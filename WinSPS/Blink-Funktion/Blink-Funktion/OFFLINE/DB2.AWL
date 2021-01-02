@@ -1,0 +1,22 @@
+//{{V2}}
+DATA_BLOCK DB2
+
+AUTHOR:nb
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+FB10
+
+BEGIN
+
+       Impulsdauer:=DW#16#00000000
+       Pausendauer:=DW#16#00000000
+       Timer1:=T 0
+       Timer2:=T 0
+       Q:=FALSE
+       NOT_Q:=FALSE
+       FM_TimerNr1:=FALSE
+       FM_TimerNr2:=FALSE
+END_DATA_BLOCK

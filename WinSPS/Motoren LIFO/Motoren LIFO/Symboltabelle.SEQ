@@ -1,0 +1,7 @@
+Pointer Taster	MD   100	DWORD	
+Pointer Motor	MD   104	DWORD	
+StackPointer	MD   108	DWORD	
+FlankeLokal	M    0.0	BOOL	
+Überstrom	E    7.4	BOOL	
+Impuls Merker	M    7.6	BOOL	
+AdresseAus	MD   112	DWORD	

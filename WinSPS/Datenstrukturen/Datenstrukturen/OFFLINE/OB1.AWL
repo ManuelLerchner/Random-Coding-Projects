@@ -1,0 +1,116 @@
+//{{V2}}
+ORGANIZATION_BLOCK OB1
+TITLE= "Zyklisches Hauptprogramm"
+
+
+AUTHOR:nb
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+VAR_TEMP
+       OB1_EV_CLASS:BYTE //Bits 0-3 = 1 (Coming event), Bits 4-7 = 1 (Event class 1)
+       OB1_SCAN_1:BYTE //1 (Cold restart scan 1 of OB 1), 3 (Scan 2-n of OB 1)
+       OB1_PRIORITY:BYTE //1 (Priority of 1 is lowest)
+       OB1_OB_NUMBR:BYTE //1 (Organization block 1, OB1)
+       OB1_RESERVED_1:BYTE //Reserved for system
+       OB1_RESERVED_2:BYTE //Reserved for system
+       OB1_PREV_CYCLE:INT //Cycle time of previous OB1 scan (milliseconds)
+       OB1_MIN_CYCLE:INT //Minimum cycle time of OB1 (milliseconds)
+       OB1_MAX_CYCLE:INT //Maximum cycle time of OB1 (milliseconds)
+       OB1_DATE_TIME:DATE_AND_TIME //Date and time OB1 started
+END_VAR
+BEGIN
+
+NETWORK
+TITLE= 
+//{{a}}
+
+//impuls 
+       UN   T         0
+       =    M0.0
+       L    S5T#5S
+       SV   T         0
+
+
+       U    M0.0
+       SPBN _001
+
+//Read temp 
+       CALL FC      105
+         IN:=PEW256
+         HI_LIM:=1.023000e+03
+         LO_LIM:=0.000000e+00
+         BIPOLAR:=FALSE
+         RET_VAL:=MW2000
+         OUT:=MD10
+
+//Map  temp 
+       CALL FC       10
+         val:=MD10
+         curL:=2.000000e+01
+         curH:=3.580000e+02
+         newL:=-4.000000e+01
+         newH:=1.250000e+02
+         out:=MD14
+
+
+//humidity 
+       CALL FC      105
+         IN:=PEW258
+         HI_LIM:=1.000000e+02
+         LO_LIM:=0.000000e+00
+         BIPOLAR:=FALSE
+         RET_VAL:=MW2000
+         OUT:=MD18
+
+       L    MD18
+       RND
+       T    MW0
+
+//werte setzen 
+       U    E0.0
+       =    DB10.laut
+
+       L    MD14
+       T    DB10.temp
+
+       L    MW0
+       T    DB10.luftfeuchtigkeit
+
+
+_001:  NOP  0
+NETWORK
+TITLE= 
+//{{a}}
+
+//Ausgabe 
+
+//Taster S1 
+       U    E0.1
+       SPBN temp
+       L    DB10.temp
+       RND
+       ITB
+       T    AW10
+temp:  NOP  0
+
+
+//Taster S2 
+       U    E0.2
+       SPBN laut
+
+       U    DB10.laut
+       SPBN if
+       L    1
+       T    AW10
+       SPA  else
+if:    NOP  0
+       L    0
+       T    AW10
+else:  NOP  0
+
+
+laut:  NOP  0
+END_ORGANIZATION_BLOCK

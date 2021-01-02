@@ -1,0 +1,92 @@
+//{{V2}}
+FUNCTION_BLOCK FB10
+TITLE=   <Beschreibung des FBs>
+
+
+AUTHOR:mh
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+VAR_INPUT
+       Impulsdauer:DWORD:=DW#16#00000000  // 
+       Pausendauer:DWORD:=DW#16#00000000  
+       TimerNr1:INT:=0  
+       TimerNr2:INT:=0  
+END_VAR
+
+VAR_OUTPUT
+       Q:BOOL:=FALSE  
+       NOT_Q:BOOL:=FALSE  
+END_VAR
+
+VAR_IN_OUT
+END_VAR
+
+VAR
+       FM_TimerNr1:BOOL:=FALSE  
+       FM_TimerNr2:BOOL:=FALSE  
+END_VAR
+
+VAR_TEMP
+       temp_TimerNr1:INT 
+       temp_TimerNr2:INT 
+       temp_Impulsdauer:TIME // 
+       temp_Pausendauer:TIME 
+       ImpulsdauerS5T:S5TIME 
+       PausendauerS5T:S5TIME 
+END_VAR
+BEGIN
+
+NETWORK
+TITLE=Prepare Values
+//{{a}}
+
+//Prepare Timer Number 
+       L    #TimerNr1
+       T    #temp_TimerNr1
+
+       L    #TimerNr2
+       T    #temp_TimerNr2
+
+//Set Dauer to TYP Timer 
+       L    #Impulsdauer
+       T    #temp_Impulsdauer
+
+       L    #Pausendauer
+       T    #temp_Pausendauer
+
+//Convert TIME to S5Time
+       CALL FC       40
+         IN:=#temp_Impulsdauer
+         RET_VAL:=#ImpulsdauerS5T
+
+       CALL FC       40
+         IN:=#temp_Pausendauer
+         RET_VAL:=#PausendauerS5T
+NETWORK
+TITLE=Clock
+//{{a}}
+
+//Clock Impuls 
+       UN   T [#temp_TimerNr2]
+       FP   #FM_TimerNr2
+       L    #ImpulsdauerS5T
+       SV   T [#temp_TimerNr1]
+
+//Clock Pause 
+       U    T [#temp_TimerNr1]
+       FN   #FM_TimerNr1
+       L    #PausendauerS5T
+       SV   T [#temp_TimerNr2]
+NETWORK
+TITLE=Ausgänge
+//{{a}}
+
+       U    T [#temp_TimerNr1]
+       =    #Q
+
+       U    T [#temp_TimerNr2]
+       =    #NOT_Q
+END_FUNCTION_BLOCK

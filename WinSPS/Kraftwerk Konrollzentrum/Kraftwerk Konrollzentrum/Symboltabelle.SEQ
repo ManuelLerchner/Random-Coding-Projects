@@ -1,0 +1,7 @@
+Val	MD   100	DWORD	
+Impuls	M    0.0	BOOL	
+ListPointer	MD   104	DWORD	
+BCDPointer	MD   108	DWORD	
+runningSum	MD   112	DWORD	
+counter	MD   116	DWORD	
+Average	AW    22	WORD	

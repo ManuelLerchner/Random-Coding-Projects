@@ -1,0 +1,56 @@
+Drücken Sie die Return-Taste um den entsprechenden Editor zu öffnen!
+EINGAENGE
+
+   E0.0            # OB1      NETZWERK 001 Zeile 0003 # R # U    E0.0
+   E0.1            # OB1      NETZWERK 001 Zeile 0023 # R # U    E0.1
+   E1.0            # OB1      NETZWERK 002 Zeile 0025 # R # U    E1.0
+
+AUSGAENGE
+
+   A0.0            # OB1      NETZWERK 001 Zeile 0078 # W # =    A0.0
+   A1.0            # OB1      NETZWERK 002 Zeile 0044 # W # =    A1.0
+   A1.1            # OB1      NETZWERK 002 Zeile 0048 # W # =    A1.1
+   A1.2            # OB1      NETZWERK 002 Zeile 0051 # W # =    A1.2
+
+MERKER
+
+   M0.0            # OB1      NETZWERK 001 Zeile 0047 # W # =    M0.0
+                   # OB1      NETZWERK 001 Zeile 0077 # R # UN   M0.0
+   M0.1            # OB1      NETZWERK 001 Zeile 0072 # C # Q:=M0.1
+                   # OB1      NETZWERK 001 Zeile 0076 # R # U    M0.1
+   M1.0            # OB1      NETZWERK 002 Zeile 0038 # C # Q:=M1.0
+                   # OB1      NETZWERK 002 Zeile 0042 # R # U    M1.0
+   M1.1            # OB1      NETZWERK 002 Zeile 0039 # C # NOT_Q:=M1.1
+                   # OB1      NETZWERK 002 Zeile 0046 # R # U    M1.1
+   MW10            # OB1      NETZWERK 001 Zeile 0007 # R # L    MW10
+                   # OB1      NETZWERK 001 Zeile 0010 # W # T    MW10
+                   # OB1      NETZWERK 001 Zeile 0013 # R # L    MW10
+                   # OB1      NETZWERK 001 Zeile 0016 # W # T    MW10
+                   # OB1      NETZWERK 001 Zeile 0027 # R # L    MW10
+                   # OB1      NETZWERK 001 Zeile 0030 # W # T    MW10
+                   # OB1      NETZWERK 001 Zeile 0033 # R # L    MW10
+                   # OB1      NETZWERK 001 Zeile 0036 # W # T    MW10
+                   # OB1      NETZWERK 001 Zeile 0044 # R # L    MW10
+                   # OB1      NETZWERK 001 Zeile 0049 # R # L    MW10
+                   # OB1      NETZWERK 001 Zeile 0057 # R # L    MW10
+   MD12            # OB1      NETZWERK 001 Zeile 0054 # W # T    MD12
+                   # OB1      NETZWERK 001 Zeile 0062 # W # T    MD12
+                   # OB1      NETZWERK 001 Zeile 0068 # C # Impulsdauer:=MD12
+                   # OB1      NETZWERK 001 Zeile 0069 # C # Pausendauer:=MD12
+   MD20            # OB1      NETZWERK 002 Zeile 0007 # C # OUT:=MD20
+                   # OB1      NETZWERK 002 Zeile 0011 # R # L    MD20
+   MD24            # OB1      NETZWERK 002 Zeile 0017 # W # T    MD24
+                   # OB1      NETZWERK 002 Zeile 0021 # C # IN:=MD24
+   MW28            # OB1      NETZWERK 002 Zeile 0022 # C # RET_VAL:=MW28
+                   # OB1      NETZWERK 002 Zeile 0026 # R # L    MW28
+   MW500           # OB1      NETZWERK 002 Zeile 0006 # C # RET_VAL:=MW500
+   M1000.0         # OB1      NETZWERK 001 Zeile 0004 # W # FP   M      1000.0
+   M1000.1         # OB1      NETZWERK 001 Zeile 0024 # W # FP   M      1000.1
+   M10000.0        # OB1      NETZWERK 001 Zeile 0073 # C # NOT_Q:=M10000.0
+
+ZEITEN
+
+   T10             # OB1      NETZWERK 002 Zeile 0027 # W # SV   T        10
+                   # OB1      NETZWERK 002 Zeile 0043 # R # U    T        10
+                   # OB1      NETZWERK 002 Zeile 0047 # R # U    T        10
+                   # OB1      NETZWERK 002 Zeile 0050 # R # U    T        10

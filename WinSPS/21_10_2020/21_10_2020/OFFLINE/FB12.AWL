@@ -1,0 +1,114 @@
+//{{V2}}
+FUNCTION_BLOCK FB12
+TITLE=   <Beschreibung des FBs>
+
+
+AUTHOR:mh
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+VAR_INPUT
+       freq:REAL:=0.000000e+00  // 
+       ratio:REAL:=0.000000e+00  // 
+       start:BOOL:=FALSE  
+       reset:BOOL:=FALSE  
+       T1:TIMER 
+       T2:TIMER 
+END_VAR
+
+VAR_OUTPUT
+       q:BOOL:=FALSE  
+END_VAR
+
+VAR_IN_OUT
+END_VAR
+
+VAR
+       verzFlanke1:FB10 
+       verzFlanke2:FB10 
+       flanke1:BOOL:=FALSE  // 
+       flanke2:BOOL:=FALSE  
+       fm:BOOL:=FALSE  
+END_VAR
+
+VAR_TEMP
+       Dauer:REAL 
+       Formel1:REAL 
+       Pausendauer:REAL // 
+       Impulsdauer:REAL 
+       startFlanke1:BOOL 
+       ImpulsdauerMillis:TIME // 
+       PausendauerMillis:TIME // 
+END_VAR
+BEGIN
+
+NETWORK
+TITLE=   <Ueberschrift von Netzwerk>
+//{{a}}
+
+       L    1.000000e+00
+       L    #freq
+       /R
+       T    #Dauer
+
+
+       L    #ratio
+       L    1.000000e+00
+       +R
+       T    #Formel1
+
+
+       L    #Dauer
+       L    #Formel1
+       /R
+       T    #Pausendauer
+
+       L    #Dauer
+       L    #Pausendauer
+       -R
+       T    #Impulsdauer
+
+
+       L    #Impulsdauer
+       L    1.000000e+03
+       *R
+       RND
+       T    #ImpulsdauerMillis
+
+       L    #Pausendauer
+       L    1.000000e+03
+       *R
+       RND
+       T    #PausendauerMillis
+NETWORK
+TITLE= 
+//{{a}}
+
+       O    #start
+       FP   #fm
+       O    #flanke2
+       =    #startFlanke1
+
+       CALL #verzFlanke1
+         impuls:=#startFlanke1
+         reset:=#reset
+         T:=#T1
+         zeit:=#ImpulsdauerMillis
+         q:=#flanke1
+
+       CALL #verzFlanke2
+         impuls:=#flanke1
+         reset:=#reset
+         T:=#T2
+         zeit:=#PausendauerMillis
+         q:=#flanke2
+
+
+       U    #startFlanke1
+       S    #q
+
+       U    #flanke1
+       R    #q
+END_FUNCTION_BLOCK

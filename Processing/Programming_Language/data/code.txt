@@ -1,0 +1,13 @@
+a=0
+a=a+1
+
+
+pi=3141516/1000000
+
+
+
+alpha=14/100
+print(cos(alpha)^2+sin(alpha)^2)
+
+
+print(cos(pi/3))

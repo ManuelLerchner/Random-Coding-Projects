@@ -1,0 +1,18 @@
+start	E    0.0	BOOL	
+kassaeingeschaltet	M    0.0	BOOL	
+Band	A    0.0	BOOL	
+trennbrett	E    0.1	BOOL	
+AktuellerGesPreis	MD   100	DWORD	
+lichtschranke	E    0.2	BOOL	
+mBand	M    0.3	BOOL	
+mDrehteller	M    0.4	BOOL	
+Drehteller	A    0.1	BOOL	
+BarcodeScanner	ED    10	DWORD	
+Scannen	E    0.3	BOOL	
+Prod-ID	MW    10	WORD	
+Preis-Euro	MW    12	WORD	
+Preis-Cent	MW    14	WORD	
+Index MwST	MW    16	WORD	
+geradeEingelesen	M    0.5	BOOL	
+MwSt	MW    18	WORD	
+Anzeige Preis	MW    20	WORD	

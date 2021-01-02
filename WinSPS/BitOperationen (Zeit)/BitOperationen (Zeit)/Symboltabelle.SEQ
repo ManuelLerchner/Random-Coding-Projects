@@ -1,0 +1,12 @@
+Timer laeuft	A    0.0	BOOL	
+Timer fertig	A    0.1	BOOL	
+Start	E    0.0	BOOL	
+Stop	E    0.1	BOOL	
+BCD Eingabe	EW    10	WORD	
+EingabeMinuten	MW    10	WORD	
+EingabeSekunden	MW    12	WORD	
+EingabeGesamtZeit	MW    14	WORD	
+EingabeGesamtZeitS5T	MW    16	WORD	
+RestZeitS5T	MW    18	WORD	
+RestZeitSekunden	MW    20	WORD	
+VergangeneZeitSekunden	MW    28	WORD	

@@ -1,0 +1,35 @@
+//{{V2}}
+DATA_BLOCK DB1
+
+AUTHOR:nb
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+FB12
+
+BEGIN
+
+       freq:=0.000000e+00
+       ratio:=0.000000e+00
+       start:=FALSE
+       reset:=FALSE
+       T1:=T 0
+       T2:=T 0
+       q:=FALSE
+       verzFlanke1.impuls:=FALSE
+       verzFlanke1.reset:=FALSE
+       verzFlanke1.T:=T 0
+       verzFlanke1.zeit:=T#0MS
+       verzFlanke1.q:=FALSE
+       verzFlanke1.fm:=FALSE
+       verzFlanke2.impuls:=FALSE
+       verzFlanke2.reset:=FALSE
+       verzFlanke2.T:=T 0
+       verzFlanke2.zeit:=T#0MS
+       verzFlanke2.q:=FALSE
+       verzFlanke2.fm:=FALSE
+       flanke1:=FALSE
+       flanke2:=FALSE
+END_DATA_BLOCK

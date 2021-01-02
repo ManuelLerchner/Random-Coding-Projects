@@ -1,0 +1,47 @@
+//{{V2}}
+FUNCTION_BLOCK FB12
+TITLE=   <Beschreibung des FBs>
+
+
+AUTHOR:mh
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+VAR_INPUT
+       freq:REAL:=0.000000e+00  // 
+       ratio:REAL:=0.000000e+00  // 
+       start:BOOL:=FALSE  
+       reset:BOOL:=FALSE  
+       T1:TIMER 
+       T2:TIMER 
+END_VAR
+
+VAR_OUTPUT
+       q:BOOL:=FALSE  
+END_VAR
+
+VAR_IN_OUT
+END_VAR
+
+VAR
+       verzFlanke1:FB10 
+       verzFlanke2:FB10 
+       flanke1:BOOL:=FALSE  // 
+       flanke2:BOOL:=FALSE  
+       fm:BOOL:=FALSE  
+END_VAR
+
+VAR_TEMP
+       Dauer:REAL 
+       Formel1:REAL 
+       Pausendauer:REAL // 
+       Impulsdauer:REAL 
+       startFlanke1:BOOL 
+       ImpulsdauerMillis:TIME // 
+       PausendauerMillis:TIME // 
+END_VAR
+BEGIN
+
+END_FUNCTION_BLOCK

@@ -1,0 +1,6 @@
+Eingabe	EW    10	WORD	
+ListPointer	MD   100	DWORD	
+SumValues	MD   108	DWORD	
+LoopPointer	MD   112	DWORD	
+Lampe	A    0.0	BOOL	
+Impuls500ms	M    0.0	BOOL	

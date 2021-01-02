@@ -1,0 +1,31 @@
+Zylinder	A    0.0	BOOL	
+BandLinks	A    1.0	BOOL	
+BandRechts	A    1.1	BOOL	
+BCD Gewicht	AW    10	WORD	
+Ein	E    0.0	BOOL	
+Start	E    0.1	BOOL	
+NotAus	E    0.2	BOOL	
+ApfelAufWage	E    1.0	BOOL	
+Apfel Gewogen	E    1.1	BOOL	
+EndschBandLinks	E    1.3	BOOL	
+EndschBandRechts	E    1.4	BOOL	
+Eingabe Menge BCD	EW    10	WORD	
+Anlage ein	M    0.0	BOOL	
+Vorgang läuft	M    0.1	BOOL	
+MZylinder	M    1.0	BOOL	
+MBandLinks	M    1.1	BOOL	
+MBandRechts	M    1.2	BOOL	
+Gewicht_zwischen_Werten	M    2.0	BOOL	
+Wiegevorgang	M    2.1	BOOL	
+automatischNeuerDurchgan	M    2.3	BOOL	
+gewicht	MD   100	DWORD	
+gesammtGewicht	MD   104	DWORD	
+Eingabe INT	MW    10	WORD	
+Menge 	MW    12	WORD	
+durchgaenge	MW    14	WORD	
+Waage	PEW  256	WORD	
+MMeldeleuchte	M    1.3	BOOL	
+Meldeleuchte	A    1.3	BOOL	
+ZeitAbgelaufen	M    2.4	BOOL	
+Behälter leer	A    1.4	BOOL	
+apfelAngekommen	M    2.5	BOOL	

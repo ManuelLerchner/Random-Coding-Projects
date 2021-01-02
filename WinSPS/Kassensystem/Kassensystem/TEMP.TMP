@@ -1,0 +1,243 @@
+//{{V2}}
+ORGANIZATION_BLOCK OB1
+TITLE= "Zyklisches Hauptprogramm"
+
+
+AUTHOR:nb
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+VAR_TEMP
+       OB1_EV_CLASS:BYTE //Bits 0-3 = 1 (Coming event), Bits 4-7 = 1 (Event class 1)
+       OB1_SCAN_1:BYTE //1 (Cold restart scan 1 of OB 1), 3 (Scan 2-n of OB 1)
+       OB1_PRIORITY:BYTE //1 (Priority of 1 is lowest)
+       OB1_OB_NUMBR:BYTE //1 (Organization block 1, OB1)
+       OB1_RESERVED_1:BYTE //Reserved for system
+       OB1_RESERVED_2:BYTE //Reserved for system
+       OB1_PREV_CYCLE:INT //Cycle time of previous OB1 scan (milliseconds)
+       OB1_MIN_CYCLE:INT //Minimum cycle time of OB1 (milliseconds)
+       OB1_MAX_CYCLE:INT //Maximum cycle time of OB1 (milliseconds)
+       OB1_DATE_TIME:DATE_AND_TIME //Date and time OB1 started
+END_VAR
+BEGIN
+
+NETWORK
+TITLE= 
+//{{a}}
+
+       U    E0.0
+       S    M0.0
+
+
+       U    M0.0
+       FP   M      1000.0
+       S    M0.3
+NETWORK
+TITLE= 
+//{{a}}
+
+       U    E0.1
+       SPBN _001
+       L    0.000000e+00
+       T    MD100
+_001:  NOP  0
+NETWORK
+TITLE= 
+//{{a}}
+
+       U    E0.2
+       FN   M      1000.1
+       SPBN _002
+       L    123                          //Aktueller preis 
+       L    MD100
+       +R
+       T    MD100
+       R    M0.3
+       S    M0.4
+_002:  NOP  0
+NETWORK
+TITLE= 
+//{{a}}
+
+       L    ED10
+       L    L#0
+       <>D
+       U    E0.3
+
+       FP   M      1000.2
+       =    M0.5
+
+       U    M0.5
+       SPBN _003
+
+//Einlesen  
+       L    ED10
+       L    2#11111111000000000000000000000000
+       UD 
+       SRD           24
+       T    MW10
+
+
+       L    ED10
+       L    2#00000000111111111111110000000000
+       UD 
+       SRD           10
+       T    MW12
+
+       L    ED10
+       L    2#00000000000000000000001111111100
+       UD 
+       SRD            2
+       T    MW14
+
+       L    ED10
+       L    2#00000000000000000000000000000011
+       UD 
+       T    MW16
+
+_003:  NOP  0
+NETWORK
+TITLE= 
+//{{a}}
+
+//2 Sekunden ID Ausgeben 
+       U    M0.5
+       L    S5T#2S
+       SV   T         0 
+ 
+       U    T         0
+       SPBN _004 
+       L    MW10
+       ITB 
+       T    AW       10
+       SPA  _005
+_004:  NOP  0
+       L    0
+       T    AW       10
+_005:  NOP  0
+NETWORK
+TITLE= 
+//{{a}}
+
+// MsSt berechnen 
+       U    M0.5
+       SET
+       SPBN _006
+
+       L    MW16
+       L    0
+       ==I
+       SPBN __0
+       L    0
+       T    MW18
+__0:   NOP  0
+
+       L    MW16
+       L    1
+       ==I
+       SPBN __1
+       L    4
+       T    MW18
+__1:   NOP  0
+
+       L    MW16
+       L    2
+       ==I
+       SPBN __2
+       L    10
+       T    MW18
+__2:   NOP  0
+
+
+       L    MW16
+       L    3
+       ==I
+       SPBN __3
+       L    22
+       T    MW18
+__3:   NOP  0
+
+
+_006:  NOP  0
+NETWORK
+TITLE= 
+//{{a}}
+
+       L    MW10
+       L    MW12
+       L    MW14
+       L    MW16
+
+
+       U    M0.5
+
+       SPBN _007
+       L    MW12
+       L    1000
+       *D
+       L    MW14
+       +D
+       DTR
+       L    MW18
+       DTR
+       *R
+       L    MD100
+       +R
+       T    MD100
+_007:  NOP  0
+
+
+       L    MD100
+NETWORK
+TITLE= 
+//{{a}}
+
+
+       U    M0.5
+       L    S5T#2S
+       SV   T         1
+
+
+//Aktueller Preis 
+       U    T         1
+       SPBN _008
+       L    MW12
+       L    1000
+       *D
+       L    MW14
+       +D
+       DTR
+       L    1.000000e+02
+       /R
+       RND
+       DTB
+       T    AW       12
+       SPA  _009
+_008:  NOP  0
+       L    0
+       T    AW       12
+_009:  NOP  0
+NETWORK
+TITLE= 
+//{{a}}
+
+
+//Aktueller Preis 
+       L    MD100
+       L    1.000000e+03
+       /R
+       RND
+       DTB
+       T    AW       14
+NETWORK
+TITLE= 
+//{{a}}
+
+       U    M0.3
+       =    A0.0
+
+       U    M0.4
+       =    A0.1
+END_ORGANIZATION_BLOCK

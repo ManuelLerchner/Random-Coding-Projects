@@ -1,0 +1,20 @@
+//{{V2}}
+DATA_BLOCK DB10
+
+AUTHOR:mh
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+       STRUCT 
+         temp:REAL:=0.000000e+00  // 
+         luftfeuchtigkeit:WORD:=W#16#0000  // 
+         laut:BOOL:=FALSE  
+       END_STRUCT 
+BEGIN
+
+       temp:=0.000000e+00
+       luftfeuchtigkeit:=W#16#0000
+       laut:=FALSE
+END_DATA_BLOCK

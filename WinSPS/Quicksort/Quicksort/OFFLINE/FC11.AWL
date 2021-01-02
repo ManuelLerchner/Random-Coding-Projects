@@ -1,0 +1,256 @@
+//{{V2}}
+FUNCTION FC11
+TITLE= <Beschreibung der FC>
+
+
+AUTHOR:mh
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+VAR_INPUT
+       links:INT // 
+       rechts:INT // 
+END_VAR
+
+VAR_OUTPUT
+       out:INT // 
+END_VAR
+
+VAR_IN_OUT
+END_VAR
+
+VAR_TEMP
+       i:INT 
+       j:INT 
+       pivot:INT 
+       DatenRechts:INT 
+       DatenLinks:INT 
+       DatenI:INT // 
+       DatenJ:INT 
+END_VAR
+BEGIN
+
+NETWORK
+TITLE=   <Ueberschrift von Netzwerk>
+//{{a}}
+
+       AUF  DB       10
+
+       L    #links
+       L    P#        2.0
+       *D
+       T    LD        0
+       L    DBW [LD0]
+       T    #DatenLinks
+NETWORK
+TITLE= 
+//{{a}}
+
+       L    #links
+       T    #i
+
+       L    #rechts
+       L    1
+       -D
+       T    #j
+
+       L    #rechts
+       L    P#        2.0
+       *D
+       T    LD        4
+       AUF  DB       10
+       L    DBW [LD4]
+       T    #DatenRechts
+         
+
+       L    #DatenRechts
+       T    #pivot
+
+for1:  NOP  0
+NETWORK
+TITLE= 
+//{{a}}
+
+       U(
+       L    #i
+       L    P#        2.0
+       *D
+       T    LD        8
+       L    DBW [LD8]
+       T    #DatenI
+
+       L    #DatenI
+       L    #pivot
+       <D
+       )
+       SPBN for3
+
+
+for2:  NOP  0
+       L    #i
+       L    1
+       +D
+       T    #i
+
+
+       U(
+       L    #i
+       L    #rechts
+       <D
+       )
+
+       U(
+       L    #i
+       L    P#        2.0
+       *D
+       T    LD        8
+       L    DBW [LD8]
+       T    #DatenI
+
+       L    #DatenI
+       L    #pivot
+       <D
+       )
+
+       SPB  for2
+NETWORK
+TITLE= 
+//{{a}}
+
+       U(
+       L    #j
+       L    P#        2.0
+       *D
+       T    LD       12
+       L    DBW [LD12]
+       T    #DatenJ
+
+       L    #DatenJ
+       L    #pivot
+       >=D
+       )
+       SPB  _end
+
+
+for3:  NOP  0
+       L    #j
+       L    1
+       -D
+       T    #j
+
+ 
+       U(
+       L    #j
+       L    #links
+       >I
+       ) 
+ 
+       U(
+       L    #j
+       L    P#        2.0 
+       *D 
+       T    LD       12
+       L    DBW [LD12]
+       T    #DatenJ
+
+       L    #DatenJ
+       L    #pivot
+       >=D
+       )
+ 
+       SPB  for3
+NETWORK
+TITLE= 
+//{{a}}
+
+_end:  NOP  0
+
+       L    #i
+       L    #j
+       <I
+       SPBN if
+
+       L    #i
+       L    P#        2.0
+       *D
+       T    LD       16
+
+
+       L    #j
+       L    P#        2.0
+       *D
+       T    LD       20
+
+
+
+//       L    DBW [LD16]
+//       T    LW      100
+//
+//       L    DBW [LD20]
+//       L    DBW [LD16]
+//
+//       L    LW      100
+//       L    DBW [LD20]
+//
+
+if:    NOP  0
+NETWORK
+TITLE= 
+//{{a}}
+
+       L    #i
+       L    #j
+       <I
+       SPB  for1
+NETWORK
+TITLE= 
+//{{a}}
+
+//       L    #i
+//       L    P#        2.0
+//       *D
+//       T    LD       24
+//       L    DBW [LD24]
+//       T    #DatenI 
+// 
+//       L    #DatenI
+//       L    #pivot
+//       >I
+//       SPBN if2
+//
+//
+//       L    #i
+//       L    P#        2.0
+//       *D
+//       T    LD       28
+// 
+// 
+//       L    #rechts
+//       L    P#        2.0 
+//       *D
+//       T    LD       32
+//
+//
+//       L    DBW [LD28]
+//       T    LW      102
+//
+//       L    DBW [LD32]
+//       L    DBW [LD28]
+//
+//       L    LW      102
+//       L    DBW [LD32]
+//
+//
+//
+//if2:   NOP  0
+NETWORK
+TITLE= 
+//{{a}}
+
+       L    #i
+       T    #out
+
+
+END_FUNCTION

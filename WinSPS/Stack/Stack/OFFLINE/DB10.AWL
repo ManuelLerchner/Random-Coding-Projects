@@ -1,0 +1,21 @@
+//{{V2}}
+DATA_BLOCK DB10
+
+AUTHOR:nb
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+FB10
+
+BEGIN
+
+       DATA:=0
+       PUSH_POP:=FALSE
+       DB_num:=0
+       DB_StepSize:=0
+       DB_len:=0
+       POP_Value:=0
+       StackPointer:=L#0
+END_DATA_BLOCK

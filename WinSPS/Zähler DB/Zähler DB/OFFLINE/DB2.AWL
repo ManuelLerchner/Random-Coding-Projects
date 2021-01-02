@@ -1,0 +1,17 @@
+//{{V2}}
+DATA_BLOCK DB2
+
+AUTHOR:nb
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+FB11
+
+BEGIN
+
+       in:=FALSE
+       flanke:=FALSE
+       prev:=FALSE
+END_DATA_BLOCK

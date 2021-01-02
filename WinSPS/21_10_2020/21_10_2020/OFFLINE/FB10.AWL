@@ -1,0 +1,59 @@
+//{{V2}}
+FUNCTION_BLOCK FB10
+TITLE=   <Beschreibung des FBs>
+
+
+AUTHOR:mh
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+VAR_INPUT
+       impuls:BOOL:=FALSE  // 
+       reset:BOOL:=FALSE  // 
+       T:TIMER 
+       zeit:TIME:=T#0MS  
+END_VAR
+
+VAR_OUTPUT
+       q:BOOL:=FALSE  
+END_VAR
+
+VAR_IN_OUT
+END_VAR
+
+VAR
+       fm:BOOL:=FALSE  // 
+END_VAR
+
+VAR_TEMP
+       zeitS5t:S5TIME 
+END_VAR
+BEGIN
+
+NETWORK
+TITLE= 
+//{{a}}
+
+       CALL FC       40
+         IN:=#zeit
+         RET_VAL:=#zeitS5t
+
+NETWORK
+TITLE=   <Ueberschrift von Netzwerk>
+//{{a}}
+
+
+       U    #impuls
+       L    #zeitS5t
+       SS   #T
+
+       U    #T
+
+       =    #q
+
+       O    #q
+       O    #reset
+       R    #T
+END_FUNCTION_BLOCK

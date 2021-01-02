@@ -1,0 +1,21 @@
+//{{V2}}
+DATA_BLOCK DB1
+
+AUTHOR:nb
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+FB10
+
+BEGIN
+
+       Plus:=FALSE
+       Minus:=FALSE
+       Reset:=FALSE
+       Q:=FALSE
+       value:=0
+       FM_ZV:=FALSE
+       FM_ZR:=FALSE
+END_DATA_BLOCK

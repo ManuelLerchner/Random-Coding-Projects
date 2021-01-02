@@ -1,0 +1,11 @@
+DrehreglerBCD	EW    10	WORD	
+DrehreglerINT	MW    10	WORD	
+Klebedauer	MW    12	WORD	
+Lichtschranke	E    0.0	BOOL	
+Förderband	PAW  256	WORD	
+Potenziometer	PEW  256	WORD	
+Ventil	A    0.0	BOOL	
+KlebedauerMS	MD   100	DWORD	
+Klebedauer S5t#	MW    14	WORD	
+Geschw Band	MD   104	DWORD	
+Strom Poti	MD   108	DWORD	

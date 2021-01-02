@@ -1,0 +1,103 @@
+body{
+	background-color: rgb(230);
+	background-image: url("dark_wood.png");
+	font-family: Helvetica,Arial, sans-serif;
+	padding-top: 25;
+}
+
+
+#nav a{
+	text-decoration: none;
+	color: red;
+	cursor: pointer;	
+}
+
+h1,h2{
+	margin: 2;
+}
+
+h3{
+	margin-top:2;
+	color: rgb(50,50,80);
+}
+
+h4{
+	color: rgb(50,50,120);
+	margin-top: 45;
+	margin-bottom: 15;	
+}
+
+input {
+  font-size: 30px;
+   height:75px;
+}
+
+
+#container{
+	
+	background: rgb(205,205,205);
+	width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 25px;
+}
+
+#header{
+	background-color: rgb(76, 174, 245);
+	color: white;
+	text-align: center;
+	padding: 10px;
+	border-top-right-radius: 25px;
+	border-top-left-radius: 25px;
+}
+
+
+#content{
+	margin: 10px;
+	padding: 10px;
+}
+
+.selected{
+	font-weight: bold;
+	font-size: 26px;
+}
+
+address {
+  display: block;
+  font-style: italic;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#nav ul{
+	padding: 0px 0px 0px 25px;
+}
+
+#nav{
+	
+	float: left;
+	line-height: 250%;
+	font-size: 24px;
+	padding-top: 12px;
+}
+
+#main{
+	width: 700px;
+	float: right;
+	word-break: normal;
+	
+	border-left: solid rgb(0,0,70);
+	padding-left: 20;
+	margin: 20px;
+	font-size: 22px;
+}
+
+#footer{
+	clear: both;
+	padding: 2px;
+	background-color: #999999;
+	color: white;
+	text-align: right;
+	border-bottom-right-radius: 25px;
+	border-bottom-left-radius: 25px;
+}

@@ -1,0 +1,145 @@
+//{{V2}}
+ORGANIZATION_BLOCK OB1
+TITLE= "Zyklisches Hauptprogramm"
+
+
+AUTHOR:nb
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+VAR_TEMP
+       OB1_EV_CLASS:BYTE //Bits 0-3 = 1 (Coming event), Bits 4-7 = 1 (Event class 1)
+       OB1_SCAN_1:BYTE //1 (Cold restart scan 1 of OB 1), 3 (Scan 2-n of OB 1)
+       OB1_PRIORITY:BYTE //1 (Priority of 1 is lowest)
+       OB1_OB_NUMBR:BYTE //1 (Organization block 1, OB1)
+       OB1_RESERVED_1:BYTE //Reserved for system
+       OB1_RESERVED_2:BYTE //Reserved for system
+       OB1_PREV_CYCLE:INT //Cycle time of previous OB1 scan (milliseconds)
+       OB1_MIN_CYCLE:INT //Minimum cycle time of OB1 (milliseconds)
+       OB1_MAX_CYCLE:INT //Maximum cycle time of OB1 (milliseconds)
+       OB1_DATE_TIME:DATE_AND_TIME //Date and time OB1 started
+END_VAR
+BEGIN
+
+NETWORK
+TITLE=
+//{{a}}
+
+       L    MD100
+       L    L#0
+       ==D
+       SPBN _res
+       L    P#       10.0
+       T    MD100
+
+       L    P#        4.0
+       T    MD104
+
+       L    P#        8.0
+       T    MD108
+
+_res:  NOP  0
+
+
+
+       L    EW [MD100]
+       BTD
+       T    MD112
+
+
+//summe  
+//       L    "Summe"
+//       L    "Wert" 
+//       +D 
+//       T    "Summe"
+
+ 
+//kleiner 20    
+       L    MD112
+       L    L#20 
+       <D 
+       S    M [MD108]
+ 
+//gröser 50  
+       L    MD112
+       BTI 
+       L    L#50 
+       >D 
+       R    M [MD108] 
+ 
+ 
+       U    M [MD108] 
+       =    A [MD104] 
+ 
+ 
+       L    MD112
+       L    5 
+       <D 
+       S    M9.7
+ 
+       L    MD112
+       L    90 
+       >D 
+       S    M9.6
+ 
+ 
+ 
+//pointer  
+       L    MD100
+       L    P#        2.0 
+       +D 
+       T    MD100
+ 
+ 
+       L    MD104
+       L    P#        0.1 
+       +D 
+       T    MD104
+ 
+ 
+       L    MD108
+       L    P#        0.1 
+       +D 
+       T    MD108
+NETWORK
+TITLE=
+//{{a}}
+
+       L    MD100
+       L    P#       28.0
+       >D
+       SPBN _001
+
+       L    P#       10.0
+       T    MD100
+
+       L    P#        4.0
+       T    MD104
+
+       L    P#        8.0 
+       T    MD108
+
+       L    MD116
+
+       DTB
+       T    AW      100
+
+
+       L    L#0
+       T    MD116
+
+       U    M9.7
+       =    A         0.1
+
+       U    M9.6
+       =    A         0.2
+
+       SET
+       R    M9.6
+       R    M9.7
+
+
+_001:  NOP  0
+END_ORGANIZATION_BLOCK

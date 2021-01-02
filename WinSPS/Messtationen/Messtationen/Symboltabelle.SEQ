@@ -1,0 +1,7 @@
+PointerStörungen	MD   100	DWORD	
+PointerAnalogIn	MD   104	DWORD	
+AnzahlStörungen	MD   108	DWORD	
+SumValues	MD   112	REAL	
+Val	MD   116	REAL	
+Counter	MD   120	REAL	
+Average	MD   124	REAL	

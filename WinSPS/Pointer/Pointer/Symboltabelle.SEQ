@@ -1,0 +1,6 @@
+Byte	MW    10	WORD	
+Bit	MW    12	WORD	
+Pointer	MD   100	DWORD	
+Eingabe Byte	EW    10	WORD	
+Eingabe Bit	EW    12	WORD	
+Toggle	E    0.0	BOOL	

@@ -1,0 +1,11 @@
+[PrjV2]
+Kennung=WS7V2
+iAktivesUnterprojekt=0
+bSimulatorAktiv=1
+ExternWeg=0
+LetzteAenderungTicks=122115179
+LetzteAenderungDatum=20.09.2020
+LetzteAenderungUhrzeit=20:41:55
+WinPLC7-Version=V6.05
+[UPrj]
+P0=STOPPUHR\STOPPUHR.PRJ

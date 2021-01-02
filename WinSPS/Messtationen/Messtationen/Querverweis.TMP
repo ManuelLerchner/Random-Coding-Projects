@@ -1,0 +1,25 @@
+Drücken Sie die Return-Taste um den entsprechenden Editor zu öffnen!
+
+MERKER
+
+   MD100           # OB1      NETZWERK 002 Zeile 0007 # W # T    MD100
+                   # OB1      NETZWERK 002 Zeile 0019 # R # L    MD100
+                   # OB1      NETZWERK 002 Zeile 0075 # R # L    MD100
+                   # OB1      NETZWERK 002 Zeile 0077 # W # T    MD100
+   MD104           # OB1      NETZWERK 002 Zeile 0008 # W # T    MD104
+                   # OB1      NETZWERK 002 Zeile 0025 # R # L    MD104
+                   # OB1      NETZWERK 002 Zeile 0081 # R # L    MD104
+                   # OB1      NETZWERK 002 Zeile 0083 # W # T    MD104
+   MD108           # OB1      NETZWERK 002 Zeile 0001 # R # L    MD108
+                   # OB1      NETZWERK 002 Zeile 0009 # W # T    MD108
+                   # OB1      NETZWERK 002 Zeile 0035 # R # L    MD108
+                   # OB1      NETZWERK 002 Zeile 0037 # W # T    MD108
+   MD112           # OB1      NETZWERK 002 Zeile 0002 # R # L    MD112
+                   # OB1      NETZWERK 002 Zeile 0012 # W # T    MD112
+                   # OB1      NETZWERK 002 Zeile 0057 # R # L    MD112
+                   # OB1      NETZWERK 002 Zeile 0060 # W # T    MD112
+   MD116           # OB1      NETZWERK 002 Zeile 0054 # C # OUT:=MD116
+                   # OB1      NETZWERK 002 Zeile 0058 # R # L    MD116
+   MW666           # OB1      NETZWERK 002 Zeile 0053 # C # RET_VAL:=MW666
+   MW1000          # OB1      NETZWERK 002 Zeile 0046 # W # T    MW     1000
+                   # OB1      NETZWERK 002 Zeile 0049 # C # IN:=MW1000

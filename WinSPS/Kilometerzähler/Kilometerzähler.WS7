@@ -1,0 +1,11 @@
+[PrjV2]
+Kennung=WS7V2
+iAktivesUnterprojekt=0
+bSimulatorAktiv=1
+ExternWeg=0
+LetzteAenderungTicks=374397194
+LetzteAenderungDatum=14.09.2020
+LetzteAenderungUhrzeit=16:58:56
+WinPLC7-Version=V6.05
+[UPrj]
+P0=S7-PROG-KILOMETERZÄHLER\S7-PROG-KILOMETERZÄHLER.PRJ

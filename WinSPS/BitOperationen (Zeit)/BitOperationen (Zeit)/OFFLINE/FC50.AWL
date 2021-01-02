@@ -1,0 +1,58 @@
+//{{V2}}
+FUNCTION FC50
+TITLE=Sekunden ---> Minuten:Sekunden
+//Sekunden ---> Minuten:Sekunden
+
+
+AUTHOR:mh
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+VAR_INPUT
+       Zeit_Sekunden:INT 
+END_VAR
+
+VAR_OUTPUT
+       Zeit_Minuten_Sekunden:INT 
+END_VAR
+
+VAR_IN_OUT
+END_VAR
+
+VAR_TEMP
+       RestZeitSekunden:INT 
+       RestZeitMinuten:INT 
+END_VAR
+BEGIN
+
+NETWORK
+TITLE=   <Ueberschrift von Netzwerk>
+//{{a}}
+
+// Sekunden 
+       L    #Zeit_Sekunden
+       L    60
+       MOD 
+       T    #RestZeitSekunden
+
+
+//Minuten  
+       L    #Zeit_Sekunden
+       L    #RestZeitSekunden
+       -I
+       L    60
+       /I
+       T    #RestZeitMinuten
+
+ 
+//Werte zusammenhängen  
+       L    #RestZeitMinuten
+       ITB
+       SLW            8
+       L    #RestZeitSekunden
+       ITB
+       OW
+       T    #Zeit_Minuten_Sekunden
+END_FUNCTION

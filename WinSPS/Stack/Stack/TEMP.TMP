@@ -1,0 +1,7 @@
+     0.0 DATA:=0            
+     2.0 PUSH_POP:=FALSE            
+     4.0 DB_num:=0            
+     6.0 DB_StepSize:=0            
+     8.0 DB_len:=0            
+     10.0 POP_Value:=0            
+     12.0 StackPointer:=L#0            

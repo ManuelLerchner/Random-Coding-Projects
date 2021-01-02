@@ -1,0 +1,11 @@
+[PrjV2]
+Kennung=WS7V2
+iAktivesUnterprojekt=0
+bSimulatorAktiv=1
+ExternWeg=0
+LetzteAenderungTicks=1009453618
+LetzteAenderungDatum=04.12.2020
+LetzteAenderungUhrzeit=08:58:00
+WinPLC7-Version=V6.05
+[UPrj]
+P0=FARM\FARM.PRJ

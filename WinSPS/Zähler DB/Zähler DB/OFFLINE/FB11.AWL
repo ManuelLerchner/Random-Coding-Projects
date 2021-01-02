@@ -1,0 +1,45 @@
+//{{V2}}
+FUNCTION_BLOCK FB11
+TITLE=   <Beschreibung des FBs>
+
+
+AUTHOR:mh
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+VAR_INPUT
+       in:BOOL:=FALSE  
+END_VAR
+
+VAR_OUTPUT
+       flanke:BOOL:=FALSE  
+END_VAR
+
+VAR_IN_OUT
+END_VAR
+
+VAR
+       prev:BOOL:=FALSE  
+END_VAR
+
+VAR_TEMP
+       now:BOOL 
+END_VAR
+BEGIN
+
+NETWORK
+TITLE=   <Ueberschrift von Netzwerk>
+//{{a}}
+
+       U    #now
+       =    #prev
+
+       U    #in
+       =    #now
+
+       U    #now
+       UN   #prev
+       =    #flanke
+END_FUNCTION_BLOCK

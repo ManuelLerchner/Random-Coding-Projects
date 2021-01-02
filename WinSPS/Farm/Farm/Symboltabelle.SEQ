@@ -1,0 +1,7 @@
+PointerAdresse	MD   100	DWORD	
+PointerAusgang	MD   104	DWORD	
+PointerMerker	MD   108	DWORD	
+Wert	MD   112	DWORD	
+Summe	MD   116	DWORD	
+Led	M    9.7	BOOL	
+Led2	M    9.6	BOOL	

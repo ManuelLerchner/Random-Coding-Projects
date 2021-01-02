@@ -1,0 +1,11 @@
+Timer laeuft	A    0.0	BOOL	
+Start	E    0.0	BOOL	
+EingabeMilliSekunden	MD   100	DWORD	
+RestZeitMillis	MD   104	DWORD	
+VergangeZeitMillis	MD   108	DWORD	
+EingabeMinuten	MW    10	WORD	
+EingabeSekunden	MW    12	WORD	
+EingabeZeitS5T	MW    14	WORD	
+RestZeitS5T	MW    16	WORD	
+Stop	E    0.1	BOOL	
+TimerAbgelaufen	A    0.1	BOOL	

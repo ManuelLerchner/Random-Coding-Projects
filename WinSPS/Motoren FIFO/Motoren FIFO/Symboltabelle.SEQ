@@ -1,0 +1,7 @@
+EingangsPointer	MD   100	DWORD	
+AusgangsPointer	MD   104	DWORD	
+QueuePointerPUSH	MD   108	DWORD	
+QueuePointerPOP	MD   112	DWORD	
+Überstrom	E    5.4	BOOL	
+AdressePOP	MD   116	DWORD	
+Impuls	M    0.0	BOOL	

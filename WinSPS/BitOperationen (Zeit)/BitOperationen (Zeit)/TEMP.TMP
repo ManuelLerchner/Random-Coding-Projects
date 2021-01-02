@@ -1,0 +1,161 @@
+//{{V2}}
+ORGANIZATION_BLOCK OB1
+TITLE= "Zyklisches Hauptprogramm"
+
+
+AUTHOR:nb
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+VAR_TEMP
+       OB1_EV_CLASS:BYTE //Bits 0-3 = 1 (Coming event), Bits 4-7 = 1 (Event class 1)
+       OB1_SCAN_1:BYTE //1 (Cold restart scan 1 of OB 1), 3 (Scan 2-n of OB 1)
+       OB1_PRIORITY:BYTE //1 (Priority of 1 is lowest)
+       OB1_OB_NUMBR:BYTE //1 (Organization block 1, OB1)
+       OB1_RESERVED_1:BYTE //Reserved for system
+       OB1_RESERVED_2:BYTE //Reserved for system
+       OB1_PREV_CYCLE:INT //Cycle time of previous OB1 scan (milliseconds)
+       OB1_MIN_CYCLE:INT //Minimum cycle time of OB1 (milliseconds)
+       OB1_MAX_CYCLE:INT //Maximum cycle time of OB1 (milliseconds)
+       OB1_DATE_TIME:DATE_AND_TIME //Date and time OB1 started
+END_VAR
+BEGIN
+
+NETWORK
+TITLE= 
+//{{a}}
+
+//////////////////    
+// Zeit Einlesen  
+//////////////////  
+
+       U    E0.0
+       FP   M      1000.0
+       SET
+       SPBN read
+NETWORK
+TITLE= 
+//{{a}}
+
+// Get Minuten 
+       L    EW10
+       L    2#1111111100000000
+       UW
+       SRW            8
+       BTI
+       T    MW10
+
+
+// Get Sekunden  
+       L    EW10
+       L    2#0000000011111111
+       UW
+       BTI
+       T    MW12
+NETWORK
+TITLE= 
+//{{a}}
+
+// Zeitbasis ==3 --> Basiseinheit in 10 Sekunden; SekundenStelle wird auf/abgerunden 
+       L    MW10
+       L    60
+       *I
+       L    MW12
+       +I
+       ITD
+       DTR
+       L    1.000000e+01
+       /R
+       RND
+       T    MW14
+NETWORK
+TITLE= 
+//{{a}}
+//Zeit als S5T
+
+//Konvertiere Zeit zu S5T-Zeit 
+       L    3
+       ITB
+       SLW           12
+       L    MW14
+       ITB
+       OW
+       T    MW16
+
+read:  NOP  0
+NETWORK
+TITLE= 
+//{{a}}
+
+//////////////////   
+//RestZeit Ausgabe 
+////////////////// 
+
+       U    A0.0
+       SPBN _out
+
+//Extract Gesamtsekunden 
+       LC   T         0
+       L    2#0000111111111111
+       UW
+       T    MW18
+       BTI
+       L    10
+       *I
+       T    MW20
+
+
+       CALL FC       50
+         Zeit_Sekunden:=MW20
+         Zeit_Minuten_Sekunden:=AW10
+NETWORK
+TITLE= 
+//{{a}}
+
+//////////////////   
+//Vergangene Zeit  
+//////////////////  
+       L    MW14
+       L    10
+       *I
+       L    MW20
+       -I
+       T    MW28
+
+       CALL FC       50
+         Zeit_Sekunden:=MW28
+         Zeit_Minuten_Sekunden:=AW12
+
+
+_out:  NOP  0
+NETWORK
+TITLE= 
+//{{a}}
+
+//////////////////    
+//Timer Stuff 
+//////////////////  
+
+
+//Timer Starten 
+       U    E0.0
+       R    A0.1
+       L    MW16
+       SV   T         0 
+
+
+//Timer Stoppen 
+       U    E0.1
+       R    T         0
+
+//Timer läuft 
+       U    T         0
+       =    A0.0
+
+//Timer abgelaufen 
+       U    T         0
+       FN   M      1000.1
+       S    A0.1
+END_ORGANIZATION_BLOCK

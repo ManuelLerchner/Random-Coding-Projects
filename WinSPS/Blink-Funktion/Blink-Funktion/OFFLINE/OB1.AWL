@@ -1,0 +1,192 @@
+//{{V2}}
+ORGANIZATION_BLOCK OB1
+TITLE= "Zyklisches Hauptprogramm"
+
+
+AUTHOR:nb
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+VAR_TEMP
+       OB1_EV_CLASS:BYTE //Bits 0-3 = 1 (Coming event), Bits 4-7 = 1 (Event class 1)
+       OB1_SCAN_1:BYTE //1 (Cold restart scan 1 of OB 1), 3 (Scan 2-n of OB 1)
+       OB1_PRIORITY:BYTE //1 (Priority of 1 is lowest)
+       OB1_OB_NUMBR:BYTE //1 (Organization block 1, OB1)
+       OB1_RESERVED_1:BYTE //Reserved for system
+       OB1_RESERVED_2:BYTE //Reserved for system
+       OB1_PREV_CYCLE:INT //Cycle time of previous OB1 scan (milliseconds)
+       OB1_MIN_CYCLE:INT //Minimum cycle time of OB1 (milliseconds)
+       OB1_MAX_CYCLE:INT //Maximum cycle time of OB1 (milliseconds)
+       OB1_DATE_TIME:DATE_AND_TIME //Date and time OB1 started
+END_VAR
+BEGIN
+
+NETWORK
+TITLE=LichterKette
+//{{a}}
+
+////////////  
+//Taster +//  
+////////////  
+       U    E0.0
+       FP   M      1000.0
+       SPBN _ADD
+//Increment 
+       L    MW10
+       L    1
+       +I
+       T    MW10
+
+//Loop back 
+       L    MW10
+       L    3
+       MOD
+       T    MW10
+_ADD:  NOP  0
+
+
+//////////// 
+//Taster -// 
+//////////// 
+       U    E0.1
+       FP   M      1000.1
+       SPBN _SUB
+//Decrement  
+       L    MW10
+       L    -1
+       +I
+       T    MW10
+
+//Loop back  
+       L    MW10
+       L    -3
+       MOD
+       T    MW10
+_SUB:  NOP  0
+
+
+
+//////////////  
+// Get Werte//  
+//////////////  
+       L    MW10
+       L    0
+       ==I
+       =    M0.0
+       SPBN __0
+       L    T#1S
+       T    MD12
+__0:   NOP  0
+
+       L    MW10
+       L    1
+       ==I
+       SPBN __1
+       L    T#250MS                      //2 HZ   
+       T    MD12
+__1:   NOP  0
+
+       L    MW10
+       L    2
+       ==I
+       SPBN __2
+       L    T#1S                         //0.5 HZ    
+       T    MD12
+__2:   NOP  0
+
+
+
+       CALL FB       10,DB1
+         Impulsdauer:=MD12
+         Pausendauer:=MD12
+         Timer1:=T0
+         Timer2:=T1
+         Q:=M0.1
+         NOT_Q:=M5000.0
+
+//Ausgang 
+       U    M0.1
+       UN   M0.0
+       =    A0.0
+NETWORK
+TITLE=Waschmaschine
+//{{a}}
+
+//Map Potenziometer [30min , 120 min] 
+       CALL FC      105
+         IN:=PEW256
+         HI_LIM:=1.200000e+02
+         LO_LIM:=3.000000e+01
+         BIPOLAR:=FALSE
+         RET_VAL:=MW500
+         OUT:=MD20
+
+
+//Calc Millis 
+       L    MD20
+       L    6.000000e+01
+       *R
+       L    1.000000e+03
+       *R
+       RND
+       T    MD24
+
+//Millis 2 S5T 
+       CALL FC       40
+         IN:=MD24
+         RET_VAL:=MW28
+
+//Start Timer 
+       U    E1.0
+       L    MW28
+       SV   T        10
+
+//Rotationsdauer 
+       L    T#3S
+       T    LD       10
+
+       CALL FB       10,DB2
+         Impulsdauer:=LD10
+         Pausendauer:=LD10
+         Timer1:=T2
+         Timer2:=T3
+         Q:=M1.0
+         NOT_Q:=M1.1
+          
+//Ausgänge 
+       U    M1.0
+       U    T        10
+       =    A1.0
+
+       U    M1.1
+       U    T        10
+       =    A1.1
+
+       U    T        10
+       =    A1.2
+NETWORK
+TITLE= 
+//{{a}}
+
+//Fragen 
+
+//Was ist der Unterschied zwischen einem DB und einem DI?  
+
+// Ein Global-Datenbaustein ist "global" zugänglich, das heißt, dass man aus jeder Funktion bzw. jedem Baustein 
+//darauf zugreifen kann
+//Ein Instanz-Datenbaustein gehört immer zu einem Funktionsbaustein, er ist eine Instanz des Funktionsbausteins  
+//und speichert dessen Lokaldaten.  Ein Funktionsbaustein kann mehrere Instanz-Datenbausteine haben, dadurch kann ein  
+//Funktionsbaustein (verschiedene) Daten die in den Instanz-Datenbausteinen gespeichert sind auf die gleiche  
+//Art und Weise verarbeiten
+
+
+//Wann ist es „besser“, FC zu verwenden, wann hingegen FB?  
+
+//Immer wenn eine Funktion Werte aus früheren Durchgängen benötigt, ist es sinnvoll einen Funktionsbaustein zu verwenden, da 
+//diser seine benötigten Daten selbst speichert/verwaltet. Anderenfalls müsste der Benutzer für jeden Funktionsaufruf  
+//dessen benötigten Variabeln einzeln verwalten und der Funktion als Input übergeben. Mit einem FB kümmert sich die Funktion 
+//selbst um seine Datenverwaltung indem sie die benötigten Werte selbstständig aus einem zugehörigen Instanz-DatenBaustein  
+//bezieht bzw. sie dort abspeichert.
+END_ORGANIZATION_BLOCK

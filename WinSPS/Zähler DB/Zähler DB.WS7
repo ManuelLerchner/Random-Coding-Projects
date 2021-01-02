@@ -1,0 +1,11 @@
+[PrjV2]
+Kennung=WS7V2
+iAktivesUnterprojekt=0
+bSimulatorAktiv=1
+ExternWeg=0
+LetzteAenderungTicks=293963369
+LetzteAenderungDatum=07.10.2020
+LetzteAenderungUhrzeit=20:08:16
+WinPLC7-Version=V6.05
+[UPrj]
+P0=ZÄHLER DB\ZÄHLER DB.PRJ

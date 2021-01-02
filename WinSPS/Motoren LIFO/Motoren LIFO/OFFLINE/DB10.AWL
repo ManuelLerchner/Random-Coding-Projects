@@ -1,0 +1,34 @@
+//{{V2}}
+DATA_BLOCK DB10
+
+AUTHOR:mh
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+       STRUCT 
+         L0:INT 
+       L1:INT 
+       L2:INT 
+       L3:INT 
+       L4:INT 
+       L5:INT 
+       L6:INT 
+       L7:INT 
+       L8:INT 
+       L9:INT 
+       END_STRUCT 
+BEGIN
+
+       L0:=0
+       L1:=0
+       L2:=0
+       L3:=0
+       L4:=0
+       L5:=0
+       L6:=0
+       L7:=0
+       L8:=0
+       L9:=0
+END_DATA_BLOCK

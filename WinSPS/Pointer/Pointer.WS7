@@ -1,0 +1,11 @@
+[PrjV2]
+Kennung=WS7V2
+iAktivesUnterprojekt=0
+bSimulatorAktiv=1
+ExternWeg=0
+LetzteAenderungTicks=157865201
+LetzteAenderungDatum=24.11.2020
+LetzteAenderungUhrzeit=12:24:55
+WinPLC7-Version=V6.05
+[UPrj]
+P0=POINTER\POINTER.PRJ

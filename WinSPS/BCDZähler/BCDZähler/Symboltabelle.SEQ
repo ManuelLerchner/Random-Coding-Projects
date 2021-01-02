@@ -1,0 +1,5 @@
+Impuls500ms	M    0.0	BOOL	
+zahl	MW    10	WORD	
+ZehnerPos	MW    12	WORD	
+EinerPos	MW    14	WORD	
+zahlBCD	MW    16	WORD	

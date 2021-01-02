@@ -1,0 +1,16 @@
+LichterKette +	E    0.0	BOOL	
+LichterKette -	E    0.1	BOOL	
+LichterKette Status	MW    10	S5TIME	
+LichterKette Dauer	MD    12	DWORD	
+LichterKette Aus	M    0.0	BOOL	
+LichterKette State	M    0.1	BOOL	
+LichterKette Ausgang	A    0.0	BOOL	
+Waschmaschine Start	E    1.0	BOOL	
+Waschmaschine Zeit min	MD    20	DWORD	
+Waschmaschine Zeit mil	MD    24	DWORD	
+Waschmaschine Zeit S5T	MW    28	WORD	
+TrommelRechtslaufState	M    1.0	BOOL	
+TrommelLinkslaufState	M    1.1	BOOL	
+Türverriegelt	A    1.2	BOOL	
+Rechtslauf	A    1.0	BOOL	
+Linkslauf	A    1.1	BOOL	

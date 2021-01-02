@@ -1,0 +1,7 @@
+Now	MW  1000	INT	
+Prev	MW  1002	INT	
+PrevPrev	MW  1004	INT	
+average	MD  2000	REAL	
+meter_pro_sekunde	MD  2004	REAL	
+value	PAW  256	WORD	
+km_pro_sekunde	MD  2008	DWORD	

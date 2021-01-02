@@ -1,0 +1,118 @@
+//{{V2}}
+ORGANIZATION_BLOCK OB1
+TITLE= "Zyklisches Hauptprogramm"
+
+
+AUTHOR:nb
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+VAR_TEMP
+       OB1_EV_CLASS:BYTE //Bits 0-3 = 1 (Coming event), Bits 4-7 = 1 (Event class 1)
+       OB1_SCAN_1:BYTE //1 (Cold restart scan 1 of OB 1), 3 (Scan 2-n of OB 1)
+       OB1_PRIORITY:BYTE //1 (Priority of 1 is lowest)
+       OB1_OB_NUMBR:BYTE //1 (Organization block 1, OB1)
+       OB1_RESERVED_1:BYTE //Reserved for system
+       OB1_RESERVED_2:BYTE //Reserved for system
+       OB1_PREV_CYCLE:INT //Cycle time of previous OB1 scan (milliseconds)
+       OB1_MIN_CYCLE:INT //Minimum cycle time of OB1 (milliseconds)
+       OB1_MAX_CYCLE:INT //Maximum cycle time of OB1 (milliseconds)
+       OB1_DATE_TIME:DATE_AND_TIME //Date and time OB1 started
+END_VAR
+BEGIN
+
+NETWORK
+TITLE= 
+//{{a}}
+
+       CALL FB       10,DB1
+         Pulse:=E0.0
+         Bit0:=A0.0 
+         Bit1:=A0.1 
+         Bit2:=A0.2
+         Reset:=A0.3
+
+
+//reset 
+       U    A         0.3
+       SPBN _res
+       L    0
+       T    MW12
+
+       L    0.000000e+00
+       T    MD104
+
+
+       L    1.000000e+04
+       T    MD112
+
+       L    -1.000000e+04
+       T    MD116
+_res:  NOP  0
+  
+
+       U    E0.0
+       FP   M      1001.0
+       SPBN _002
+
+       CALL FC      105
+         IN:=PEW256
+         HI_LIM:=1.000000e+01
+         LO_LIM:=0.000000e+00
+         BIPOLAR:=FALSE
+         RET_VAL:=MW522
+         OUT:=MD100
+
+//average 
+       L    MD100
+       L    MD104
+       +R
+       T    MD104
+
+       L    1
+       L    MW12
+       +I
+       T    MW12
+
+
+//minval 
+       L    MD100
+       L    MD112
+       <R
+       SPBN _min
+       L    MD100
+       T    MD112
+_min:  NOP  0
+
+
+//maxVal 
+       L    MD100
+       L    MD116
+       >R
+       SPBN _max
+       L    MD100
+       T    MD116
+_max:  NOP  0
+
+
+_002:  NOP  0
+NETWORK
+TITLE= 
+//{{a}}
+
+       L    MD104
+       L    MW12
+       DTR
+       /R
+       T    MD108
+NETWORK
+TITLE= 
+//{{a}}
+
+       L    MD108
+       L    MD112
+       L    MD116
+
+END_ORGANIZATION_BLOCK

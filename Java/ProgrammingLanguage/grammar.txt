@@ -1,0 +1,17 @@
+
+Punkt vor Strich
+
+(1+5)/(5+1*2)
+
+
+5*2+5+(1)
+
+
+
+
+EXPRESSION          :FACTOR ( PLUS|MINUS FACTOR)*
+
+FACTOR              :ATOM ( MUL|DIV ATOM)*
+
+ATOM                : NUMBER
+                    : LPAR  EXPRESSION  RPAR
