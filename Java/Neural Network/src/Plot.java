@@ -1,8 +1,11 @@
-import javax.swing.*;
 import java.awt.*;
 
 
-class Plot extends Component {
+public class Plot extends Component {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     double[][] data;
     int sizeFactor = 1;
     javax.swing.JFrame frame;

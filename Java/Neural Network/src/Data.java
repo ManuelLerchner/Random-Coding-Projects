@@ -1,7 +1,5 @@
-import java.io.IOException;
 
 public class Data {
-
 
     static double[] createXOR() {
         double r1 = Math.round(Math.random());
@@ -14,14 +12,13 @@ public class Data {
 
         int result = c ? 1 : 0;
 
-        return new double[]{r1, r2, result};
+        return new double[] { r1, r2, result };
 
     }
 
     static double[] createCIRCLE() {
         double x = Math.random() - 0.5;
         double y = Math.random() - 0.5;
-
 
         double dist = Math.abs(x) + Math.abs(y);
         double dist2 = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
@@ -32,7 +29,6 @@ public class Data {
         boolean onYCenter = Math.abs(x) < 0.025;
         boolean onXCenter = Math.abs(y) < 0.025;
 
-
         double result = onSquare || onCircle || onYCenter || onXCenter ? 1 : 0;
 
         if (Math.abs(x + y) < 0.025) {
@@ -42,8 +38,7 @@ public class Data {
             result = 1;
         }
 
-
-        return new double[]{x + 0.5, y + 0.5, result};
+        return new double[] { x + 0.5, y + 0.5, result };
 
     }
 
@@ -51,10 +46,9 @@ public class Data {
         float x = (float) Math.random();
         float y = (float) Math.random();
 
-
         float result = (x + y) / 2;
 
-        return new float[]{x, y, result};
+        return new float[] { x, y, result };
 
     }
 
@@ -64,8 +58,7 @@ public class Data {
         double[] inp = c.training_set[r].inputs;
         double[] out = c.training_set[r].outputs;
 
-        return new double[][]{inp, out};
+        return new double[][] { inp, out };
 
     }
 }
-

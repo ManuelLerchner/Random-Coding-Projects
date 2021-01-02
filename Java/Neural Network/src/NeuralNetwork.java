@@ -22,9 +22,9 @@ public class NeuralNetwork {
         Date today = Calendar.getInstance().getTime();
         String todayAsString = df.format(today);
 
-        String Path = "/Users/Manuel/Documents/Java/IdeaProjects/Neural Network/Images/" + todayAsString;
-
+        String Path = "/Users/Manuel/Documents/Coding Projects/Java/Neural Network/Images/" + todayAsString;
         Path path = Paths.get(Path);
+        
         try {
             Files.createDirectories(path);
         } catch (IOException e) {

@@ -29,7 +29,7 @@ public class VectorMath {
         Random r = new Random();
         for (int i = 0; i < mat.length; i++) {
             for (int j = 0; j < mat[i].length; j++) {
-                mat[i][j] = r.nextGaussian()/5;
+                mat[i][j] = r.nextGaussian() / 5;
             }
 
         }
@@ -48,11 +48,8 @@ public class VectorMath {
     /////////////////////////////////////////////////////
     public static double[][] matmul(double[][] a, double[][] b) {
 
-
         double[][] C = new double[a.length][b.length];
-        b=VectorMath.transpose(b);
-
-
+        b = VectorMath.transpose(b);
 
         for (int i = 0; i < a.length; i++) { // aRow
             for (int k = 0; k < a[0].length; k++) { // aColumn
@@ -66,10 +63,8 @@ public class VectorMath {
         return C;
     }
 
-
     /////////////////////////////////////////////////////
     public static double[][] transpose(double[][] A) {
-
 
         double[][] C = new double[A[0].length][A.length];
         for (int i = 0; i < A.length; i++) {
@@ -82,8 +77,6 @@ public class VectorMath {
 
     /////////////////////////////////////////////////////
     public static double[][] addVec(double[][] A, double[] B) {
-
-
 
         double[][] C = new double[A.length][A[0].length];
         for (int i = 0; i < A.length; i++) {
@@ -101,7 +94,6 @@ public class VectorMath {
         int max = -1;
         float maxVal = -1;
 
-        float[] C = new float[A.length];
         for (int i = 0; i < A.length; i++) {
 
             if (A[i] > maxVal) {
@@ -172,14 +164,14 @@ public class VectorMath {
 
     }
 
-
     ///////////////////////////////////////////////
     public static double relu(double a) {
-        return Math.max(a,0);
+        return Math.max(a, 0);
     }
+
     ///////////////////////////////////////////////
     public static double reluPrime(double a) {
-        return a>0?1:0;
+        return a > 0 ? 1 : 0;
     }
 
     /////////////////////////////////////////////////////
