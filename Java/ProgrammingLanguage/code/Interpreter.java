@@ -1,6 +1,8 @@
+
 public class Interpreter {
 
     Node root;
+    Context context;
 
     public Interpreter(Node root) {
         this.root = root;
@@ -9,18 +11,21 @@ public class Interpreter {
     ////////////////////////////////////////////////////
     ////////////////////////////////////////////////////
 
-    Number interpet() {
-        return visit(root);
+    Number interpet(Context context) {
+        return visit(root, context);
     }
 
     ////////////////////////////////////////////////////
     ////////////////////////////////////////////////////
 
-    Number visit(Node N) {
+    Number visit(Node N, Context context) {
+
         if (N.getClass() == BinOpNode.class) {
-            return visitBinOpNode((BinOpNode) N);
+            return visitBinOpNode((BinOpNode) N, context);
         } else if (N.getClass() == NumberNode.class) {
-            return visitNumberNode((NumberNode) N);
+            return visitNumberNode((NumberNode) N, context);
+        } else if (N.getClass() == VarAssignNode.class) {
+            return visitVarAssignNode((VarAssignNode) N, context);
         }
 
         return null;
@@ -29,14 +34,29 @@ public class Interpreter {
     ////////////////////////////////////////////////////
     ////////////////////////////////////////////////////
 
-    Number visitNumberNode(NumberNode N) {
+    Number visitNumberNode(NumberNode N, Context context) {
+        if (N.isVariable) {
+            return context.get(N.name);
+        }
         return N.Num;
     }
 
     ////////////////////////////////////////////////////
 
-    Number visitBinOpNode(BinOpNode N) {
-        return N.eval(visit(N.Left), N.operation, visit(N.Right));
+    Number visitBinOpNode(BinOpNode N, Context context) {
+        return N.eval(visit(N.Left, context), N.operation, visit(N.Right, context));
+    }
+
+    ////////////////////////////////////////////////////
+
+    Number visitVarAssignNode(VarAssignNode N, Context context) {
+
+        Number val = visit(N.expr, context);
+        String name = N.name;
+
+        context.put(name, val);
+
+        return val;
     }
 
 }

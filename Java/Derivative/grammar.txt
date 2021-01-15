@@ -1,0 +1,23 @@
+
+
+
+expr:   factor (ADD/SUB factor)*    
+
+
+term:  power (MUL/DIV power)*    
+
+factor: PLUS/MINUS factor
+        power
+
+power:  atom (POW atom)*    
+
+
+atom:           number
+                var
+                expression
+                function
+
+
+function:      keyword-RPAR Exression LPAR
+
+

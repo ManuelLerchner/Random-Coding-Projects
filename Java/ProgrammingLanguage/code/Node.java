@@ -5,13 +5,20 @@ public interface Node {
 class NumberNode implements Node {
 
     Number Num;
+    boolean isVariable;
+    String name;
 
     public NumberNode(Number N) {
         this.Num = N;
     }
 
+    public NumberNode(String name) {
+        this.name = name;
+        isVariable = true;
+    }
+
     public String toString() {
-        return "" + Num;
+        return "" + (isVariable == false ? Num : name);
     }
 }
 
@@ -45,5 +52,20 @@ class BinOpNode implements Node {
                 return null;
         }
 
+    }
+}
+
+class VarAssignNode implements Node {
+
+    Node expr;
+    String name;
+
+    public VarAssignNode(String name, Node expr) {
+        this.expr = expr;
+        this.name = name;
+    }
+
+    public String toString() {
+        return "" + expr;
     }
 }

@@ -10,7 +10,7 @@ class GetUserInput {
 
     String get() {
 
-        System.out.println("\nEnter expression:");
+        System.out.print("\nEnter expression:\n>>>  ");
 
         return in.nextLine();
 

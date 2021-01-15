@@ -17,8 +17,13 @@ public class Lexer {
     public LinkedList<Token> interpret() {
 
         while (currentChar != 0) {
+            while (currentChar == ' ') {
+                advance();
+            }
             if (Token.NUMBERS.contains(String.valueOf(currentChar))) {
                 Tokens.add(makeNumber());
+            } else if (Token.LETTERS.contains(String.valueOf(currentChar))) {
+                Tokens.add(makeWord());
             } else {
                 Tokens.add(makeOperator());
             }
@@ -77,12 +82,35 @@ public class Lexer {
             case ')':
                 T = new Token(Token.RPAR);
                 break;
+            case '=':
+                T = new Token(Token.EQ);
+                break;
             default:
                 T = null;
                 break;
         }
         advance();
         return T;
+    }
+
+    Token makeWord() {
+        Token T = null;
+        String word = "";
+        while (Token.LETTERS.contains(String.valueOf(currentChar))) {
+            word += currentChar;
+            advance();
+        }
+
+        if (Token.KEYWORDS.contains(word)) {
+            T = new Token(Token.KEYWORD);
+            T.name = word;
+            return T;
+        }
+
+        T = new Token(Token.IDENTIFIER);
+        T.name = word;
+        return T;
+
     }
 
 }

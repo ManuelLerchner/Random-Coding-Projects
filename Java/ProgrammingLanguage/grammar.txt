@@ -11,7 +11,10 @@ Punkt vor Strich
 
 EXPRESSION          :FACTOR ( PLUS|MINUS FACTOR)*
 
+                    :var Identifier EQ EXPR
+
 FACTOR              :ATOM ( MUL|DIV ATOM)*
 
 ATOM                : NUMBER
                     : LPAR  EXPRESSION  RPAR
+                    : Identifier

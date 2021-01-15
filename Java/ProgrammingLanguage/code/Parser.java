@@ -33,14 +33,34 @@ public class Parser {
     ////////////////////////////////////////////////////
     ////////////////////////////////////////////////////
 
-    Node expression(Token currentToken) {
-        return repeat("factor", new HashSet<String>(Arrays.asList(new String[] { Token.PLUS, Token.MINUS })));
+    Node expression(Token Tok) {
+
+        if (Tok.type.equals(Token.KEYWORD) && Tok.name.equals("var")) {
+
+            advance();
+            Token Identifier = currentToken;
+            advance();
+
+            if (!currentToken.type.equals(Token.EQ)) {
+                return null;
+            }
+            advance();
+
+            Node expr = expression(currentToken);
+
+            return new VarAssignNode(Identifier.name, expr);
+
+        } else {
+
+            return repeat("factor", new HashSet<String>(Arrays.asList(new String[] { Token.PLUS, Token.MINUS })));
+        }
     }
 
     ////////////////////////////////////////////////////
     ////////////////////////////////////////////////////
 
     Node factor(Token currentToken) {
+
         return repeat("atom", new HashSet<String>(Arrays.asList(new String[] { Token.MUL, Token.DIV })));
     }
 
@@ -49,7 +69,7 @@ public class Parser {
 
     Node atom(Token currentToken) {
         Node N = null;
-     
+
         if (new HashSet<String>(Arrays.asList(Token.NUMBER)).contains(currentToken.type)) {
             advance();
             N = new NumberNode(new Number(currentToken.value));
@@ -57,8 +77,10 @@ public class Parser {
             advance();
             N = expression(currentToken);
             advance();
+        } else if (currentToken.type == Token.IDENTIFIER) {
+            N = new NumberNode(currentToken.name);
+            advance();
         }
-
         return N;
     }
 
@@ -86,6 +108,7 @@ public class Parser {
         while (allowedTokens.contains(currentToken.type)) {
             Token operator = currentToken;
             advance();
+
             switch (Function) {
                 case "factor":
                     Right = factor(currentToken);
@@ -96,6 +119,7 @@ public class Parser {
             }
             Left = new BinOpNode(Left, operator, Right);
         }
+
         return Left;
     }
 

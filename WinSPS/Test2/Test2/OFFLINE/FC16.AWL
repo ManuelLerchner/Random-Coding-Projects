@@ -1,0 +1,20 @@
+{{WINSPSPROTECT}}
+FUNCTION FC16                                                                   
+TITLE =                                                                         
+KNOW_HOW_PROTECT                                                                
+AUTHOR:  MHJ
+FAMILY:  IEC                                                                    
+NAME:    I_STRNG                                                                
+VERSION: 1.0                                                                  
+                                                                                
+VAR_INPUT                                                                       
+    I:INT                                                                     
+END_VAR                                                                         
+                                                                                
+VAR_OUTPUT                                                                      
+    RET_VAL:STRING [254]                                                        
+END_VAR                                                                         
+                                                                                
+BEGIN                                                                           
+
+END_FUNCTION                                                                    
