@@ -1,5 +1,0 @@
-class Layer {
-   public:
-    Layer() {
-    }
-};

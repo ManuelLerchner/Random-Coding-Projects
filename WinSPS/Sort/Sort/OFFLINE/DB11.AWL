@@ -1,0 +1,34 @@
+//{{V2}}
+DATA_BLOCK DB11
+
+AUTHOR:mh
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+       STRUCT 
+         b0:INT 
+       b1:INT 
+       b2:INT 
+       b3:INT 
+       b4:INT 
+       b5:INT 
+       b6:INT 
+       b7:INT 
+       b8:INT 
+       b9:INT 
+       END_STRUCT 
+BEGIN
+
+       b0:=1
+       b1:=2
+       b2:=4
+       b3:=6
+       b4:=9
+       b5:=10
+       b6:=10
+       b7:=10
+       b8:=23
+       b9:=103
+END_DATA_BLOCK

@@ -1,0 +1,5 @@
+StackPointer	MD   100	DWORD	
+index	MW    10	WORD	
+push	E    0.0	BOOL	
+pop	E    0.1	BOOL	
+value	MW    12	WORD	

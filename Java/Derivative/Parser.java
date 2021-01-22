@@ -65,15 +65,24 @@ public class Parser {
             N = new VarNode(currentToken.name);
             advance();
         } else if (currentToken.type == Token.KEYWORD) {
+            advance();
             N = function(currentToken);
-            BinOpNode remaining = (BinOpNode) expression(this.currentToken);
+
+           
+            advance();
+            Token op = this.currentToken;
+            advance();
+         
+
+            Node remaining = expression(currentToken);
 
             if (remaining != null) {
-                remaining.Left = N;
-                N = remaining;
+
+                Node out = new BinOpNode(N, op, remaining);
+                N = out;
             }
 
-            advance();
+
         }
 
         return N;
@@ -84,7 +93,7 @@ public class Parser {
 
         Token func = currentToken;
         advance();
-        Node expr = factor(this.currentToken);
+        Node expr = expression(this.currentToken);
         return new FunctionNode(func, expr);
     }
 

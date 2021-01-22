@@ -3,11 +3,20 @@
 #include <iostream>
 using namespace std;
 
-void MaxorMin(int n, double x) {
-    cout << "Type two numbers: ";
-    cin >> n >> x;
+void MaxorMin(int f, int g, int *a, int *b) {
+    int n = 5;
+
+    cout << n << endl;
+
+    *a = n;
+    *b = 2 * n;
 }
 
 int main() {
-    MaxorMin(4, 5);
+    int a;
+    int b;
+    MaxorMin(1, 2, &a, &b);
+
+    cout << a << endl;
+    cout << b << endl;
 }

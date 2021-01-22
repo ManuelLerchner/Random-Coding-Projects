@@ -1,0 +1,149 @@
+//{{V2}}
+ORGANIZATION_BLOCK OB1
+TITLE= "Zyklisches Hauptprogramm"
+
+
+AUTHOR:nb
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+VAR_TEMP
+       OB1_EV_CLASS:BYTE //Bits 0-3 = 1 (Coming event), Bits 4-7 = 1 (Event class 1)
+       OB1_SCAN_1:BYTE //1 (Cold restart scan 1 of OB 1), 3 (Scan 2-n of OB 1)
+       OB1_PRIORITY:BYTE //1 (Priority of 1 is lowest)
+       OB1_OB_NUMBR:BYTE //1 (Organization block 1, OB1)
+       OB1_RESERVED_1:BYTE //Reserved for system
+       OB1_RESERVED_2:BYTE //Reserved for system
+       OB1_PREV_CYCLE:INT //Cycle time of previous OB1 scan (milliseconds)
+       OB1_MIN_CYCLE:INT //Minimum cycle time of OB1 (milliseconds)
+       OB1_MAX_CYCLE:INT //Maximum cycle time of OB1 (milliseconds)
+       OB1_DATE_TIME:DATE_AND_TIME //Date and time OB1 started
+END_VAR
+BEGIN
+
+NETWORK
+TITLE= 
+//{{a}}
+
+       U    E         0.0
+       FP   M      1000.0
+       SPBN copy
+
+       L    0
+       T    LW       50
+
+
+
+for:   NOP  0
+
+       L    LW       50
+       L    P#        2.0
+       *I
+       T    MD         100
+
+
+
+       AUF  DB       10
+       L    DBW [MD100]
+
+       AUF  DB       11
+       T    DBW [MD100]
+
+       L    LW       50
+       L    1
+       +I
+       T    LW       50
+
+       L    LW       50
+       L    10
+       <I
+       SPB  for
+
+copy:  NOP  0
+NETWORK
+TITLE= 
+//{{a}}
+
+       U    E0.1
+       FP   M      1000.1
+       SPBN sort
+
+       L    10
+       T    MW64
+
+       S    M0.0
+
+sort:  NOP  0
+
+
+       U    M0.0
+       SPBN sorE
+
+       L    1
+       T    MW60
+
+
+for1:  NOP  0
+
+       L    MW60
+       L    1 
+       -I 
+       T    MW62
+
+
+       L    MW60
+       L    P#        2.0
+       *I
+       T    LD       10
+
+       L    MW62
+       L    P#        2.0
+       *I
+       T    LD       14
+
+
+
+       AUF  DB       11
+       L    DBW [LD14]
+       L    DBW [LD10]
+       >I
+       SPBN swp
+
+       L    DBW [LD14]
+       T    LW       60 
+ 
+       L    DBW [LD10]
+       T    DBW [LD14] 
+ 
+       L    LW       60
+       T    DBW [LD10] 
+ 
+
+swp:   NOP  0
+
+       L    MW60
+       L    1
+       +I
+       T    MW60
+
+       L    MW60
+       L    MW64
+       <I
+       SPB  for1
+
+
+       L    MW64
+       L    1
+       -I
+       T    MW64
+
+       L    MW64
+       L    0
+       ==I
+       R    M0.0
+
+
+sorE:  NOP  0
+END_ORGANIZATION_BLOCK

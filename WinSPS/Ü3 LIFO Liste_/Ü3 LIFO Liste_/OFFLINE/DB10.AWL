@@ -1,0 +1,30 @@
+//{{V2}}
+DATA_BLOCK DB10
+
+AUTHOR:mh
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+       STRUCT 
+         b0:REAL 
+       b1:REAL 
+       b2:REAL 
+       b3:REAL 
+       b4:REAL 
+       b5:REAL 
+       b6:REAL 
+       b7:REAL 
+       END_STRUCT 
+BEGIN
+
+       b0:=1.000000e+02
+       b1:=1.000000e+02
+       b2:=1.000000e+02
+       b3:=1.000000e+02
+       b4:=1.000000e+02
+       b5:=1.000000e+02
+       b6:=1.000000e+02
+       b7:=-5.000000e+01
+END_DATA_BLOCK

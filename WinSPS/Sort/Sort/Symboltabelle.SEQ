@@ -1,0 +1,7 @@
+Copy	E    0.0	BOOL	
+PointerCopy	MD   100	DWORD	
+i	MW    60	WORD	
+iPrev	MW    62	WORD	
+j	MW    64	WORD	
+Sort	E    0.1	BOOL	
+SortEnable	M    0.0	BOOL	

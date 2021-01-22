@@ -4,27 +4,48 @@ class Derivative {
 
     public static void main(String[] args) {
 
-        String test = "sin(x^2)";
+        String test = "e^(x^2+1/x)";
 
         parse(test);
 
     }
 
     static void parse(String text) {
+
         Lexer L = new Lexer(text);
         L.interprete();
-        //printTokens(L.Tokens);
+        // printTokens(L.Tokens);
 
         Parser P = new Parser(L.Tokens);
         Node res = P.parse();
 
+        System.out.println("function");
+        System.out.println(text);
+        System.out.println(res);
+
+        Simplifier SI = new Simplifier(res);
+        res = SI.simplify();
+
+        System.out.println(res + "\n");
+
         Analyzer A = new Analyzer(res, "x");
         Node deriv = A.analyze();
 
-        System.out.println("function");
-        System.out.println(res + "\n");
         System.out.println("deriv");
-        System.out.println(deriv);
+        System.out.println(deriv + "\n");
+
+        Simplifier S = new Simplifier(deriv);
+
+        Node simpified = S.simplify();
+
+        S = new Simplifier(simpified);
+
+        simpified = S.simplify();
+
+        System.out.println("simplified");
+        System.out.println(simpified);
+
+        System.out.println(simpified.prettyPrint());
 
     }
 

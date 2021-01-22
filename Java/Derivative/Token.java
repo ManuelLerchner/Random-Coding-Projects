@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Token {
 
@@ -20,6 +21,18 @@ public class Token {
     static final String operators = "+-*/()^";
 
     static final ArrayList<String> keywords = new ArrayList<String>(Arrays.asList("sin", "cos", "tan", "sqrt", "ln"));
+
+    static final HashMap<String, String> PrettyPrintTable = new HashMap<String, String>() {
+        {
+            put(MUL, "*");
+            put(DIV, "/");
+            put(PLUS, "+");
+            put(MINUS, "-");
+            put(POW, "^");
+            put(LPAR, "(");
+            put(RPAR, ")");
+        }
+    };
 
     String type;
     String name;
@@ -47,5 +60,9 @@ public class Token {
 
     public String toString() {
         return type + (valueSet ? ": " + value : (nameSet ? ": " + name : ""));
+    }
+
+    public String prettyPrint() {
+        return PrettyPrintTable.get(type);
     }
 }

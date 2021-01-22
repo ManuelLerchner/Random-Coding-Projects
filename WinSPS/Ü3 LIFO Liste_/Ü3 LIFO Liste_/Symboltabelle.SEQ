@@ -1,0 +1,7 @@
+Counter	MD    10	DWORD	
+PointerAnalogIN	MD   100	DWORD	
+currVal	MD   104	DWORD	
+PointerList	MD   108	DWORD	
+PointerAusgang	MD   112	DWORD	
+SumVal	MD   116	DWORD	
+AnzahlFrost	MW    20	WORD	
