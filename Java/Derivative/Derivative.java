@@ -4,7 +4,7 @@ class Derivative {
 
     public static void main(String[] args) {
 
-        String test = "e^(x^2+1/x)";
+        String test = "3*(x-2)^3";
 
         parse(test);
 

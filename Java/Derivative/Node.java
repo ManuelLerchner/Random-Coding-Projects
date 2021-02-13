@@ -161,7 +161,7 @@ class BinOpNode implements Node {
             }
             return "(" + Left.prettyPrint() + op.prettyPrint() + Right.prettyPrint() + ")";
         }
-        return "(" + Left.prettyPrint() + op.prettyPrint() + Right.prettyPrint() + ")";
+        return "("+ Left.prettyPrint() + op.prettyPrint() + Right.prettyPrint() + ")";
     }
 
     public boolean isStatic(String var) {
