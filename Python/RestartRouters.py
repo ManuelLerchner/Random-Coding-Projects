@@ -12,13 +12,13 @@ twait = 0.5
 PATH = "C:\Program Files (x86)\chromedriver.exe"
 options = Options()
 options.add_argument('--log-level=3')
-options.add_argument("--headless")
+#options.add_argument("--headless")
 driver = webdriver.Chrome(PATH, options=options)
 
 
 # Credentials Dictionary
 CredentialsDict = {}
-for row in open("Data/routerConf.dat", 'r'):
+for row in open("C:/Users/Manuel/Documents/Coding Projects/Python/Data/routerConf.dat", 'r'):
     values = row.split(":")
     CredentialsDict.update({values[0]: (values[1].rstrip()).strip()})
 
@@ -347,11 +347,11 @@ Network Layout:
 
 print(networkLayout+"\n")
 
-restartTPLink_11()
 restartTPLink_10()
+restartTPLink_11()
 
-restartTPLink_04()
 restartTPLink_03()
+restartTPLink_04()
 
 restartGenexis_01()
 restartTPLink_02()
