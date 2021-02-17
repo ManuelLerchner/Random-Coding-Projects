@@ -17,5 +17,9 @@ class DynamicArray {
         L.add(8);
 
         L.print();
+
+    
+
+        L.print();
     }
 }

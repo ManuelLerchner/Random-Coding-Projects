@@ -16,13 +16,6 @@ public class ArrayList<T> {
         index++;
     }
 
-    void remove(int idx) {
-        if (index == size) {
-            createNew(2 * size);
-        }
-        arr[index] = val;
-        index++;
-    }
 
     void createNew(int newSize) {
 

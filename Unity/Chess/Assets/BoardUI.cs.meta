@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7bf714a98c45c6e40aac107c9787193f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - WhiteTile: {fileID: 5970466352569312381, guid: a06103e251bde03479e8b472a3123db3,
+      type: 3}
+  - BlackTile: {fileID: 5970466352569312381, guid: 45842f1707efb8f4eb734694e3f75a95,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
