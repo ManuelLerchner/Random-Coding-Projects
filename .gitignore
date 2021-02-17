@@ -2,3 +2,6 @@ serverside/
 config.php
 combined.php
 wol.php
+routerConf.dat
+Library/
+[Ll]ibrary/
