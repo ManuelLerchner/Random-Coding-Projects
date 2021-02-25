@@ -24,7 +24,7 @@ END_VAR
 BEGIN
 
 NETWORK
-TITLE= 
+TITLE=
 //{{a}}
 
        U    E         0.0
@@ -63,7 +63,7 @@ for:   NOP  0
 
 copy:  NOP  0
 NETWORK
-TITLE= 
+TITLE=
 //{{a}}
 
        U    E0.1

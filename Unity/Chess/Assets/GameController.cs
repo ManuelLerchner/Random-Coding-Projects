@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Chess.Game {
-    public class GameController : MonoBehaviour {
+using System;
 
-        public Board Board;
-        void Start() {
+public class GameController : MonoBehaviour {
 
 
-        }
+    BoardUI BoardUI;
 
 
-        void Update() {
-
-        }
+    void Start() {
+        BoardUI = gameObject.GetComponent<BoardUI>();
     }
+
+
+    void Update() {
+
+    }
+
+
 }

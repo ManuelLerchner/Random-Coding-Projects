@@ -204,7 +204,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2054575727
+--- !u!1 &642315813
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -212,36 +212,55 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2054575729}
-  - component: {fileID: 2054575728}
-  - component: {fileID: 2054575730}
-  - component: {fileID: 2054575731}
+  - component: {fileID: 642315816}
+  - component: {fileID: 642315815}
+  - component: {fileID: 642315814}
+  - component: {fileID: 642315818}
+  - component: {fileID: 642315819}
+  - component: {fileID: 642315817}
   m_Layer: 0
-  m_Name: GameController
+  m_Name: Chess
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2054575728
+--- !u!114 &642315814
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2054575727}
+  m_GameObject: {fileID: 642315813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bf714a98c45c6e40aac107c9787193f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colWhite: {r: 0.6981132, g: 0.58766097, b: 0.5367569, a: 0}
+  colBlack: {r: 0.41509432, g: 0.17193012, b: 0.12726949, a: 0}
+  colBackground: {r: 0, g: 0, b: 0, a: 0}
+  colGreen: {r: 0.28926703, g: 0.6792453, b: 0.08009967, a: 0}
+  colPrecomputed: {r: 0.6886792, g: 0.022739422, b: 0.022739422, a: 0}
+--- !u!114 &642315815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642315813}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa98991967d197948ba8d97ae0ad578e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &2054575729
+--- !u!4 &642315816
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2054575727}
+  m_GameObject: {fileID: 642315813}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -249,42 +268,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2054575730
+--- !u!114 &642315817
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2054575727}
+  m_GameObject: {fileID: 642315813}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bf714a98c45c6e40aac107c9787193f, type: 3}
+  m_Script: {fileID: 11500000, guid: a4d0e555926528c439efa72a4df4ca56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightCol: {r: 0.5849056, g: 0.37433305, b: 0.35039157, a: 0}
-  darkCol: {r: 1, g: 1, b: 1, a: 0}
-  Sprites: {fileID: 2054575731}
---- !u!114 &2054575731
+  BauerW: {fileID: 21300000, guid: f009597a9b950234aa630a6a96768596, type: 3}
+  TurmW: {fileID: 21300000, guid: 172d65f9f3f6eb547becf0a128a91733, type: 3}
+  "L\xE4uferW": {fileID: 21300000, guid: 7a9a14906ca320347b193647569cf391, type: 3}
+  PferdW: {fileID: 21300000, guid: 232271cd27666194dbee36b154dc40bd, type: 3}
+  DameW: {fileID: 21300000, guid: 7ba0946792ec1a44f8eb2b512abca056, type: 3}
+  "K\xF6nigW": {fileID: 21300000, guid: 393c3f90c24f6f4468b2580dac832d33, type: 3}
+  BauerS: {fileID: 21300000, guid: 6868c9eab68eeed4995f30331f36b00d, type: 3}
+  TurmS: {fileID: 21300000, guid: 404953dd2cb8d6d43860d0252b9abba9, type: 3}
+  "L\xE4uferS": {fileID: 21300000, guid: a8cda4bc7ac988f4ea0ba02b5fbb01bc, type: 3}
+  PferdS: {fileID: 21300000, guid: a28987c4e5fb8674e98bc11bc78d7bf5, type: 3}
+  DameS: {fileID: 21300000, guid: eb95e527ab9d0e8429b1123a5f3866ac, type: 3}
+  "K\xF6nigS": {fileID: 21300000, guid: 758bb3b3b927d074294ad0d4ddac2920, type: 3}
+--- !u!114 &642315818
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2054575727}
+  m_GameObject: {fileID: 642315813}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c3195e2ddf509a4cbca77eca5e8722d, type: 3}
+  m_Script: {fileID: 11500000, guid: f608fd496a3d93e45bc2634be35b1785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pawnW: {fileID: 21300000, guid: f009597a9b950234aa630a6a96768596, type: 3}
-  rookW: {fileID: 21300000, guid: 172d65f9f3f6eb547becf0a128a91733, type: 3}
-  knightW: {fileID: 21300000, guid: 232271cd27666194dbee36b154dc40bd, type: 3}
-  bishopW: {fileID: 21300000, guid: 7a9a14906ca320347b193647569cf391, type: 3}
-  queenW: {fileID: 21300000, guid: 7ba0946792ec1a44f8eb2b512abca056, type: 3}
-  kingW: {fileID: 21300000, guid: 393c3f90c24f6f4468b2580dac832d33, type: 3}
-  pawnS: {fileID: 21300000, guid: 6868c9eab68eeed4995f30331f36b00d, type: 3}
-  rookS: {fileID: 21300000, guid: 404953dd2cb8d6d43860d0252b9abba9, type: 3}
-  knightS: {fileID: 21300000, guid: a28987c4e5fb8674e98bc11bc78d7bf5, type: 3}
-  bishopS: {fileID: 21300000, guid: a8cda4bc7ac988f4ea0ba02b5fbb01bc, type: 3}
-  queenS: {fileID: 21300000, guid: eb95e527ab9d0e8429b1123a5f3866ac, type: 3}
-  kingS: {fileID: 21300000, guid: 758bb3b3b927d074294ad0d4ddac2920, type: 3}
+  playerTurn: White
+--- !u!114 &642315819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642315813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd80c772b196d814a877f97f36a9fcd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
