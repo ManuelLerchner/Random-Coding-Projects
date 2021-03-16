@@ -16,13 +16,14 @@ public class Token {
     static final String VAR = "VAR";
     static final String NUMBER = "NUMBER";
 
-    static final String numbers = "01234567890.";
-    static final String letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    static final String operators = "+-*/()^";
+    static final String NUMBERS = "01234567890.";
+    static final String LETTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    static final String OPERATORS = "+-*/()^";
 
-    static final ArrayList<String> keywords = new ArrayList<String>(Arrays.asList("sin", "cos", "tan", "sqrt", "ln"));
+    static final ArrayList<String> keywords = new ArrayList<>(Arrays.asList("sin", "cos", "tan", "sqrt", "ln"));
 
-    static final HashMap<String, String> PrettyPrintTable = new HashMap<String, String>() {
+   HashMap<String, String> prettyPrintTable = new HashMap<>() {
+        private static final long serialVersionUID = 1L;
         {
             put(MUL, "*");
             put(DIV, "/");
@@ -59,10 +60,10 @@ public class Token {
     }
 
     public String toString() {
-        return type + (valueSet ? ": " + value : (nameSet ? ": " + name : ""));
+        return type + (valueSet ? ": " + value : name);
     }
 
     public String prettyPrint() {
-        return PrettyPrintTable.get(type);
+        return prettyPrintTable.get(type);
     }
 }

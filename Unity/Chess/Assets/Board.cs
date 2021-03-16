@@ -15,8 +15,6 @@ public class Board : MonoBehaviour {
     public String playerTurn = "White";
     public Piece pieceSelected;
 
-
-
     public List<Move> illegalMoves = new List<Move>();
 
 
@@ -24,6 +22,7 @@ public class Board : MonoBehaviour {
     bool check;
 
     void Start() {
+
         GS = gameObject.GetComponent<LoadSprites>();
         String standard = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -0 1";
         loadGameStatefromFENString(standard);

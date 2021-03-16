@@ -1,0 +1,11 @@
+[PrjV2]
+Kennung=WS7V2
+iAktivesUnterprojekt=0
+bSimulatorAktiv=1
+ExternWeg=0
+LetzteAenderungTicks=24957908
+LetzteAenderungDatum=12.03.2021
+LetzteAenderungUhrzeit=14:57:46
+WinPLC7-Version=V6.05
+[UPrj]
+P0=INT TO BCD\INT TO BCD.PRJ

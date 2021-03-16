@@ -20,11 +20,11 @@ $.ajax({
             alert("failed");
         }
     }
-}); 
+});
 
 
-function println(){
+function println() {
     var p = document.getElementById("abc");
 
-    p.innerHTML="213"
+    p.innerHTML = "213"
 }

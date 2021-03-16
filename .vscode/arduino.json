@@ -1,0 +1,13 @@
+{
+    "programmer": "ArduinoISP",
+    "board": "arduino:avr:uno",
+    "sketch": "Master.ino",
+    "defines": [
+        "ARDUINO=100",
+        "ARDUINO_ARCH_SAMD",
+        "ARDUINO_SAMD_MKRWAN1300",
+        "__SAMD21G18A__",
+        "BOARD_ID_arduino_mkrwan1300",
+        "_VARIANT_ARDUINO_MKRWAN1300_"
+    ]
+}

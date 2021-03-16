@@ -63,9 +63,6 @@ public class Interact : MonoBehaviour {
 
             //Place Piece on Empty spot
             if (Board.pieceSelected != null) {
-
-
-
                 if (Board.getPieceAt(BoardPos.x, BoardPos.y) == null) {
                     Move Move = new Move(Board, Board.pieceSelected, BoardPos);
 
