@@ -1,0 +1,37 @@
+
+Grundfläche zeichnen:
+	Länge eingeben: z.B:  1m
+
+	Linksklick auf Punkt: Auswählen
+
+	Richtung auswählen, und mit Linksklick bestätigen
+
+
+
+
+Gitter:
+
+	Bewegen:
+		Irgendeine Taste Drücken:
+		Maus ziehen
+
+	Rotieren:
+		Irgendeine Taste Drücken:
+		Mausrad scrollen
+
+	Fliesenlänge ändern:
+		gewünschte Länge eingeben
+		mit Taste 'x' bzw 'y' Fliesenlänge ändern
+
+
+
+Rechtwinklig zeichnen ein/ausschalten:
+	Taste 'o'
+
+
+Gitter ein/ausblenden:
+	Taste 'g'
+
+
+Gittereinstellungen zurücksetzen:
+	Taste 'r'
