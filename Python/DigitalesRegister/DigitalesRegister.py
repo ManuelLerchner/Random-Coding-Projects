@@ -38,13 +38,13 @@ while True:
         # login("wegfel")
 
         # login("vopale")
-        # login("grusim")
+        login("grusim")
 
         # login("nökthe")
-        #login("fieluk")
+        login("fieluk")
 
-        # login("siejon")
-        # login("aueman")
+        login("siejon")
+        login("aueman")
 
         # login("zingab")
         # login("kirmor")
