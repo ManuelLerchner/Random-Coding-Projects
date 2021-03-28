@@ -5,6 +5,7 @@ wol.php
 routerConf.dat
 Library/
 [Ll]ibrary/
+apikeys.json
 
 
 .vscode/*

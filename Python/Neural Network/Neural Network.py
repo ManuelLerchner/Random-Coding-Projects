@@ -10,7 +10,8 @@ class Layer:
     def __init__(self, upperNetwork, i):
         self.NN = upperNetwork
         self.index = i
-        self.weights = np.random.randn(upperNetwork.NetworkLayout[i - 1], upperNetwork.NetworkLayout[i])
+        self.weights = np.random.randn(
+            upperNetwork.NetworkLayout[i - 1], upperNetwork.NetworkLayout[i])
         self.bias = np.zeros(upperNetwork.NetworkLayout[i])
 
     def forward(self, inputs, func):
@@ -22,10 +23,13 @@ class Layer:
         Nabla_aC = np.subtract(self.a, desired)
         # Nabla_aC = [(self.a[i] - desired[i]) / (self.a[i] - self.a[i] * self.a[i]) for i in range(len(desired))]
         sigmaPrime = sigmoidPrime(self.z)
+
         self.deltaL = np.multiply(Nabla_aC, sigmaPrime)
 
     def backwards(self):
-        error = np.transpose(np.dot(NN.Layers[self.index + 1].weights, np.transpose(NN.Layers[self.index + 1].deltaL)))
+        print()
+        error = np.transpose(np.dot(
+            NN.Layers[self.index + 1].weights, np.transpose(NN.Layers[self.index + 1].deltaL)))
         sigmaPrime = sigmoidPrime(self.z)
         self.deltaL = np.multiply(error, sigmaPrime)
 
@@ -73,8 +77,10 @@ class Network:
                 for k in range(0, self.NetworkLayout[l - 1]):
                     delC_w = 0
                     for batch in range(batchSize):
-                        delC_w += self.Layers[l - 1].a[batch][k] * self.Layers[l].deltaL[batch][j]
-                        self.Layers[l].weights[k][j] -= delC_w * self.learningRate
+                        delC_w += self.Layers[l - 1].a[batch][k] * \
+                            self.Layers[l].deltaL[batch][j]
+                        self.Layers[l].weights[k][j] -= delC_w * \
+                            self.learningRate
 
             delC_b = 0
             for batch in range(batchSize):
