@@ -1,0 +1,11 @@
+
+
+expr: term ((PLUS|MINUS) term)*
+
+term: factor (MULT | DIV factor)*
+
+factor: (PLUS | MINUS)* atom
+
+
+atom:       NUMBER
+            LPAR EXPR RPAR

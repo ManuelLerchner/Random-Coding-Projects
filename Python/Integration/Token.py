@@ -70,6 +70,6 @@ class Token:
         self.type = type
         self.value = value
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         val = self.value if self.value != None else ""
-        return f"{self.type} {val}"
+        return f"{self.type}{val}"

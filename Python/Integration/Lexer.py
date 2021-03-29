@@ -9,6 +9,6 @@ class Lexer:
 
     def evaluate(self):
 
-        Tokens=Token.tokify(self.expression)
+        self.Tokens = Token.tokify(self.expression)
 
-        print(Tokens)
+        
