@@ -54,6 +54,12 @@ class UnOpNode(Node):
     def __repr__(self):
         return str(self.op) + " " + str(self.Right)
 
+    def simplyfy(self):
+        if(self.op.type == Token.Plus):
+            return NumberNode(self.Right.val)
+        elif(self.op.type == Token.Minus):
+            return NumberNode(-self.Right.val)
+
 
 class NumberNode(Node):
     def __init__(self, val):
