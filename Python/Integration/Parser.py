@@ -8,7 +8,6 @@ class Parser:
         self.Token = Token
         self.count = -1
         self.currToken = None
-
         self.advance()
 
     def advance(self):
@@ -34,7 +33,11 @@ class Parser:
             self.advance()
             Atom = self.makeFactor(self.currToken)
             return UnOpNode(Op, Atom)
-        return self.makeAtom(self.currToken)
+        return self.makePower(self.currToken)
+
+    def makePower(self, tok):
+        Atom = self.repeat(self.makeAtom, [Token.Pow])
+        return Atom
 
     def makeAtom(self, tok):
         N = None
@@ -49,15 +52,16 @@ class Parser:
             self.advance()
             N = self.makeExpression(tok.value)
             self.advance()
+
         return N
 
     def repeat(self, Function, allowedTokens):
         Left = Function(self.currToken)
         Right = None
+
         while (self.currToken.type in allowedTokens):
             operator = self.currToken
             self.advance()
-            Right = Function(operator)
+            Right = Function(self.currToken)
             Left = BinOpNode(Left, operator, Right)
-
         return Left

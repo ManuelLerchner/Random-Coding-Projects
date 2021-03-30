@@ -4,8 +4,11 @@ expr: term ((PLUS|MINUS) term)*
 
 term: factor (MULT | DIV factor)*
 
-factor: (PLUS | MINUS)* atom
+factor: (PLUS | MINUS)* power
 
+
+power:  atom (POW atom)*    
 
 atom:       NUMBER
+            VAR
             LPAR EXPR RPAR
