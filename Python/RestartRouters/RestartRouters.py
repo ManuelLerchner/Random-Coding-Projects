@@ -27,6 +27,67 @@ for row in open("C:/Users/Manuel/Documents/Coding Projects/Python/Data/routerCon
 AckMessage = {}
 
 
+def restartTPLink_12():
+    try:
+        global driver
+        print("192.168.0.12 loading...")
+        driver.get("http://192.168.0.12/")
+
+        print("192.168.0.12 loaded")
+
+        # credentials
+
+        WebDriverWait(driver, 20).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, '//*[@id="local-login-pwd"]/div[2]/div[1]/span[2]/input[1]'))
+        ).send_keys(CredentialsDict.get("PasswordTP-Link"))
+
+        # login
+        WebDriverWait(driver, 20).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, '//*[@id="local-login-button"]/div[2]/div[1]/a/span[2]'))
+        ).click()
+
+        print("     logged in")
+
+        # Find System Tools
+        WebDriverWait(driver, 20).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Einstellungen"))
+        ).click()
+        print("     switched to Menu")
+
+    # Find System Tools
+        WebDriverWait(driver, 20).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "System-Tools"))
+        ).click()
+
+        print("     switched to System Menu")
+
+        # Find System Tools
+        WebDriverWait(driver, 20).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "Neustart"))
+        ).click()
+
+        print("     switched to Reboot Menu")
+
+        # Reboot
+        WebDriverWait(driver, 20).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, '//*[@id = "reboot-button"]/div[2]/div[1]/a/span[2]'))
+        ).click()
+
+        WebDriverWait(driver, 20).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, '//*[@id= "global-confirm-btn-ok"]/div[2]/div[1]/a/span[2]'))
+        ).click()
+
+        print("     rebooted ...")
+        Status = {"192.168.0.12": "restarted"}
+    except:
+        Status = {"192.168.0.12": "failed"}
+    AckMessage.update(Status)
+
+
 def restartTPLink_11():
     try:
         global driver
@@ -84,51 +145,47 @@ def restartTPLink_10():
         print("192.168.0.10 loaded")
 
         # credentials
+        WebDriverWait(driver, 20).until(
+            EC.element_to_be_clickable((By.XPATH, '//*[@id="userName"]'))
+        ).send_keys(CredentialsDict.get("UsernameTP-Link"))
 
         WebDriverWait(driver, 20).until(
-            EC.element_to_be_clickable(
-                (By.XPATH, '//*[@id="local-login-pwd"]/div[2]/div[1]/span[2]/input[1]'))
+            EC.element_to_be_clickable((By.XPATH, '//*[@id = "pcPassword"]'))
         ).send_keys(CredentialsDict.get("PasswordTP-Link"))
 
         # login
         WebDriverWait(driver, 20).until(
-            EC.element_to_be_clickable(
-                (By.XPATH, '//*[@id="local-login-button"]/div[2]/div[1]/a/span[2]'))
+            EC.element_to_be_clickable((By.XPATH, '//*[@id="loginBtn"]'))
         ).click()
 
         print("     logged in")
 
+        # Change to Menu
+        driver.switch_to.frame("bottomLeftFrame")
+        time.sleep(twait)
+
         # Find System Tools
         WebDriverWait(driver, 20).until(
-            EC.element_to_be_clickable((By.LINK_TEXT, "Einstellungen"))
+            EC.element_to_be_clickable((By.LINK_TEXT, "System Tools"))
         ).click()
         print("     switched to Menu")
 
-    # Find System Tools
-        WebDriverWait(driver, 20).until(
-            EC.element_to_be_clickable((By.LINK_TEXT, "System-Tools"))
-        ).click()
-
-        print("     switched to System Menu")
-
         # Find System Tools
         WebDriverWait(driver, 20).until(
-            EC.element_to_be_clickable((By.LINK_TEXT, "Neustart"))
+            EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "Reboot"))
         ).click()
 
         print("     switched to Reboot Menu")
 
+        # Change to Main
+        driver.switch_to.parent_frame()
+        driver.switch_to.frame("mainFrame")
+        time.sleep(twait)
+
         # Reboot
-        WebDriverWait(driver, 20).until(
-            EC.element_to_be_clickable(
-                (By.XPATH, '//*[@id = "reboot-button"]/div[2]/div[1]/a/span[2]'))
-        ).click()
+        driver.find_element_by_xpath('//*[@id = "reboot"]').click()
 
-        WebDriverWait(driver, 20).until(
-            EC.element_to_be_clickable(
-                (By.XPATH, '//*[@id= "global-confirm-btn-ok"]/div[2]/div[1]/a/span[2]'))
-        ).click()
-
+        driver.switch_to.alert.accept()
         print("     rebooted ...")
         Status = {"192.168.0.10": "restarted"}
     except:
@@ -193,7 +250,7 @@ def restartTPLink_04():
     AckMessage.update(Status)
 
 
-def restartTPLink_03():
+def restartZyxel_03():
     try:
         global driver
         print("192.168.0.3 loading...")
@@ -203,44 +260,54 @@ def restartTPLink_03():
 
         # credentials
         WebDriverWait(driver, 20).until(
-            EC.element_to_be_clickable((By.XPATH, '//*[@id="userName"]'))
-        ).send_keys(CredentialsDict.get("UsernameTP-Link"))
-
-        WebDriverWait(driver, 20).until(
-            EC.element_to_be_clickable((By.XPATH, '//*[@id = "pcPassword"]'))
-        ).send_keys(CredentialsDict.get("PasswordTP-Link"))
+            EC.element_to_be_clickable((By.XPATH, '//*[@id="LoginPassword"]'))
+        ).send_keys(CredentialsDict.get("PasswordZyxel"))
 
         # login
         WebDriverWait(driver, 20).until(
-            EC.element_to_be_clickable((By.XPATH, '//*[@id="loginBtn"]'))
+            EC.element_to_be_clickable(
+                (By.XPATH, '//*[@id="UI-H01"]/div[6]/ul/li[7]/form/table/tbody/tr[2]/td[4]/div/ul/li/a/span'))
         ).click()
 
         print("     logged in")
 
+        time.sleep(twait*3)
+        # change to expert mode
+        WebDriverWait(driver, 20).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, '//*[@id = "id_ExpertMode"]'))
+        ).click()
+
+        # Find System Tools
+        WebDriverWait(driver, 20).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, '//*[@id="b_maintenance"]/a'))
+        ).click()
+
+        print("     switched to Menu")
+
+        time.sleep(twait)
+
         # Change to Menu
-        driver.switch_to.frame("bottomLeftFrame")
+        driver.switch_to.frame("InfoFrame")
         time.sleep(twait)
 
         # Find System Tools
         WebDriverWait(driver, 20).until(
-            EC.element_to_be_clickable((By.LINK_TEXT, "System Tools"))
-        ).click()
-        print("     switched to Menu")
-
-        # Find System Tools
-        WebDriverWait(driver, 20).until(
-            EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "Reboot"))
+            EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, "Restart"))
         ).click()
 
         print("     switched to Reboot Menu")
 
-        # Change to Main
-        driver.switch_to.parent_frame()
-        driver.switch_to.frame("mainFrame")
+        # Change to Menu
+        driver.switch_to.frame("InfoFrame2")
         time.sleep(twait)
 
         # Reboot
-        driver.find_element_by_xpath('//*[@id = "reboot"]').click()
+        WebDriverWait(driver, 20).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "/html/body/form/div/ul/li[2]/center/input"))
+        ).click()
 
         driver.switch_to.alert.accept()
         print("     rebooted ...")
@@ -383,6 +450,9 @@ Network Layout:
  |                  |
  v                  v
 0.11               0.10
+                    |
+                    v 
+                   0.12                                   
 """
 
 # Restart all Routers
@@ -390,10 +460,11 @@ Network Layout:
 print(networkLayout+"\n")
 
 restartTPLink_11()
-restartTPLink_10()
-
-restartTPLink_03()
 restartTPLink_04()
+
+restartTPLink_12()
+restartTPLink_10()
+restartZyxel_03()
 
 restartGenexis_01()
 restartTPLink_02()

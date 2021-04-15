@@ -6,6 +6,7 @@ routerConf.dat
 Library/
 [Ll]ibrary/
 apikeys.json
+auth.json
 
 
 .vscode/*
