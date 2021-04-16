@@ -2,6 +2,7 @@ from waitress import serve
 from flask import Flask, render_template, request, redirect, session
 from flask.helpers import url_for
 import ServerFunctions
+import logToFile
 
 
 app = Flask(__name__)
@@ -11,16 +12,19 @@ app.config['SECRET_KEY'] = 'e5ac358c-f0gf-11e5-9e39-d35532c10a28'
 @app.route('/')
 @app.route('/index')
 def main():
+    logToFile.log(f"User: {request.remote_addr} connected to 'Main'")
     return render_template("index.html")
 
 
 @app.route('/about')
 def about():
+    logToFile.log(f"User: {request.remote_addr} connected to 'About'")
     return render_template("about.html")
 
 
 @app.route('/controller')
 def controller():
+    logToFile.log(f"User: {request.remote_addr} connected to 'Controller'")
     messagesPC = []
     messagesRelay = []
     colorRelay = ""
@@ -46,6 +50,7 @@ def controller():
 
 @app.route('/notify')
 def notify():
+    logToFile.log(f"User: {request.remote_addr} connected to 'Notify'")
     messages = []
     if(session.get('messagesNotification')):
         messages = session.get('messagesNotification')
@@ -56,6 +61,7 @@ def notify():
 
 @app.route('/handlePost', methods=["POST"])
 def handlePost():
+    logToFile.log(f"User: {request.remote_addr} made Post-Request")
     data = request.form
     URL_Location = request.referrer.split("/")[3]
 

@@ -1,3 +1,4 @@
+"""
 import RPi.GPIO as GPIO
 import time
 import threading
@@ -17,3 +18,4 @@ def closeRelay():
 
     x = threading.Thread(target=worker)
     x.start()
+"""
