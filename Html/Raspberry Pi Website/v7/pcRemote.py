@@ -1,6 +1,7 @@
 import subprocess
 import json
 import logToFile
+import os
 
 # Login Creds
 with open('auth.json') as json_file:
@@ -13,7 +14,7 @@ ip = config.get("PC_IP")
 
 # Commands
 shutdownCommand = rf'net rpc shutdown -t 30 -U {username}%{password} -I {ip}'.split()
-wakeupCommand = "wakeonlan {mac}"
+wakeupCommand = f"wakeonlan {mac}"
 
 
 def shutdown():
@@ -23,7 +24,7 @@ def shutdown():
 
 def wakeUp():
     logToFile.log("PC-WakeUp:")
-    executeCommand(wakeupCommand)
+    runShell(wakeupCommand)
 
 
 def executeCommand(command):
@@ -32,3 +33,7 @@ def executeCommand(command):
         stdout=subprocess.PIPE,
         encoding='UTF8'
     )
+
+
+def runShell(command):
+    os.system(command)
