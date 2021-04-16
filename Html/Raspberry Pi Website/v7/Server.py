@@ -1,6 +1,8 @@
+from waitress import serve
 from flask import Flask, render_template, request, redirect, session
 from flask.helpers import url_for
 import ServerFunctions
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'e5ac358c-f0gf-11e5-9e39-d35532c10a28'
@@ -62,10 +64,9 @@ def handlePost():
     for cookie in cookies:
         session[cookie[0]] = cookie[1]
 
-    print(session)
-
     return redirect(URL_Location)
 
 
 if __name__ == '__main__':
-    app.run()
+    # app.run("192.168.0.100",port=80)
+    serve(app, host="192.168.0.100", port=80)
