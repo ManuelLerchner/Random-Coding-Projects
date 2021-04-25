@@ -9,6 +9,8 @@ apikeys.json
 auth.json
 
 
+*.mp3
+
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -18,3 +20,4 @@ auth.json
 
 # Local History for Visual Studio Code
 .history/
+
