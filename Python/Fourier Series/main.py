@@ -2,16 +2,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-P = 3
+P = 3*np.pi
 x0 = 0
 
-n = 50
+n = 4
 
 
 def f(x):
     x = np.mod(x+x0, P)+x0
 
-    return np.maximum(np.minimum(np.sqrt(x), 2-x), x*x/5)
+    return np.absolute(np.sin(x))
+    # return np.maximum(np.minimum(np.sqrt(x), 2-x), x*x/5)
     # return np.minimum(x, 3-x)
 
 
@@ -48,7 +49,8 @@ def getFreq(x, a, b):
 
 
 a, b = getFourierCoefficient()
-
+print("a", a)
+print("b", b)
 
 # Setup Plot
 
@@ -67,4 +69,5 @@ ax2.plot(x, yFourier)
 
 plt.axis('equal')
 plt.grid()
+
 plt.show()
