@@ -1,0 +1,94 @@
+//{{V2}}
+ORGANIZATION_BLOCK OB1
+TITLE= "Zyklisches Hauptprogramm"
+
+
+AUTHOR:nb
+FAMILY:nb
+NAME:nb
+VERSION:1.0
+
+
+VAR_TEMP
+       OB1_EV_CLASS:BYTE //Bits 0-3 = 1 (Coming event), Bits 4-7 = 1 (Event class 1)
+       OB1_SCAN_1:BYTE //1 (Cold restart scan 1 of OB 1), 3 (Scan 2-n of OB 1)
+       OB1_PRIORITY:BYTE //1 (Priority of 1 is lowest)
+       OB1_OB_NUMBR:BYTE //1 (Organization block 1, OB1)
+       OB1_RESERVED_1:BYTE //Reserved for system
+       OB1_RESERVED_2:BYTE //Reserved for system
+       OB1_PREV_CYCLE:INT //Cycle time of previous OB1 scan (milliseconds)
+       OB1_MIN_CYCLE:INT //Minimum cycle time of OB1 (milliseconds)
+       OB1_MAX_CYCLE:INT //Maximum cycle time of OB1 (milliseconds)
+       OB1_DATE_TIME:DATE_AND_TIME //Date and time OB1 started
+END_VAR
+BEGIN
+
+NETWORK
+TITLE= 
+//{{a}}
+
+       U    E0.0
+       S    M0.0
+
+       S    M0.1
+
+
+
+       U    E0.1
+       R    M0.0
+NETWORK
+TITLE= 
+//{{a}}
+
+       U    E0.3
+       FP   M      1000.0
+       =    M0.3
+
+       U    M0.3
+       UN   M0.0
+       R    M0.1
+
+       U    M0.3
+       U    M0.0
+       L    S5T#5S
+       SA   T         0
+
+// U    "Status"
+       U    M0.1
+       UN   T         0
+       =    A0.1
+NETWORK
+TITLE= 
+//{{a}}
+
+       U    M0.0
+       =    A0.0
+
+
+NETWORK
+TITLE= 
+//{{a}}
+
+       O(
+       U    T         2
+       FN   M      1000.3
+       )
+       O(
+       U    E         0.4
+       FP   M      1000.1
+       )
+
+       L    S5T#2S
+       SA   T         1
+
+       U    T         1
+       FN   M      1000.2
+       L    S5T#1S
+       SA   T         2
+
+       U    T         1
+       =    A         0.3
+
+       U    T         2
+       =    A         0.4
+END_ORGANIZATION_BLOCK

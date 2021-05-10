@@ -50,10 +50,13 @@ boolean ManuellerModus;
 
 int DATE;  // Monatstag [1,31]
 
+String errorLog="";
+
 
 void setup() {
-  size(600, 600);
+  size(800, 600);
   rectMode(CENTER);
+  textAlign(TOP,LEFT);
 
   for (int i=1; i <= ANZAHL_AUSLAESSE; i++) {
     PVector pos=new PVector(width/(ANZAHL_AUSLAESSE+1)*i, height-100);
@@ -67,7 +70,8 @@ void setup() {
 
 void draw() {
   background(51);
-
+  fill(255);
+  text(errorLog, 10, 20);
   if (AnlageEin) {
 
     //Wiederholen
@@ -159,4 +163,6 @@ void draw() {
 
 
   visualizeGraphics();
+
+ //saveFrame("data/image-######.png");
 }

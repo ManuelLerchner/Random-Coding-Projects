@@ -2,9 +2,9 @@
 
 class Duese {
   public:
-    boolean ventilState;
+    boolean ventilState=false;
 
-    color RGBCol = {0, 0, 0};
+    Color RGBCol = {0, 0, 0};
 
     int pinR;
     int pinG;
@@ -15,18 +15,21 @@ class Duese {
       pinR = PWMPins[0];
       pinG = PWMPins[1];
       pinB = PWMPins[2];
+      pinMode(pinR, OUTPUT);
+      pinMode(pinG, OUTPUT);
+      pinMode(pinB, OUTPUT);
       this->pinVentil = pinVentil;
     }
 
 
     void show() {
-      RGBCol = ventilState ? RGBCol : color{0, 0, 0};
+      RGBCol = ventilState ? RGBCol : Color{0, 0, 0};
 
       showRGB(pinR, pinG, pinB, RGBCol);
-      digitalWrite(pinVentil,ventilState);
+      digitalWrite(pinVentil, ventilState);
     }
 
-    void showRGB(int pR, int pG, int pB, color col) {
+    void showRGB(int pR, int pG, int pB, Color col) {
       analogWrite(pR, col.r);
       analogWrite(pG, col.g);
       analogWrite(pB, col.b);

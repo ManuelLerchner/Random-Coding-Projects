@@ -155,5 +155,7 @@ String rightPad(String s, char c, int len) {
 //Error Logger
 void Log(Error E) {
   String time=nf(day(), 2)+"/"+nf(month(), 2)+"/"+year()+" - "+nf(hour(), 2)+":"+nf(minute(), 2)+":"+nf(second(), 2);
-  println(time, " ", rightPad(E.type, ' ', 8), " ", E.text);   //Log to SD-Card?
+  String str=time +" "+rightPad(E.type, ' ', 8)+ " "+ E.text;   //Log to SD-Card?
+  errorLog+=str+"\n";
+  println(str);
 }

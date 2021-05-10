@@ -1,0 +1,8 @@
+Setze Problem	E    0.0	BOOL	
+M_Problem	M    0.0	BOOL	
+Rucksetze Problem	E    0.1	BOOL	
+Fehler	M    0.1	BOOL	
+Quittiere	E    0.3	BOOL	
+F_Quittiere	M    0.3	BOOL	
+Lampe	A    0.1	BOOL	
+Problem	A    0.0	BOOL	

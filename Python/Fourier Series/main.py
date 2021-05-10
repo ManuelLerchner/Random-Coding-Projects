@@ -11,7 +11,7 @@ n = 4
 def f(x):
     x = np.mod(x+x0, P)+x0
 
-    return np.absolute(np.sin(x))
+    return np.where(x < np.pi/2, 4/np.pi*x, 2)
     # return np.maximum(np.minimum(np.sqrt(x), 2-x), x*x/5)
     # return np.minimum(x, 3-x)
 

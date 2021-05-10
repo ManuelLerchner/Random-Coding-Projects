@@ -1,0 +1,11 @@
+[PrjV2]
+Kennung=WS7V2
+iAktivesUnterprojekt=0
+bSimulatorAktiv=1
+ExternWeg=0
+LetzteAenderungTicks=37215528
+LetzteAenderungDatum=08.05.2021
+LetzteAenderungUhrzeit=19:54:32
+WinPLC7-Version=V6.05
+[UPrj]
+P0=TIMER TEST\TIMER TEST.PRJ
