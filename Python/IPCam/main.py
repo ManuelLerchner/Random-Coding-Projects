@@ -1,21 +1,26 @@
+import requests
 import cv2
 import imutils
 import time
 import json
+import datetime
+
 
 with open(".secrets") as file:
     data = json.load(file)
     username = data['username']
     password = data['password']
 
-my_ip = '192.168.0.103'
+my_ip = '192.168.0.103:8080'
 
 
-vcap = cv2.VideoCapture(f'http://{username}:{password}@'+my_ip+":8080/video")
+vcap = cv2.VideoCapture(f"http://{username}:{password}@{my_ip}/video")
 
-lasttime = time.time()
+tDetected = time.time()
+window_name = "Camera"
 frame = None
 gray = None
+NightMode = False
 
 
 def detectMotion(frame, frameA, frameB):
@@ -27,12 +32,35 @@ def detectMotion(frame, frameA, frameB):
                             cv2.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)
 
+    count = 0
+
     for c in cnts:
-        if cv2.contourArea(c) < 200:
+        if cv2.contourArea(c) < 1000:
             continue
+        count += 1
+
         (x, y, w, h) = cv2.boundingRect(c)
         frame = cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-    return len(cnts)
+    return count
+
+
+def handleNightMode():
+    global NightMode
+    now = datetime.datetime.now()
+    now_time = now.time()
+
+    if now_time >= datetime.time(20, 30) or now_time <= datetime.time(6, 00):
+        if not NightMode:
+            requests.get(
+                f"http://{username}:{password}@{my_ip}/settings/night_vision?set=on")
+            print("NightMode On")
+            NightMode = True
+    else:
+        if NightMode:
+            requests.get(
+                f"http://{username}:{password}@{my_ip}/settings/night_vision?set=off")
+            print("NightMode Off")
+            NightMode = False
 
 
 while vcap.isOpened():
@@ -46,17 +74,26 @@ while vcap.isOpened():
 
     if frame is not None:
         if prevFrame is not None:
+            #cv2.imshow("Frame1", frame)
             objectsCount = detectMotion(frame, prevFrame, gray)
 
+            detected = False
             if objectsCount != 0:
-                cv2.imshow('cam', frame)
-                lasttime = time.time()
+                tDetected = time.time()
+                detected = True
 
-            if objectsCount == 0:
-                if time.time()-lasttime < 5:
-                    cv2.imshow('cam', frame)
+            if detected:
+                cv2.imshow(window_name, frame)
+                #cv2.setWindowProperty(window_name, cv2.WND_PROP_TOPMOST, 1)
+
+            if not detected:
+                if time.time()-tDetected < 5:
+                    cv2.imshow(window_name, frame)
+                    #cv2.setWindowProperty(window_name, cv2.WND_PROP_TOPMOST, 1)
                 else:
-                    cv2.destroyAllWindows()
+                    cv2.destroyWindow(window_name)
+
+        handleNightMode()
 
         if cv2.waitKey(22) & 0xFF == ord('q'):
             break

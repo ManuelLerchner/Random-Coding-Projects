@@ -21,4 +21,4 @@ auth.json
 # Local History for Visual Studio Code
 .history/
 
-Python/IPCam/.secrets
+.secrets
