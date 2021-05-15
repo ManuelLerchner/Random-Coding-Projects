@@ -1,6 +1,7 @@
 #include <RTClib.h>
-#include <SD.h>
 #include <SPI.h>
+#include <SD.h>
+#include <Wire.h>
 
 #include "Duese.h"
 #include "Helper.h"
@@ -16,12 +17,17 @@ const int S_Manuell = 23; //Taster, Schließer
 const int S_Reset = 24; //Taster, Schließer
 const int S_NotHalt = 25; //Schalter, Öffner
 
-//Sensoren
-const int S_Temperatur = A0; //AnalogWert
-const int S_TemperaturOK = 30;
+//Leds
+const int LED_AnlageEin = 26;
+const int LED_ManuellerModus = 27;
+const int LED_WartungsModus = 28;
+const int LED_AnlageBisMorgenAus = 29;
 
+//Sensoren
+const int S_TemperaturOK = 30;
 const int S_Wasserstand = 31; //Taster, 1^= genung Wasser vorhanden
 
+const int S_Temperatur = A0; //AnalogWert
 const int S_Zeitdauer = A1; //AnalogWert
 const int S_Wiederholungen = A2; //Analogwert
 
@@ -108,16 +114,18 @@ Duese Duesen[ANZAHL_AUSLAESSE] = {
   Duese(RGBPinsVentilC, Pin_VentilC),
 };
 
-RTC_DS1307 rtc;
 
+//Modules
+RTC_DS1307 rtc;
 File myFile;
 const int pinCS = 53;
-
 
 void setup() {
 
   Serial.begin(9600);
+  SD.begin();
   rtc.begin();
+
   rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
 
   //Pinmodes
@@ -132,9 +140,6 @@ void setup() {
   pinMode(Pin_Motor, OUTPUT);
 
   pinMode(pinCS, OUTPUT);
-
-  SD.begin();
-  myFile = SD.open("Log.txt", FILE_WRITE);
 
   String msg = "Anlage wurde eingeschaltet";
   Log(Error{"INFO", msg});
@@ -197,6 +202,7 @@ void loop() {
 
       if (ManuellerModus) {
         String msg = "Manueller Zyklus abgeschlossen";
+        ManuellerModus = false;
         Log(Error{"INFO", msg});
       } else {
         AnlageBisMorgenAus = true;
@@ -254,9 +260,14 @@ void loop() {
     };
   }
 
-  //Set Motor
+  //Activate Motor
   digitalWrite(Pin_Motor, motorState);
 
+  //Set Status-Leds
+  digitalWrite(LED_AnlageEin, AnlageEin );
+  digitalWrite(LED_AnlageBisMorgenAus, AnlageBisMorgenAus );
+  digitalWrite(LED_WartungsModus, WartungsModus );
+  digitalWrite(LED_ManuellerModus, ManuellerModus );
 }
 
 
@@ -271,6 +282,7 @@ void detectButtonPresses() {
   bool fReset = F_Reset.fPos(digitalRead(S_Reset));
   bool fNotHalt = F_NotHalt.fNeg(digitalRead(S_NotHalt));
 
+
   //Automatischer Start Taster
   if (fStart && !AnlageBisMorgenAus && !WartungsModus) {
     AnlageEin = true;
@@ -282,6 +294,7 @@ void detectButtonPresses() {
     String msg = "Start Automatik Modus:  Wiederholungen: " + String(Wiederholungen) + ", ZeitFaktor: " + String(ZeidauerFaktor) + ", Expected Time: " + String(ZeidauerFaktor * 60) + "s";
     Log(Error{"INFO", msg});
   }
+
 
   //Manueller Start Taster
   if (fManuell && !WartungsModus) {
@@ -295,7 +308,8 @@ void detectButtonPresses() {
     Log(Error{"INFO", msg});
   }
 
-  //Reset Anlage
+
+  //Reset Anlage, Wartung abgeschossen
   if (fReset) {
     WartungsModus = false;
     durchlaufCounter = 0;

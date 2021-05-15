@@ -4,33 +4,44 @@ extern bool AnlageEin;
 extern bool AnlageBisMorgenAus;
 extern bool WartungsModus;
 extern bool ManuellerModus;
+
 extern int wiederholungsCounter;
 extern int repeatLastStatesCounter;
+extern int Wiederholungen;
 extern int currentState;
+extern int DATE;
+
 extern long tStart;
 extern long tWait;
 extern long accumulatedTime;
-extern int DATE;
+
+extern float ZeidauerFaktor;
+
 extern const int MIN_TEMP;
 extern const int S_Zeitdauer, S_Wiederholungen, S_TemperaturOK, S_Temperatur, S_Wasserstand;
-extern float ZeidauerFaktor;
-extern int Wiederholungen;
 
 extern RTC_DS1307 rtc;
 extern File myFile;
 
+
+//////////////
+//Functions//
+////////////
+
+
 //Completly reset Anlage
 void resetAnlage() {
   AnlageEin = false;
+  AnlageBisMorgenAus = false;
+  ManuellerModus = false;
+  WartungsModus = false;
+
   wiederholungsCounter = 0;
   currentState = -1;
   tStart = 0;
   tWait = 0;
   accumulatedTime = 0;
   repeatLastStatesCounter = 0;
-
-  AnlageBisMorgenAus = false;
-  ManuellerModus = false;
 }
 
 
@@ -43,19 +54,25 @@ Color interpolateColors(Color A, Color B, float t) {
   return Color{round(r), round(g), round(b)};
 }
 
+
 //Logger
 void Log(Error E) {
   DateTime now = rtc.now();
   String timeRTC = String(now.day()) + "/" + String(now.month()) + "/" + String(now.year()) + " -- " + String(now.hour()) + ":" + String(now.minute()) + ":" + String(now.second());
   String finalString = timeRTC + "   " + E.type + "   " + E.text;
+
   Serial.println(finalString);
-  myFile.println(finalString); //SD Card
+
+  //SD Card
+  myFile = SD.open("Brunnensteuerung-Log.txt", FILE_WRITE);
+  myFile.println(finalString);
+  myFile.close();
 }
 
 
-/////////////////////////////
-//External Sensors | Inputs/
-///////////////////////////
+//////////////////////////////
+//External Sensors | Inputs//
+////////////////////////////
 
 
 //Handle Time
@@ -109,7 +126,6 @@ void Temperatur() {
 void getZeidauerFaktor() {
   int analogVal = analogRead(S_Zeitdauer);
   ZeidauerFaktor = mapf(analogVal, 0, 1024, 1 / 3.0, 3); // Ranges from [1/3 , 3]
-  ZeidauerFaktor = 0.3;
 }
 
 
