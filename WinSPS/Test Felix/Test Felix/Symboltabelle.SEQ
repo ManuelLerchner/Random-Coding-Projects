@@ -1,0 +1,5 @@
+wert	MD   100	DWORD	
+flanke	M    0.0	BOOL	
+dimmen	M    0.1	BOOL	
+timerFertig	M    0.2	BOOL	
+richtung	M    0.3	BOOL	
