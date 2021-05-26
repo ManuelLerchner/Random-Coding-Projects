@@ -24,7 +24,7 @@ END_VAR
 BEGIN
 
 NETWORK
-TITLE= 
+TITLE=
 //{{a}}
 
        U    E         0.0
@@ -103,7 +103,7 @@ kl:    NOP  0
        T    MD100
 aus:   NOP  0
 NETWORK
-TITLE= 
+TITLE=
 //{{a}}
 
        CALL FC      106
@@ -113,4 +113,27 @@ TITLE=
          BIPOLAR:=FALSE
          RET_VAL:=MW333
          OUT:=PAW256
+NETWORK
+TITLE= 
+//{{a}}
+
+
+       U    E         1.0
+       FP   M      1000.0
+       SPBN str
+       CALL SFC      64
+         RET_VAL:=MD20
+
+str:   NOP  0
+
+
+       CALL SFC      64
+         RET_VAL:=MD24
+
+
+
+       L    MD       24
+       L    MD       20
+       -D
+       T    MD       28
 END_ORGANIZATION_BLOCK
