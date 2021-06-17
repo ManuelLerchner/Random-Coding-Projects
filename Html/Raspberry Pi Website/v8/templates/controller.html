@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <script type="text/javascript" src="static/script.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="/static/logoUrl.png" />
+
+
+    <title>Controller</title>
+    <script>
+        //Clear Cache
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
+
+
+
+</head>
+
+<div id="bg"></div>
+
+<body>
+
+
+
+    <div id="header">
+        <ul id="Links">
+            <li> <a href="/index"> <img src="/static/haus.png"> Home </a> </li>
+            <li> <a href="/controller"> <img src="/static/controller.png"> Controller </a> </li>
+            <li> <a href="/notify"> <img src="/static/notify.png"> Notify Me </a> </li>
+            <li> <a href="/about"> <img src="/static/about.png"> About </a> </li>
+        </ul>
+
+        <img id="Logo" src="/static/logo2.png">
+
+    </div>
+
+
+
+    <div id="main">
+
+        <!-- Relay Controller -->
+        <div class="shell smaller noTransform">
+            <p> &gt sudo relay_controller.py</p>
+
+            <form class="form-inline" method="post" action="/handlePost">
+                <p>
+                    <label for="passwordRelay"> <span style="color: whitesmoke;"> &nbsp password:</span> </label>
+                    <input type="password" class="PasswordField" name="passwordRelay" placeholder="_">
+                    <input type="submit" name="submitRelay" value="▢">
+                </p>
+            </form>
+
+            {% for msg in MessagesRelay %}
+            <p> &gt <span style="color:{{ColorRelay}}"> {{msg}}</span> </p>
+            {% endfor %}
+
+        </div>
+
+
+        <!-- PC Controller -->
+        <div class="shell smaller noTransform">
+            <p> &gt sudo pc_controller.py toggle</p>
+
+            <p> &nbsp; <span style="color: {{ColorPCState}};">{{StatePC}} </span></p>
+
+
+            <form class="form-inline" method="post" action="/handlePost">
+                <p>
+                    <label for="passwordPC"> <span style="color: whitesmoke;"> &nbsp password:</span> </label>
+                    <input type="password" class="PasswordField" name="passwordPC" size="20" placeholder="_">
+                    <input type="submit" name="submitPC" value="▢">
+                </p>
+            </form>
+
+
+
+            {% for msg in MessagesPC %}
+            <p> &gt <span style="color:{{ColorPC}}"> {{msg}}</span> </p>
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+
+
+    <div id="footer">
+        <ul id="References">
+            <li> <a id="Twitter" href="https://twitter.com/ManuelLerchner"> <img src="/static/twitter.png"> Twitter </a>
+            </li>
+            <li> <a id="Youtube" href="https://www.youtube.com/channel/UCvIGqQ5pelOqwaKOFaqiP4w"> <img
+                        src="/static/youtube.png"> Youtube </a>
+            </li>
+        </ul>
+
+    </div>
+
+</body>
+
+
+</html>

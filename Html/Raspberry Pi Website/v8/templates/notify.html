@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <script type="text/javascript" src="/static/script.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="/static/logoUrl.png" />
+    <title>Notifiy Me</title>
+</head>
+
+<div id="bg"></div>
+
+<body>
+
+    <div id="header">
+        <ul id="Links">
+            <li> <a href="/index"> <img src="/static/haus.png"> Home </a> </li>
+            <li> <a href="/controller"> <img src="/static/controller.png"> Controller </a> </li>
+            <li> <a href="/notify"> <img src="/static/notify.png"> Notify Me </a> </li>
+            <li> <a href="/about"> <img src="/static/about.png"> About </a> </li>
+        </ul>
+
+        <img id="Logo" src="/static/logo2.png">
+
+    </div>
+
+
+
+    <div id="main">
+
+        <div class="shell smaller noTransform">
+            <p>&gt sudo notify root</p>
+
+
+
+
+            <form class="form-inline" method="post" action="/handlePost">
+                <p>
+                    <label for="nameField"> <span style="color: whitesmoke;"> &nbsp enter Name: &#8205 &#8205 &#8205
+                        </span> </label>
+                    <input type="text" name="nameField" width="20" placeholder="_">
+                </p>
+
+                <p>
+                    <label for="textField"> <span style="color: whitesmoke;"> &nbsp enter Message:</span> </label>
+                    <textarea id="textField" name="textField" rows="4"></textarea>
+                </p>
+                <p>
+                    <label for="SendNotification"> <span style="color: whitesmoke;"> &nbsp confirm: &#8205 &#8205 &#8205
+                            &#8205 &#8205 &#8205 </span> </label>
+                    <input id="wideInput" type="submit" name="SendNotification" value="▢">
+                </p>
+
+            </form>
+            {% for msg in Messages %}
+            <p> &gt {{ msg}}</p>
+            {% endfor %}
+
+        </div>
+
+
+    </div>
+
+
+
+    <div id="footer">
+
+        <ul id="References">
+            <li> <a id="Twitter" href="https://twitter.com/ManuelLerchner"> <img src="/static/twitter.png"> Twitter </a>
+            </li>
+            <li> <a id="Youtube" href="https://www.youtube.com/channel/UCvIGqQ5pelOqwaKOFaqiP4w"> <img
+                        src="/static/youtube.png"> Youtube </a>
+            </li>
+        </ul>
+
+    </div>
+
+
+
+
+</body>
+
+
+</html>

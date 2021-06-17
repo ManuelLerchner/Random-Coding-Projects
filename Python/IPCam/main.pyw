@@ -22,6 +22,9 @@ frame = None
 gray = None
 NightMode = False
 
+requests.get(
+    f"http://{username}:{password}@{my_ip}/settings/night_vision?set=off")
+print("NightMode Off")
 
 def detectMotion(frame, frameA, frameB):
     frameDelta = cv2.absdiff(frameA, frameB)
