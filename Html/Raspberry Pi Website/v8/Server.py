@@ -1,6 +1,6 @@
 from waitress import serve
-from flask import Flask, render_template, request, redirect, session
-from flask.helpers import url_for, jsonify
+from flask import Flask, render_template, request, redirect, session, jsonify
+from flask.helpers import url_for
 import ServerFunctions
 import logToFile
 
@@ -86,12 +86,12 @@ def API():
 
     cookies = ServerFunctions.handleRequest(data["URL"], data)
 
-    resp = jsonify(success=len(cookies) > 0)
+    resp = jsonify(success=["success", True] in cookies)
     resp.status_code = 200
 
     return resp
 
 
 if __name__ == '__main__':
-    # app.run("192.168.0.100",port=80)
-    serve(app, host="192.168.0.100", port=80)
+    #app.run("192.168.0.187", port=80)
+    serve(app, host="192.168.0.187", port=80)
