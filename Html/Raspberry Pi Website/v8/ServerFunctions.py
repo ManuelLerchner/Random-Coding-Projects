@@ -41,6 +41,7 @@ def handleNotify(data):
 
     # set Cookie
     cookies.append(["messagesNotification", msg])
+    cookies.append(["success", True])
 
     return cookies
 
@@ -62,6 +63,7 @@ def handleController(data):
             text = "Door just opened!"
             # send Mail
             sendEmail.sendMail("RaspberryPi Door-Service", text)
+            cookies.append(["success", True])
 
         cookies.append(["messagesRelay", answer])
         cookies.append(["colorRelay", color])
@@ -83,6 +85,7 @@ def handleController(data):
             if statePC.split(" ")[-1] == "off":
                 pcRemote.wakeUp()
                 print("wakeup")
+            cookies.append(["success", True])
 
         cookies.append(["messagesPC", answer])
         cookies.append(["colorPC", color])
