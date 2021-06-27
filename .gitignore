@@ -22,3 +22,5 @@ auth.json
 .history/
 
 .secrets
+
+node_modules/
