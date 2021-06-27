@@ -19,4 +19,8 @@ p {
 
 body {
     background-color: rgb(173, 183, 194);
+    background-image: url(../images/Cyber.jpg);
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
 }
