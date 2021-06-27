@@ -24,3 +24,5 @@ auth.json
 .secrets
 
 node_modules/
+
+config.env
