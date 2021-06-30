@@ -1,0 +1,42 @@
+body {
+    background-color: #d1d1d1;
+}
+
+.pad {
+    padding: 2px 10px 5px 10px;
+}
+
+body {
+    background-color: rgb(173, 183, 194);
+    background-image: url(../images/Cyber.jpg);
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.customcol {
+    background-color: rgb(131, 219, 249, 0.7) !important;
+}
+.customcol3 {
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.customcol2 {
+    background-color: #dd43f7 !important;
+}
+
+.tablecol {
+    background-color: rgba(116, 219, 253, 0.6) !important;
+}
+
+tbody,thead {
+    border-style: solid;
+    border-width: 2px;
+}
+
+td {
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(50, 50, 50, 0.3);
+}

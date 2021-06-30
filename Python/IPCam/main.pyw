@@ -11,10 +11,10 @@ with open(".secrets") as file:
     username = data['username']
     password = data['password']
 
-my_ip = '192.168.0.103:8080'
+my_ip = '192.168.0.189:8080'
 
 
-vcap = cv2.VideoCapture(f"http://{username}:{password}@{my_ip}/video")
+vcap = cv2.VideoCapture(f"http://{username}:{password}@{my_ip}/video/mjpeg")
 
 tDetected = time.time()
 window_name = "Camera"
@@ -25,6 +25,7 @@ NightMode = False
 requests.get(
     f"http://{username}:{password}@{my_ip}/settings/night_vision?set=off")
 print("NightMode Off")
+
 
 def detectMotion(frame, frameA, frameB):
     frameDelta = cv2.absdiff(frameA, frameB)
