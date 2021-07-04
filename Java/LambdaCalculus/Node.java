@@ -103,7 +103,7 @@ class ApplicationNode implements Node{
         return "ApplicationNode: ("+A.toString()+" "+B.toString()+")";
     }
         public String pprint(){
-        return ""+A+B;
+        return ""+A.pprint()+B.pprint();
     }
 
 }

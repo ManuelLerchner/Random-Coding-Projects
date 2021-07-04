@@ -35,6 +35,9 @@ public class Interpreter {
             E=(ApplicationNode)G;
         }
 
+        System.out.println(); 
+        System.out.println("-> "+E.pprint());
+
 
 
         NameNode Name=(NameNode)((ApplicationNode)E).A;

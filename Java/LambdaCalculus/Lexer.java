@@ -5,7 +5,7 @@ public class Lexer {
 
 
     public ArrayList<Token> parseInteractively(String str){
-        System.out.println(">>"+str);
+        System.out.println(">> "+str);
         return parse(str);
     }
 

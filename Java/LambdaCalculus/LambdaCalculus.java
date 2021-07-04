@@ -6,18 +6,15 @@ public class LambdaCalculus{
     public static void main(String[] args) {
 
         // λ
-
+        
         Interpreter I=new Interpreter();
 
         parse(I,"A=λx.x");
         parse(I,"B=λx.λy.y");
 
-        System.out.println(); 
 
         eval(I,"C=(AB)");
         eval(I,"D=(C2)");
-
-        System.out.println(); 
 
         eval(I,"E=(D3)");
 
@@ -54,9 +51,6 @@ public class LambdaCalculus{
     }
 
     static void eval(Interpreter I,String str){
-        
-        Node E= parse(I,I.eval(str));
-
-        //System.out.println(E);
+        parse(I,I.eval(str));
     }
 }
