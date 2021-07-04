@@ -30,7 +30,8 @@ body {
     background-color: rgba(116, 219, 253, 0.6) !important;
 }
 
-tbody,thead {
+tbody,
+thead {
     border-style: solid;
     border-width: 2px;
 }

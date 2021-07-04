@@ -36,7 +36,7 @@ app.get("/", (req, res) => {
 readAllMessages().then((res) => {
     data = res;
     app.listen(3000, () => {
-        console.log("Server listening at http://localhost:3000");
+        console.log("Server listening at http://manuellerchner.ddns.net:3000");
     });
 });
 
