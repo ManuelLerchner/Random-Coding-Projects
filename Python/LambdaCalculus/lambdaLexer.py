@@ -1,20 +1,20 @@
-from lambdaToken import Token
 from colorama import Fore, Style
+
+from lambdaToken import Token
 
 
 class Lexer:
 
-    def __init__(self, str):
-        self.str = str.strip()
+    def __init__(self):
         self.tokens = []
         self.idx = 0
-        self.parse(self.str)
 
-    def parse(self, str):
+    def analyze(self, str: str):
+        self.str = str.strip()
         """
         Splits Input String into Tokens and appends them to the Tokens-Array
         """
-        for chr in str:
+        for chr in self.str:
             if chr == " ":
                 self.tokens.append(Token(Token.SPACE))
 
@@ -33,6 +33,9 @@ class Lexer:
             elif chr.isalpha():
                 self.tokens.append(Token(Token.VAR, chr))
 
+            elif chr.isnumeric():
+                self.tokens.append(Token(Token.VAR, chr))
+
             else:
                 self.throwError(
                     f"Encountered invalid Character: '{chr}'", str.find(chr))
@@ -41,7 +44,8 @@ class Lexer:
         """
         Throws a custom Error-Message and Points to the part of the Input String where the error occurred
         """
-        print(f"\n{Fore.YELLOW}{errorMsg} while creating '{context}'{Style.RESET_ALL}")
+        print(
+            f"\n{Fore.YELLOW}{errorMsg} while creating '{context}'{Style.RESET_ALL}")
 
         print(f"{Fore.GREEN}{' '*errorIdx+'↓'}{Style.RESET_ALL}")
         print(f"{Fore.RED}{self.str}  {Style.RESET_ALL}")
@@ -49,7 +53,7 @@ class Lexer:
 
         exit(errorMsg)
 
-    def checkNext(self, reqType,context):
+    def checkNext(self, reqType, context):
         """
         Checks if there still exists a Token and wheter it matches the required type.
         """

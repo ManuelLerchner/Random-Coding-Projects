@@ -1,11 +1,11 @@
+from lambdaLexer import Lexer
 from lambdaToken import Token
-import lexer
-from nodes import VarNode, FunctionNode, ApplicationNode
+from nodes import ApplicationNode, FunctionNode, VarNode
 
 
 class Parser:
 
-    def __init__(self, Lexer: lexer.Lexer):
+    def __init__(self, Lexer: Lexer):
         self.Lexer = Lexer
 
     def parse(self):
@@ -50,7 +50,8 @@ class Parser:
 
                 <var>
         """
-        return VarNode(self.Lexer.nextToken(Token.VAR, "Variable"))
+        tok = self.Lexer.nextToken(Token.VAR, "Variable")
+        return VarNode(tok)
 
     def function(self):
         """
