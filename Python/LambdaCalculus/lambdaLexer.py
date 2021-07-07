@@ -1,6 +1,7 @@
-from colorama import Fore, Style
+from colorama import Fore
 
 from lambdaToken import Token
+from utility import printColor
 
 
 class Lexer:
@@ -8,12 +9,22 @@ class Lexer:
     def __init__(self):
         self.tokens = []
         self.idx = 0
+        self.str = None
 
-    def analyze(self, str: str):
-        self.str = str.strip()
+    def analyze(self, inputString: str):
         """
         Splits Input String into Tokens and appends them to the Tokens-Array
         """
+
+        self.str = inputString.strip()
+
+        printColor("\nTrying to evaluate Input:", Fore.YELLOW)
+        printColor("'"+self.str+"'", Fore.GREEN, end="\n\n")
+
+        if self.str == "":
+            self.throwError(
+                f"Found an empty Input String", 0, "Tokens")
+
         for chr in self.str:
             if chr == " ":
                 self.tokens.append(Token(Token.SPACE))
@@ -30,28 +41,24 @@ class Lexer:
             elif chr == ")":
                 self.tokens.append(Token(Token.RPAR))
 
-            elif chr.isalpha():
-                self.tokens.append(Token(Token.VAR, chr))
-
-            elif chr.isnumeric():
-                self.tokens.append(Token(Token.VAR, chr))
+            elif chr.isalpha() or chr.isnumeric():
+                self.tokens.append(Token(Token.VAR, str(chr)))
 
             else:
                 self.throwError(
-                    f"Encountered invalid Character: '{chr}'", str.find(chr))
+                    f"Encountered invalid Character: '{chr}'", inputString.find(chr), "Creating Tokens")
 
     def throwError(self, errorMsg, errorIdx, context):
         """
         Throws a custom Error-Message and Points to the part of the Input String where the error occurred
         """
-        print(
-            f"\n{Fore.YELLOW}{errorMsg} while creating '{context}'{Style.RESET_ALL}")
+        printColor("\n"+errorMsg + "while creating '"+context+"'", Fore.YELLOW)
 
-        print(f"{Fore.GREEN}{' '*errorIdx+'↓'}{Style.RESET_ALL}")
-        print(f"{Fore.RED}{self.str}  {Style.RESET_ALL}")
-        print(f"{Fore.GREEN}{' '*errorIdx+'↑'}{Style.RESET_ALL}\n")
+        printColor(' '*errorIdx+'↓', Fore.GREEN)
+        printColor(self.str, Fore.RED)
+        printColor(' '*errorIdx+'↑\n', Fore.GREEN)
 
-        exit(errorMsg)
+        exit()
 
     def checkNext(self, reqType, context):
         """
@@ -81,11 +88,15 @@ class Lexer:
         self.idx += 1
         return tok
 
-    def peekToken(self, reqType):
+    def peekToken(self, reqType, context):
         """
         Peeks at next token and checks if meets the required type
         !!Doesnt throw an error if comparison fails!!
         """
+        if not(self.idx < len(self.tokens)):
+            self.throwError(
+                f"No more Token available", self.idx, context)
+
         return self.tokens[self.idx].type == reqType
 
     def finished(self):

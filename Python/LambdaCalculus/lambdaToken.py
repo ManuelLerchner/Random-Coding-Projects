@@ -7,9 +7,20 @@ class Token:
     RPAR = "RPAR"
     SPACE = "SPACE"
 
-    def __init__(self, type: str, value: str = None):
+    def __init__(self, type: str, varName: str = None, internalIDX=0):
         self.type = type
-        self.value = value
+        self.varName = varName
+        self.internalIDX = internalIDX
+
+    def debugPrint(self):
+        """
+        Returns all attributes of Token
+        """
+        return str(self.type) + (":"+str(self.varName)+"_"+str(self.internalIDX) if self.varName is not None else "")
 
     def __repr__(self):
-        return str(self.type) + (":"+str(self.value) if self.value is not None else "")
+        """
+        Returns VariableName
+        """
+        # return self.debugPrint()
+        return self.varName

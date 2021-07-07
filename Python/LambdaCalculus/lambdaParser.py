@@ -11,7 +11,6 @@ class Parser:
     def parse(self):
         """
         Parses given Lexer-Tokens into AST
-
         """
 
         N = self.expression()
@@ -19,6 +18,8 @@ class Parser:
         if not self.Lexer.finished():
             self.Lexer.throwError(
                 f"Parser finished", self.Lexer.idx, "Expression")
+
+        N.renameVariables(0)
 
         return N
 
@@ -32,16 +33,16 @@ class Parser:
         """
 
         # Skip Leading Spaces
-        while self.Lexer.peekToken(Token.SPACE):
+        while self.Lexer.peekToken(Token.SPACE, "Expression"):
             self.Lexer.skipToken(Token.SPACE, "Expression")
 
-        if self.Lexer.peekToken(Token.VAR):
+        if self.Lexer.peekToken(Token.VAR, "Expression"):
             return self.variable()
 
-        elif self.Lexer.peekToken(Token.LAMBDA):
+        elif self.Lexer.peekToken(Token.LAMBDA, "Expression"):
             return self.function()
 
-        elif self.Lexer.peekToken(Token.LPAR):
+        elif self.Lexer.peekToken(Token.LPAR, "Expression"):
             return self.application()
 
     def variable(self):

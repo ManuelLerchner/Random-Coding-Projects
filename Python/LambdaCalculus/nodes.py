@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from copy import deepcopy
 
 from lambdaToken import Token
 
@@ -24,7 +25,7 @@ class Node(ABC):
         pass
 
     @abstractmethod
-    def createDependencies(self):
+    def renameVariables(self):
         """
         Links a Function Variable to all its occurences
         """
@@ -40,15 +41,15 @@ class Node(ABC):
     @abstractmethod
     def replace(self, variable, new):
         """
-        Replaces given Variable with new Node
+        Replaces given Variable with new Node --> recurses in all subNodes
         """
         pass
 
 
 class FunctionNode(Node):
 
-    def __init__(self, var: Node, exp: Node):
-        self.variable = var
+    def __init__(self, variable: Node, exp: Node):
+        self.variable = variable
         self.exp = exp
         self.dependencies = []
 
@@ -58,12 +59,16 @@ class FunctionNode(Node):
     def debugPrint(self):
         return "{FUNCTION: λ"+str(self.variable.debugPrint())+"."+str(self.exp.debugPrint())+"}"
 
-    def replace(self, varNode, new):
-        if self.exp.replace(varNode, new):
+    def replace(self, varNode, new, newIdx):
+
+        if self.exp.replace(varNode, new, newIdx):
             self.exp = new
 
-    def createDependencies(self, Caller):
-        self.exp.createDependencies(Caller)
+    def renameVariables(self, idx):
+        self.exp.renameVariables(idx)
+        newVar = VarNode(Token(Token.VAR, self.variable.token.varName, idx))
+        self.replace(VarNode(self.variable.token), newVar, idx)
+        self.variable = newVar
 
     def plot(self, idx, dot):
         dot.node(f"{idx}", "FUN "+str(self))
@@ -87,15 +92,24 @@ class ApplicationNode(Node):
     def debugPrint(self):
         return "(APPLICATION: "+str(self.expA.debugPrint())+" "+str(self.expB.debugPrint())+")"
 
-    def replace(self, varNode, new):
-        if self.expA.replace(varNode, new):
-            self.expA = new
-        if self.expB.replace(varNode, new):
-            self.expB = new
+    def replace(self, varNode, new, newIdx):
+        NEW = deepcopy(new)
 
-    def createDependencies(self, Caller: FunctionNode):
-        self.expA.createDependencies(Caller)
-        self.expB.createDependencies(Caller)
+        NEW.renameVariables(newIdx)
+
+        #print("...", newIdx, self, "---", varNode, "---", NEW)
+
+        if self.expA.replace(varNode, NEW, 2*newIdx+1):
+            self.expA = NEW
+
+        if self.expB.replace(varNode, NEW, 2*newIdx+2):
+            self.expB = NEW
+
+        #print("-->", newIdx, self)
+
+    def renameVariables(self, idx: FunctionNode):
+        self.expA.renameVariables(idx+1)
+        self.expB.renameVariables(idx+2)
 
     def plot(self, idx, dot):
         dot.node(f"{idx}", "APP "+str(self))
@@ -109,19 +123,20 @@ class ApplicationNode(Node):
 
 class VarNode(Node):
 
-    def __init__(self, var: Token):
-        self.var = var
+    def __init__(self, token: Token):
+        self.token = token
 
     def __repr__(self):
-        return str(self.var.value)
+        return str(self.token)
 
     def debugPrint(self):
-        return "[VAR: "+str(self.var.value)+"]"
+        return "[VAR: "+str(self.token.varName)+"]"
 
-    def replace(self, varNode, new):
-        return varNode.var.value == self.var.value
+    def replace(self, varNode, new, newIdx):
+        return (varNode.token.varName == self.token.varName) and (
+            varNode.token.internalIDX == self.token.internalIDX)
 
-    def createDependencies(self, Caller: FunctionNode):
+    def renameVariables(self, idx: FunctionNode):
         pass
 
     def plot(self, idx, dot):

@@ -1,46 +1,50 @@
+from lambdaConstants import Constants
 from lambdaInterpreter import Interpreter
 from lambdaLexer import Lexer
 from lambdaParser import Parser
-from lambdaToken import Token
-from nodes import VarNode
 from visualize import visualizeAST
 
-inputString = "(((z λx.λy.z) (x y)) (x y))"
-inputString = "(λz.λy.((y λx.x) λx.(z x)) k)"
-inputString = "(((λx.λy.(y x) λt.t) λk.k) o)"
-inputString = "(λx.(λu.λy.x (λv.v λy.y)) (λz.λx.(z z) ((v x) λu.(u v))))"
 
-# SWITCH RETURN FIRST ==> RETURN Second
-inputString = "(((λf.λa.λb.((f b) a) λi.λj.i) 1) 2)"
-# Logical AND
-inputString = "((λp.λq.((p q) λu.λo.o) λx.λy.y) λk.λl.l)"
-# SUCCESSOR Function
-inputString = "(λn.λf.λx. (f ((n f) x)) λf.λx.(f (f x)))"
+Const = Constants.getAll()
 
-#inputString = "((λx.λy.x λx.λl.x) x)"
+TRUE = Const["TRUE"]
+FALSE = Const["FALSE"]
+
+AND = Const["AND"]
+OR = Const["OR"]
+NOT = Const["NOT"]
+
+ZERO = Const["ZERO"]
+ONE = Const["ONE"]
+TWO = Const["TWO"]
+SUCC = Const["SUCC"]
+
+I = Const["I"]
+K = Const["K"]
+KI = Const["KI"]
+C = Const["C"]
 
 
-"""!!!Todo Fix  Variable Colission"""
-#AST.replace(VarNode(Token(Token.VAR, "x")), VarNode(Token(Token.VAR, "l")))
+inputString = f'(({AND} {FALSE}) {TRUE})'
+inputString = f'({NOT} {TRUE})'
+inputString = f'(({AND} {TRUE}) {FALSE})'
+#inputString = f'((({C} {AND}) {TRUE}) {FALSE})'
+inputString = f'{ONE}'
 
-if __name__ == "__main__":
 
-    print("Trying to evaluate input:", inputString)
-
-    # lexical analyze String
+def evaluate(inputString: str):
     L = Lexer()
     L.analyze(inputString)
 
-    # Parse
     P = Parser(L)
     AST = P.parse()
     visualizeAST(AST, "FULL")
 
-    print("Trying to interpret AST: ", AST)
-
-    # Reduce
     I = Interpreter()
     reducedAST = I.reduce(AST)
     visualizeAST(reducedAST, "REDUCED")
 
-    print("Got:", reducedAST)
+    return reducedAST
+
+
+evaluate(inputString)
