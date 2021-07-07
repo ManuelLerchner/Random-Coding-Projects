@@ -13,11 +13,17 @@ class Interpreter:
         def isVar(N): return type(N) == VarNode
 
         while True:
-
             if type(Node) == ApplicationNode:
 
+                # If Variable on Left Side
+                if isVar(Node.expA):
+                    newExpB = self.evaluate(Node.expB)
+                    Node.expB = newExpB
+                    if Node.expB == newExpB:  # no Changes
+                        return Node
+
                 # Replace VAR with Function or Variable
-                if isFunction(Node.expA) and (isFunction(Node.expB) or isVar(Node.expB)):
+                elif isFunction(Node.expA) and (isFunction(Node.expB) or isVar(Node.expB)):
                     Node.replace(Node.expA.variable, Node.expB)
                     Node = Node.expA.exp
 
@@ -32,6 +38,9 @@ class Interpreter:
                 else:
                     Node.expA = self.evaluate(Node.expA)
 
+            elif isFunction(Node):
+                Node.exp = self.reduce(Node.exp)
+                return Node
             else:
                 # No simplification possible
                 return Node

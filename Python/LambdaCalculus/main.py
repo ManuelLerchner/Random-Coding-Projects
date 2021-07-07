@@ -14,8 +14,11 @@ inputString = "(λx.(λu.λy.x (λv.v λy.y)) (λz.λx.(z z) ((v x) λu.(u v))))
 inputString = "(((λf.λa.λb.((f b) a) λi.λj.i) 1) 2)"
 # Logical AND
 inputString = "((λp.λq.((p q) λu.λo.o) λx.λy.y) λk.λl.l)"
+# SUCCESSOR Function
+inputString = "(λn.λf.λx. (f ((n f) x)) λf.λx.(f (f x)))"
 
 #inputString = "((λx.λy.x λx.λl.x) x)"
+
 
 """!!!Todo Fix  Variable Colission"""
 #AST.replace(VarNode(Token(Token.VAR, "x")), VarNode(Token(Token.VAR, "l")))
