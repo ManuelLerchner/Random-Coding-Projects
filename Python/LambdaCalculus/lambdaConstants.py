@@ -20,7 +20,9 @@ class Constants:
         "SUCC": "λn.λf.λx.(f ((n f) x))",
         "AND": "λp.λq.((p q) p)",
         "OR": "λp.λq.((p p) q)",
+        "XOR": "λp.λq.((p ((q λa.λb.b) λa.λb.a)) q)",
         "NOT": "λf.λa.λb.((f b) a)",
+
     }
 
     @staticmethod

@@ -12,6 +12,7 @@ FALSE = Const["FALSE"]
 
 AND = Const["AND"]
 OR = Const["OR"]
+XOR = Const["XOR"]
 NOT = Const["NOT"]
 
 ZERO = Const["ZERO"]
@@ -27,9 +28,9 @@ C = Const["C"]
 
 inputString = f'(({AND} {FALSE}) {TRUE})'
 inputString = f'({NOT} {TRUE})'
-inputString = f'(({AND} {TRUE}) {FALSE})'
-#inputString = f'((({C} {AND}) {TRUE}) {FALSE})'
-inputString = f'{ONE}'
+inputString = f'(({XOR} {TRUE}) {TRUE})'
+inputString = f'((({C} {XOR}) {TRUE}) {FALSE})'
+#inputString = f'{ONE}'
 
 
 def evaluate(inputString: str):
