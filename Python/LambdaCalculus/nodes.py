@@ -51,7 +51,6 @@ class FunctionNode(Node):
     def __init__(self, variable: Node, exp: Node):
         self.variable = variable
         self.exp = exp
-        self.dependencies = []
 
     def __repr__(self):
         return "λ"+str(self.variable)+"."+str(self.exp)

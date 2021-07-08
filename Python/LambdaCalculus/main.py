@@ -1,39 +1,58 @@
+from colorama.ansi import Fore
+
 from lambdaConstants import Constants
 from lambdaInterpreter import Interpreter
 from lambdaLexer import Lexer
 from lambdaParser import Parser
+from utility import printColor, timeIt
 from visualize import visualizeAST
 
 
-Const = Constants.getAll()
+# Boolean
+inputString = "((AND TRUE) TRUE)"
+inputString = "((XOR FALSE) TRUE)"
+inputString = "(NOT (NOT FALSE))"
+inputString = "(((C XOR) FALSE) FALSE)"
 
-TRUE = Const["TRUE"]
-FALSE = Const["FALSE"]
+# Logic
+inputString = "(((IFTHENELSE FALSE) A) B)"
 
-AND = Const["AND"]
-OR = Const["OR"]
-XOR = Const["XOR"]
-NOT = Const["NOT"]
+# Arithmetic
+inputString = "(SUCC (SUCC (SUCC FOUR)))"
+inputString = "((MULT TWO) FOUR)"
+inputString = "(PRED (PRED TEN))"
+inputString = "((EXP TWO) THREE)"
+inputString = "((MINUS EIGHT) THREE)"
 
-ZERO = Const["ZERO"]
-ONE = Const["ONE"]
-TWO = Const["TWO"]
-SUCC = Const["SUCC"]
+# Boolean - Arithmetic
+inputString = "(ISZERO ZERO)"
+inputString = "((LEQ THREE) THREE)"
+inputString = "((LEQ TWO) THREE)"
+inputString = "((LEQ TEN) TWO)"
 
-I = Const["I"]
-K = Const["K"]
-KI = Const["KI"]
-C = Const["C"]
+# List
+inputString = "(FIRST_EL ((PAIR a) b))"
+inputString = "(SECOND_EL ((PAIR a) b))"
+inputString = "(head ((cons a) ((cons b) c)))"
+inputString = "(head (tail ((cons a) ((cons b) c))))"
+inputString = "(head (tail (tail ((cons a) ((cons b) ((cons c) d))))))"
+inputString = "(FIRST_EL ((PAIR 5) j))"
+
+# Recursion
+# <<-Doesnt work->>
+#inputString = "(FACT TWO)"
+#inputString = "(FIB TWO)"
 
 
-inputString = f'(({AND} {FALSE}) {TRUE})'
-inputString = f'({NOT} {TRUE})'
-inputString = f'(({XOR} {TRUE}) {TRUE})'
-inputString = f'((({C} {XOR}) {TRUE}) {FALSE})'
-#inputString = f'{ONE}'
+@timeIt
+def evaluate(prettyString: str):
+    lambdaConstants = Constants()
 
+    printColor("\nUserInput:", Fore.YELLOW)
+    printColor(prettyString, '\033[1m'+Fore.GREEN)
 
-def evaluate(inputString: str):
+    inputString = lambdaConstants.evaluateString(prettyString)
+
     L = Lexer()
     L.analyze(inputString)
 
@@ -45,7 +64,15 @@ def evaluate(inputString: str):
     reducedAST = I.reduce(AST)
     visualizeAST(reducedAST, "REDUCED")
 
+    equivalentExpression = lambdaConstants.findInDict(str(reducedAST))
+
+    if equivalentExpression:
+        printColor("This is equivalent to:", Fore.YELLOW)
+        printColor(equivalentExpression, '\033[1m'+Fore.GREEN, end="\n\n")
+        return equivalentExpression
+
     return reducedAST
 
 
-evaluate(inputString)
+if __name__ == '__main__':
+    evaluate(inputString)

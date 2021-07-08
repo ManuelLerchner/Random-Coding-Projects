@@ -24,6 +24,7 @@ class Lexer:
         if self.str == "":
             self.throwError(
                 f"Found an empty Input String", 0, "Tokens")
+        prevChar = None
 
         for chr in self.str:
             if chr == " ":
@@ -42,6 +43,9 @@ class Lexer:
                 self.tokens.append(Token(Token.RPAR))
 
             elif chr.isalpha() or chr.isnumeric():
+                if self.tokens[-1].type == Token.VAR:
+                    self.throwError(
+                        "Probably encounterd an invalid Keyword", inputString.find(chr), "Tokens")
                 self.tokens.append(Token(Token.VAR, str(chr)))
 
             else:
@@ -52,7 +56,8 @@ class Lexer:
         """
         Throws a custom Error-Message and Points to the part of the Input String where the error occurred
         """
-        printColor("\n"+errorMsg + "while creating '"+context+"'", Fore.YELLOW)
+        printColor("\n"+errorMsg + " while creating '" +
+                   context+"'", Fore.YELLOW)
 
         printColor(' '*errorIdx+'↓', Fore.GREEN)
         printColor(self.str, Fore.RED)
@@ -64,11 +69,11 @@ class Lexer:
         """
         Checks if there still exists a Token and wheter it matches the required type.
         """
-        if not(self.idx < len(self.tokens)):
+        if self.idx >= len(self.tokens):
             self.throwError(
                 f"Parsing failed: Index out of Bounds", self.idx, context)
 
-        if not (self.tokens[self.idx].type == reqType):
+        if self.tokens[self.idx].type != reqType:
             self.throwError(
                 f"Expected {reqType}, got {self.tokens[self.idx].type}", self.idx, context)
 
@@ -93,7 +98,7 @@ class Lexer:
         Peeks at next token and checks if meets the required type
         !!Doesnt throw an error if comparison fails!!
         """
-        if not(self.idx < len(self.tokens)):
+        if self.idx >= len(self.tokens):
             self.throwError(
                 f"No more Token available", self.idx, context)
 

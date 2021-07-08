@@ -7,7 +7,7 @@ from utility import printColor
 
 class Interpreter:
 
-    def __init__(self, MAX_STEPS=100):
+    def __init__(self, MAX_STEPS=5):
         self.MAX_STEPS = MAX_STEPS
 
     def reduce(self, AST: Node):
@@ -19,7 +19,7 @@ class Interpreter:
         printColor(AST, Fore.GREEN, end="\n\n")
 
         reduced = self.evaluate(AST)
-        printColor("\nGot following result:", Fore.YELLOW)
+        printColor("Got following result:", Fore.YELLOW)
         printColor(reduced, '\033[1m'+Fore.GREEN, end="\n\n")
 
         return reduced
@@ -40,62 +40,49 @@ class Interpreter:
 
                 # If Variable on Left Side
                 if self.isVar(Node.expA):
-                    #print("A", Node)
+                    # print("A", Node)
                     Node.expB = self.evaluate(Node.expB)
                     return Node
 
                 # Replace VAR with Function or Variable
-                elif self.isFunction(Node.expA) and (self.isFunction(Node.expB) or self.isVar(Node.expB)):
-                    #print("B", Node)
+                elif self.isFunction(Node.expA) and (self.isFunction(Node.expB) or self.isVar(Node.expB) or self.isApplication(Node.expB)):
+                    # print("B", Node)
                     Node.replace(Node.expA.variable, Node.expB, 0)
                     Node = Node.expA.exp
                     Copy = Node
 
                 # If Function on Left Side, simplify Right side
                 elif self.isFunction(Node.expA):
-                    #print("C", Node)
-                    newExpB = self.evaluate(Node.expB)
-                    Node.expB = newExpB
-                    Copy = Node
-                    if Node.expB == newExpB:  # no Changes
-                        return Node
-
-                # Simplify Left side
-                elif self.isApplication(Node.expA) and self.isVar(Node.expB):
-                    #print("D", Node)
-                    Node.expA = self.evaluate(Node.expA)
-                    Copy = Node
+                    print("C", Node)
+                    Node.expB = self.evaluate(Node.expB)
+                    #Copy = Node
                     return Node
 
                 # Simplify Left side
-                elif self.isApplication(Node.expA) and self.isFunction(Node.expB):
-                    #print("E", Node)
-                    newExpB = self.evaluate(Node.expB)
+                elif self.isApplication(Node.expA) and self.isVar(Node.expB):
+                    # print("D", Node)
                     newExpA = self.evaluate(Node.expA)
-
-                    if Node.expB == newExpB and Node.expA == newExpA:  # no Changes
+                    if Node.expA == newExpA:  # no Changes
                         return Node
-
                     Node.expA = newExpA
-                    Node.expB = newExpB
                     Copy = Node
 
                 else:
-                    #print("F", Node)
+                    # print("F", Node)
                     Node.expA = self.evaluate(Node.expA)
                     Copy = Node
 
             elif self.isFunction(Node):
-                #print("G", Node)
+                # print("G", Node)
                 Node.exp = self.evaluate(Node.exp)
                 return Node
 
             else:
-                #print("H", Node)
+                # print("H", Node)
                 # No simplification possible
                 return Node
 
-        printColor(
-            f"Reached the maximum steps of reducing cycles, while simpifiying {Copy}", Fore.RED)
+        # printColor(
+        #    f"Reached the maximum steps of reducing cycles, while simpifiying {Copy}", Fore.RED)
 
         return Copy
