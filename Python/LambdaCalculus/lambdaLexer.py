@@ -11,15 +11,15 @@ class Lexer:
         self.idx = 0
         self.str = None
 
-    def analyze(self, inputString: str):
+    def analyze(self, inputString: str, debug):
         """
         Splits Input String into Tokens and appends them to the Tokens-Array
         """
 
         self.str = inputString.strip()
-
-        printColor("\nTrying to evaluate Input:", Fore.YELLOW)
-        printColor("'"+self.str+"'", Fore.GREEN, end="\n\n")
+        if(debug):
+            printColor("\nTrying to evaluate Input:", Fore.YELLOW)
+            printColor("'"+self.str+"'", Fore.GREEN, end="\n\n")
 
         if self.str == "":
             self.throwError(

@@ -45,34 +45,39 @@ inputString = "(FIRST_EL ((PAIR 5) j))"
 
 
 @timeIt
-def evaluate(prettyString: str):
+def evaluate(prettyString: str, debug=False):
     lambdaConstants = Constants()
 
-    printColor("\nUserInput:", Fore.YELLOW)
-    printColor(prettyString, '\033[1m'+Fore.GREEN)
+    if(debug):
+        printColor("\nUserInput:", Fore.YELLOW)
+        printColor(prettyString, '\033[1m'+Fore.GREEN)
 
     inputString = lambdaConstants.evaluateString(prettyString)
 
     L = Lexer()
-    L.analyze(inputString)
+    L.analyze(inputString, debug)
 
     P = Parser(L)
     AST = P.parse()
-    visualizeAST(AST, "FULL")
+    if(debug):
+        visualizeAST(AST, "FULL")
 
     I = Interpreter()
-    reducedAST = I.reduce(AST)
-    visualizeAST(reducedAST, "REDUCED")
+    reducedAST = I.reduce(AST, debug)
+    if(debug):
+        visualizeAST(reducedAST, "REDUCED")
 
     equivalentExpression = lambdaConstants.findInDict(str(reducedAST))
 
     if equivalentExpression:
-        printColor("This is equivalent to:", Fore.YELLOW)
-        printColor(equivalentExpression, '\033[1m'+Fore.GREEN, end="\n\n")
+        if(debug):
+            printColor("This is equivalent to:", Fore.YELLOW)
+            printColor(equivalentExpression, '\033[1m'+Fore.GREEN, end="\n\n")
         return equivalentExpression
 
     return reducedAST
 
 
 if __name__ == '__main__':
-    evaluate(inputString)
+    res = evaluate(inputString, debug=True)
+    print("Result:", res)

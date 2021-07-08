@@ -10,17 +10,18 @@ class Interpreter:
     def __init__(self, MAX_STEPS=5):
         self.MAX_STEPS = MAX_STEPS
 
-    def reduce(self, AST: Node):
+    def reduce(self, AST: Node, debug):
         """
         Reduces the given node as far as possible
         """
-
-        printColor("Trying to interpret AST:", Fore.YELLOW)
-        printColor(AST, Fore.GREEN, end="\n\n")
+        if(debug):
+            printColor("Trying to interpret AST:", Fore.YELLOW)
+            printColor(AST, Fore.GREEN, end="\n\n")
 
         reduced = self.evaluate(AST)
-        printColor("Got following result:", Fore.YELLOW)
-        printColor(reduced, '\033[1m'+Fore.GREEN, end="\n\n")
+        if(debug):
+            printColor("Got following result:", Fore.YELLOW)
+            printColor(reduced, '\033[1m'+Fore.GREEN, end="\n\n")
 
         return reduced
 
