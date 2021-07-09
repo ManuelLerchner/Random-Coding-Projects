@@ -22,5 +22,5 @@ class Token:
         """
         Returns VariableName
         """
-        # return self.debugPrint()
+        #return self.debugPrint()
         return self.varName

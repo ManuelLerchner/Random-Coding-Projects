@@ -4,7 +4,7 @@ from main import evaluate
 
 class Test_Recursion(unittest.TestCase):
     def test_Fibonacci(self):
-        inputString = "((Y F) ONE)"
+        inputString = "(FIB ONE)"
         res = str(evaluate(inputString))
         self.assertTrue("ONE" in res)
 

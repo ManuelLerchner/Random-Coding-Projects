@@ -7,7 +7,7 @@ from utility import printColor
 
 class Interpreter:
 
-    def __init__(self, MAX_STEPS=5):
+    def __init__(self, MAX_STEPS=10):
         self.MAX_STEPS = MAX_STEPS
 
     def reduce(self, AST: Node, debug):

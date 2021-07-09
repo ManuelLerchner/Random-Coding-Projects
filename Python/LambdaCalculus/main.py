@@ -39,9 +39,10 @@ inputString = "(head (tail (tail ((cons a) ((cons b) ((cons c) d))))))"
 inputString = "(FIRST_EL ((PAIR 5) j))"
 
 # Recursion
-# <<-Doesnt work->>
 #inputString = "(FACT TWO)"
 #inputString = "(FIB TWO)"
+#inputString = "(FACT FOUR)"
+#inputString = "(FIB FIVE)"
 
 
 @timeIt
@@ -80,4 +81,3 @@ def evaluate(prettyString: str, debug=False):
 
 if __name__ == '__main__':
     res = evaluate(inputString, debug=True)
-    print("Result:", res)

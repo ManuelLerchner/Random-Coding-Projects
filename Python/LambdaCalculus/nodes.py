@@ -64,9 +64,10 @@ class FunctionNode(Node):
             self.exp = new
 
     def renameVariables(self, idx):
-        self.exp.renameVariables(idx)
-        newVar = VarNode(Token(Token.VAR, self.variable.token.varName, idx))
-        self.replace(VarNode(self.variable.token), newVar, idx)
+        self.exp.renameVariables(2*idx+2)
+        newVar = VarNode(
+            Token(Token.VAR, self.variable.token.varName, 2*idx+2))
+        self.replace(VarNode(self.variable.token), newVar, 2*idx+2)
         self.variable = newVar
 
     def plot(self, idx, dot):
@@ -107,8 +108,8 @@ class ApplicationNode(Node):
         #print("-->", newIdx, self)
 
     def renameVariables(self, idx: FunctionNode):
-        self.expA.renameVariables(idx+1)
-        self.expB.renameVariables(idx+2)
+        self.expA.renameVariables(2*idx+1)
+        self.expB.renameVariables(2*idx+2)
 
     def plot(self, idx, dot):
         dot.node(f"{idx}", "APP "+str(self))
