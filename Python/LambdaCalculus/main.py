@@ -36,7 +36,7 @@ inputString = "(SECOND_EL ((PAIR a) b))"
 inputString = "(head ((cons a) ((cons b) c)))"
 inputString = "(head (tail ((cons a) ((cons b) c))))"
 inputString = "(head (tail (tail ((cons a) ((cons b) ((cons c) d))))))"
-inputString = "(FIRST_EL ((PAIR 5) j))"
+inputString = "(FIRST_EL ((PAIR ONE) THREE))"
 
 # Recursion
 #inputString = "(FACT TWO)"
@@ -46,7 +46,7 @@ inputString = "(FIRST_EL ((PAIR 5) j))"
 
 
 @timeIt
-def evaluate(prettyString: str, debug=False):
+def evaluate(prettyString: str, debug=True):
     lambdaConstants = Constants()
 
     if(debug):
@@ -61,12 +61,12 @@ def evaluate(prettyString: str, debug=False):
     P = Parser(L)
     AST = P.parse()
     if(debug):
-        visualizeAST(AST, "FULL")
+        visualizeAST(AST, "FULL", prettyString)
 
     I = Interpreter()
     reducedAST = I.reduce(AST, debug)
     if(debug):
-        visualizeAST(reducedAST, "REDUCED")
+        visualizeAST(reducedAST, "REDUCED", prettyString)
 
     equivalentExpression = lambdaConstants.findInDict(str(reducedAST))
 
@@ -74,6 +74,10 @@ def evaluate(prettyString: str, debug=False):
         if(debug):
             printColor("This is equivalent to:", Fore.YELLOW)
             printColor(equivalentExpression, '\033[1m'+Fore.GREEN, end="\n\n")
+
+            with open("Visuals/history.txt", mode="a") as f:
+                f.write(f"{prettyString}  -->  {equivalentExpression}\n")
+
         return equivalentExpression
 
     return reducedAST

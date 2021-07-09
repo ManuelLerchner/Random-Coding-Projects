@@ -1,0 +1,17 @@
+((EXP ONE) FIVE)  -->  ONE
+((EXP TWO) THREE)  -->  EIGHT
+((MINUS EIGHT) THREE)  -->  FIVE
+((MINUS ZERO) THREE)  -->  ZERO
+((MULT TWO) FOUR)  -->  EIGHT
+(PRED (PRED TEN))  -->  EIGHT
+(SUCC (SUCC (SUCC FOUR)))  -->  SEVEN
+((AND TRUE) TRUE)  -->  TRUE | K
+(((C XOR) FALSE) FALSE)  -->  FALSE | KI
+(NOT (NOT FALSE))  -->  FALSE | KI
+((XOR FALSE) TRUE)  -->  TRUE | K
+(ISZERO ZERO)  -->  TRUE | K
+((LEQ THREE) THREE)  -->  TRUE | K
+((LEQ TWO) THREE)  -->  TRUE | K
+((LEQ TEN) TWO)  -->  FALSE | KI
+(FACT TWO)  -->  TWO
+(FIB ONE)  -->  ONE
