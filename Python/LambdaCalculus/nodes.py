@@ -96,16 +96,12 @@ class ApplicationNode(Node):
         NEW = deepcopy(new)
 
         NEW.renameVariables(newIdx)
-
-        #print("...", newIdx, self, "---", varNode, "---", NEW)
-
+        
         if self.expA.replace(varNode, NEW, 2*newIdx+1):
             self.expA = NEW
 
         if self.expB.replace(varNode, NEW, 2*newIdx+2):
             self.expB = NEW
-
-        #print("-->", newIdx, self)
 
     def renameVariables(self, idx: FunctionNode):
         self.expA.renameVariables(2*idx+1)

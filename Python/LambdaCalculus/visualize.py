@@ -7,6 +7,8 @@ from nodes import Node
 
 def visualizeAST(Node: Node, name, inputString):
     dot = Digraph(comment='Abstract Syntax Tree')
+    inputString = inputString.strip()
+    inputString = inputString.replace("λ", "#")
 
     Node.plot(0, dot)
 

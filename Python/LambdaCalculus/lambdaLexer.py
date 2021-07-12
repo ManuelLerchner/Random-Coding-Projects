@@ -18,7 +18,7 @@ class Lexer:
 
         self.str = inputString.strip()
         if(debug):
-            printColor("\nTrying to evaluate Input:", Fore.YELLOW)
+            printColor("\nTrying to evaluate hidden Input:", Fore.YELLOW)
             printColor("'"+self.str+"'", Fore.GREEN, end="\n\n")
 
         if self.str == "":

@@ -4,9 +4,9 @@ from main import evaluate
 
 class Test_Recursion(unittest.TestCase):
     def test_Fibonacci(self):
-        inputString = "(FIB ONE)"
+        inputString = "(FIB THREE)"
         res = str(evaluate(inputString))
-        self.assertTrue("ONE" in res)
+        self.assertTrue("TWO" in res)
 
     def test_Factorial(self):
         inputString = "(FACT TWO)"

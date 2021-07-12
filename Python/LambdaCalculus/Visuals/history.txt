@@ -15,3 +15,214 @@
 ((LEQ TEN) TWO)  -->  FALSE | KI
 (FACT TWO)  -->  TWO
 (FIB ONE)  -->  ONE
+(FIRST_EL ((PAIR ONE) THREE))  -->  ONE
+(#f.#x.x y)  -->  I
+(#f.f #x.x)  -->  I
+(#f.(f ONE) PLUS)  -->  SUCC
+(#x.M N)  -->  M
+(#x.M ((PLUS x) x))   -->  M
+(#x.TWO ((PLUS x) x))   -->  TWO
+(#x.#x.x (f f))   -->  I
+(#f.((PLUS f) TWO) ONE)   -->  THREE
+(#f.(f THREE) #x.((MULT x) x))   -->  NINE
+(#f.(f THREE) #x.((MULT x) x))   -->  NINE
+((#f.f #x.((MULT x) x)) THREE)   -->  NINE
+(FACT TWO)  -->  TWO
+(FACT THREE)  -->  SIX
+(FIB SIX)  -->  EIGHT
+(#x.((MULT x) x) THREE)   -->  NINE
+(#x.((MULT x) x) THREE)   -->  NINE
+(#x.((MULT x) x) THREE)   -->  NINE
+((LEQ TWO) ONE)  -->  FALSE | KI
+((EQ TWO) ONE)  -->  FALSE | KI
+((LEQ TWO) ONE)  -->  FALSE | KI
+((LEQ TWO) ONE)  -->  FALSE | KI
+((LEQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+I  -->  I
+((AND TRUE) FALSE)  -->  FALSE | KI
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  FALSE | KI
+((EQ TWO) TWO)  -->  FALSE | KI
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  FALSE | KI
+((EQ TWO) TWO)  -->  TRUE | K
+((EQ TWO) TWO)  -->  TRUE | K
+((EXP ONE) FIVE)  -->  ONE
+((EXP TWO) THREE)  -->  EIGHT
+((MINUS EIGHT) THREE)  -->  FIVE
+((MINUS ZERO) THREE)  -->  ZERO
+((MULT TWO) FOUR)  -->  EIGHT
+(PRED (PRED TEN))  -->  EIGHT
+(SUCC (SUCC (SUCC FOUR)))  -->  SEVEN
+((AND TRUE) TRUE)  -->  TRUE | K
+(((C XOR) FALSE) FALSE)  -->  FALSE | KI
+(NOT (NOT FALSE))  -->  FALSE | KI
+((XOR FALSE) TRUE)  -->  TRUE | K
+(ISZERO ZERO)  -->  TRUE | K
+((LEQ THREE) THREE)  -->  TRUE | K
+((LEQ TWO) THREE)  -->  TRUE | K
+((LEQ TEN) TWO)  -->  FALSE | KI
+(FACT TWO)  -->  TWO
+(FIB ONE)  -->  ONE
+((EQ TWO) TWO)  -->  TRUE | K
+((EXP ONE) FIVE)  -->  ONE
+((EXP TWO) THREE)  -->  EIGHT
+((MINUS EIGHT) THREE)  -->  FIVE
+((MINUS ZERO) THREE)  -->  ZERO
+((MULT TWO) FOUR)  -->  EIGHT
+(PRED (PRED TEN))  -->  EIGHT
+(SUCC (SUCC (SUCC FOUR)))  -->  SEVEN
+((AND TRUE) TRUE)  -->  TRUE | K
+(((C XOR) FALSE) FALSE)  -->  FALSE | KI
+(NOT (NOT FALSE))  -->  FALSE | KI
+((XOR FALSE) TRUE)  -->  TRUE | K
+(ISZERO ZERO)  -->  TRUE | K
+((LEQ THREE) THREE)  -->  TRUE | K
+((LEQ TWO) THREE)  -->  TRUE | K
+((LEQ TEN) TWO)  -->  FALSE | KI
+(FACT TWO)  -->  TWO
+(FIB ONE)  -->  ONE
+((EQ TWO) TWO)  -->  TRUE | K
+((EXP ONE) FIVE)  -->  ONE
+((EXP TWO) THREE)  -->  EIGHT
+((MINUS EIGHT) THREE)  -->  FIVE
+((MINUS ZERO) THREE)  -->  ZERO
+((MULT TWO) FOUR)  -->  EIGHT
+(PRED (PRED TEN))  -->  EIGHT
+(SUCC (SUCC (SUCC FOUR)))  -->  SEVEN
+((AND TRUE) TRUE)  -->  TRUE | K
+(((C XOR) FALSE) FALSE)  -->  FALSE | KI
+(NOT (NOT FALSE))  -->  FALSE | KI
+((XOR FALSE) TRUE)  -->  TRUE | K
+(ISZERO ZERO)  -->  TRUE | K
+((LEQ THREE) THREE)  -->  TRUE | K
+((LEQ TWO) THREE)  -->  TRUE | K
+((LEQ TEN) TWO)  -->  FALSE | KI
+(FACT TWO)  -->  TWO
+(FIB ONE)  -->  ONE
+((EQ TWO) TWO)  -->  TRUE | K
+((EXP ONE) FIVE)  -->  ONE
+((EXP TWO) THREE)  -->  EIGHT
+((MINUS EIGHT) THREE)  -->  FIVE
+((MINUS ZERO) THREE)  -->  ZERO
+((MULT TWO) FOUR)  -->  EIGHT
+(PRED (PRED TEN))  -->  EIGHT
+(SUCC (SUCC (SUCC FOUR)))  -->  SEVEN
+((AND TRUE) TRUE)  -->  TRUE | K
+(((C XOR) FALSE) FALSE)  -->  FALSE | KI
+(NOT (NOT FALSE))  -->  FALSE | KI
+((XOR FALSE) TRUE)  -->  TRUE | K
+(ISZERO ZERO)  -->  TRUE | K
+((LEQ THREE) THREE)  -->  TRUE | K
+((LEQ TWO) THREE)  -->  TRUE | K
+((LEQ TEN) TWO)  -->  FALSE | KI
+(FACT TWO)  -->  TWO
+(FIB ONE)  -->  ONE
+((EQ TWO) TWO)  -->  FALSE | KI
+((EQ TWO) TWO)  -->  FALSE | KI
+((EQ TWO) TWO)  -->  FALSE | KI
+((MULT TWO) FOUR)  -->  EIGHT
+(PRED (PRED TEN))  -->  EIGHT
+(SUCC (SUCC (SUCC FOUR)))  -->  SEVEN
+((AND TRUE) TRUE)  -->  TRUE | K
+(NOT (NOT FALSE))  -->  TRUE | K
+((XOR FALSE) TRUE)  -->  TRUE | K
+(ISZERO ZERO)  -->  TRUE | K
+((LEQ THREE) THREE)  -->  FALSE | KI
+((LEQ TWO) THREE)  -->  FALSE | KI
+((LEQ TEN) TWO)  -->  FALSE | KI
+((EQ TWO) TWO)  -->  TRUE | K
+((EXP ONE) FIVE)  -->  ONE
+((EXP TWO) THREE)  -->  EIGHT
+((MINUS EIGHT) THREE)  -->  FIVE
+((MINUS ZERO) THREE)  -->  ZERO
+((MULT TWO) FOUR)  -->  EIGHT
+(PRED (PRED TEN))  -->  EIGHT
+(SUCC (SUCC (SUCC FOUR)))  -->  SEVEN
+((AND TRUE) TRUE)  -->  TRUE | K
+(((C XOR) FALSE) FALSE)  -->  FALSE | KI
+(NOT (NOT FALSE))  -->  FALSE | KI
+((XOR FALSE) TRUE)  -->  TRUE | K
+(ISZERO ZERO)  -->  TRUE | K
+((LEQ THREE) THREE)  -->  TRUE | K
+((LEQ TWO) THREE)  -->  TRUE | K
+((LEQ TEN) TWO)  -->  FALSE | KI
+(FACT TWO)  -->  TWO
+(FIB ONE)  -->  ONE
+((AND TRUE) FALSE)  -->  FALSE | KI
+((EQ TEN) TWO)  -->  FALSE | KI
+(#x.((MULT x) x) THREE)   -->  NINE
+(FIB THREE)  -->  TWO
+(FACT TWO)  -->  TWO
+(FACT THREE)  -->  SIX
+(FACT THREE)  -->  SIX
+(FACT THREE)  -->  SIX
+((EXP ONE) FIVE)  -->  ONE
+((EXP TWO) THREE)  -->  EIGHT
+((MINUS EIGHT) THREE)  -->  FIVE
+((MINUS ZERO) THREE)  -->  ZERO
+((MULT TWO) FOUR)  -->  EIGHT
+(PRED (PRED TEN))  -->  EIGHT
+(SUCC (SUCC (SUCC FOUR)))  -->  SEVEN
+((AND TRUE) TRUE)  -->  TRUE | K
+(((C XOR) FALSE) FALSE)  -->  FALSE | KI
+(NOT (NOT FALSE))  -->  FALSE | KI
+((XOR FALSE) TRUE)  -->  TRUE | K
+(ISZERO ZERO)  -->  TRUE | K
+((LEQ THREE) THREE)  -->  TRUE | K
+((LEQ TWO) THREE)  -->  TRUE | K
+((LEQ TEN) TWO)  -->  FALSE | KI
+(FACT TWO)  -->  TWO
+(FIB ONE)  -->  ONE
+(((Y DIVIDE1) THREE) TWO)  -->  ONE
+((DIV TWO) TWO)  -->  ONE
+((DIV SIX) TWO)  -->  THREE
+(FIRST_EL ((PAIR ONE) THREE))  -->  ONE
+(FIRST_EL ((PAIR ONE) THREE))  -->  ONE
+(FIRST_EL ((PAIR ONE) THREE))  -->  ONE
+(FIRST_EL ((PAIR ONE) THREE))  -->  ONE
+(FIB FIVE)  -->  FIVE
+(FIB SIX)  -->  EIGHT
+(FIB SIX)  -->  EIGHT
+(FIB FOUR)  -->  THREE
+(FIB SIX)  -->  EIGHT
+(SUCC TEN)  -->  ELEVEN
+(SUCC EIGHTEEN)  -->  NINETEEN
+((PLUS EIGHTEEN) TWO)  -->  TWENTY
+((MINUS FOUR) TWO)  -->  TWO
+((MINUS TEN) TWO)  -->  EIGHT
+((MINUS THIRTEEN) TWO)  -->  ELEVEN
+((MINUS TWENTY) TWO)  -->  EIGHTEEN
+((DIV TWENTY) FOUR)  -->  FIVE
+((DIV TWENTY) FOUR)  -->  FIVE
+((DIV EIGHT) FOUR)  -->  TWO
+((DIV TWENTY) FOUR)  -->  FIVE
+((DIV FOUR) THREE)  -->  ONE
+((DIV FIVE) THREE)  -->  ONE
+((DIV SIX) THREE)  -->  TWO
+((DIV (FIB SIX)) THREE)  -->  TWO
+((DIV (FACT FOUR)) (FIB SIX))  -->  THREE

@@ -39,6 +39,11 @@ class Test_Algebra(unittest.TestCase):
         res = str(evaluate(inputString))
         self.assertTrue("EIGHT" in res)
 
+    def test_DIV(self):
+        inputString = "((DIV TWO) TWO)"
+        res = str(evaluate(inputString))
+        self.assertTrue("ONE" in res)
+
 
 if __name__ == '__main__':
     unittest.main()

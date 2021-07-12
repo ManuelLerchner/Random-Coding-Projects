@@ -1,3 +1,5 @@
+import sys
+
 from colorama.ansi import Fore
 
 from lambdaConstants import Constants
@@ -6,6 +8,8 @@ from lambdaLexer import Lexer
 from lambdaParser import Parser
 from utility import printColor, timeIt
 from visualize import visualizeAST
+
+sys.setrecursionlimit(2500)
 
 
 # Boolean
@@ -23,12 +27,14 @@ inputString = "((MULT TWO) FOUR)"
 inputString = "(PRED (PRED TEN))"
 inputString = "((EXP TWO) THREE)"
 inputString = "((MINUS EIGHT) THREE)"
+inputString = "((DIV SIX) TWO)"
 
 # Boolean - Arithmetic
 inputString = "(ISZERO ZERO)"
 inputString = "((LEQ THREE) THREE)"
 inputString = "((LEQ TWO) THREE)"
 inputString = "((LEQ TEN) TWO)"
+inputString = "((EQ TWO) ONE)"
 
 # List
 inputString = "(FIRST_EL ((PAIR a) b))"
@@ -39,14 +45,22 @@ inputString = "(head (tail (tail ((cons a) ((cons b) ((cons c) d))))))"
 inputString = "(FIRST_EL ((PAIR ONE) THREE))"
 
 # Recursion
-#inputString = "(FACT TWO)"
-#inputString = "(FIB TWO)"
-#inputString = "(FACT FOUR)"
-#inputString = "(FIB FIVE)"
+inputString = "(FACT THREE)"
+inputString = "(FIB THREE)"
+inputString = "(FACT THREE)"
+inputString = "(FIB SIX)"
+
+#Random
+inputString = "(λf.((PLUS f) TWO) ONE) "
+inputString = "(λf.(f THREE) λx.((MULT x) x)) "
+inputString = "((λf.f λx.((MULT x) x)) THREE) "
+inputString = "(λx.((MULT x) x) THREE) "
+inputString = "((DIV (FIB SIX)) (FACT FOUR)))"
+inputString = "((DIV (FACT FOUR)) (FIB SIX))"
 
 
 @timeIt
-def evaluate(prettyString: str, debug=True):
+def evaluate(prettyString: str, debug=False):
     lambdaConstants = Constants()
 
     if(debug):
@@ -72,11 +86,14 @@ def evaluate(prettyString: str, debug=True):
 
     if equivalentExpression:
         if(debug):
-            printColor("This is equivalent to:", Fore.YELLOW)
+            printColor("Input:", Fore.YELLOW)
+            printColor(prettyString, '\033[1m'+Fore.GREEN)
+            printColor("evaluated to:", Fore.YELLOW)
             printColor(equivalentExpression, '\033[1m'+Fore.GREEN, end="\n\n")
 
             with open("Visuals/history.txt", mode="a") as f:
-                f.write(f"{prettyString}  -->  {equivalentExpression}\n")
+                f.write(
+                    f"{prettyString.replace('λ','#')}  -->  {equivalentExpression}\n")
 
         return equivalentExpression
 
@@ -84,4 +101,5 @@ def evaluate(prettyString: str, debug=True):
 
 
 if __name__ == '__main__':
+
     res = evaluate(inputString, debug=True)
