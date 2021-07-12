@@ -19,6 +19,16 @@ class Constants:
         "EIGHT":        "λf.λx.(f (f (f (f (f (f (f (f x))))))))",
         "NINE":         "λf.λx.(f (f (f (f (f (f (f (f (f x)))))))))",
         "TEN":          "λf.λx.(f (f (f (f (f (f (f (f (f (f x))))))))))",
+        "ELEVEN":       "λf.λx.(f (f (f (f (f (f (f (f (f (f (f x)))))))))))",
+        "TWELVE":       "λf.λx.(f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))",
+        "THIRTEEN":     "λf.λx.(f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))",
+        "FOURTEEN":     "λf.λx.(f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))",
+        "FIFTEEN":      "λf.λx.(f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))",
+        "SIXTEEN":      "λf.λx.(f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))))",
+        "SEVENTEEN":    "λf.λx.(f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))))",
+        "EIGHTEEN":     "λf.λx.(f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))))))",
+        "NINETEEN":     "λf.λx.(f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x)))))))))))))))))))",
+        "TWENTY":       "λf.λx.(f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f (f x))))))))))))))))))))",
     }
 
     Operations = {
@@ -42,6 +52,9 @@ class Constants:
         "MULT":             "λm.λn.λf.(m (n f))",
         "EXP":              "λm.λn.λf.λx.(((n m) f) x)",
         "MINUS":            "λj.λk.((k PRED) j)",
+        "div":              "λc.λn.λm.λf.λx.(λd.(((ISZERO d) ((ZERO f) x)) (f ((((c d) m) f) x))) ((MINUS n) m))",
+        "divide1":          "(Y div)",
+        "DIV":              "λn.(divide1 (SUCC n))",
 
         # Boolean
         "AND":              "λp.λq.((p q) p)",
@@ -51,6 +64,7 @@ class Constants:
         "IFTHENELSE":       "λb.λx.λy.((b x) y)",
         "ISZERO":           "λn.((n λx.FALSE) TRUE)",
         "LEQ":              "λm.λn.(ISZERO ((MINUS m) n))",
+        "EQ":               "λm.λn.((AND ((LEQ m) n)) ((LEQ n) m))",
 
         # Tuple
         "PAIR":             "λx.λy.λz.((z x) y)",
@@ -76,7 +90,7 @@ class Constants:
         "FACTV":            "(YV FACT_STEPV)",
 
         "FIB_STEP":         "λg.λn.(((IFTHENELSE ((LEQ n) TWO)) ONE) ((PLUS (g (PRED n))) (g (PRED (PRED n)))))",
-        "FIB":              "(Y FIB_STEP)"
+        "FIB":              "(Y FIB_STEP)",
     }
 
     def getAll(self):
