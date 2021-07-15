@@ -17,16 +17,20 @@ class TuringMachine:
         self.currentState = q0
 
     def run(self):
-        print(" ", self.currentState, self.Tape)
+        print("{: <5} {: <10} {: <20}".format(
+            " ", self.currentState, self.Tape.prettyPrint()))
 
         while True:
 
             input = (self.currentState, self.Tape.readSymbol())
             output = self.δ.find(input)
+            if output is None:
+                raise Exception(input, "not found in TransitionFunction")
 
             newSymbol, newState, dir = output
 
-            print(newSymbol, newState, self.Tape.prettyPrint())
+            print("{: <5} {: <10} {: <20}".format(
+                newSymbol, newState, self.Tape.prettyPrint()))
 
             self.Tape.writeSymbol(newSymbol)
             self.currentState = newState
@@ -35,7 +39,9 @@ class TuringMachine:
             if newState in self.F:
                 break
 
-        print(" ", self.currentState, self.Tape)
+        print("{: <5} {: <10} {: <}".format(
+            " ", self.currentState, self.Tape.prettyPrint()))
+        print()
         return self.Tape
 
     def render(self, name):

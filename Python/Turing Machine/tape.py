@@ -4,11 +4,11 @@ from colorama.ansi import Fore
 
 class Tape:
 
-    def __init__(self, blankSymbol, initialLength=6):
+    def __init__(self, blankSymbol, initialLength=25):
         self.blankSymbol = blankSymbol
         initialSize = 2*initialLength+1
         self.tape = [blankSymbol]*initialSize
-        self.idx = initialLength
+        self.idx = 10
 
     def setValues(self, list):
         for i in range(len(list)):
@@ -31,7 +31,8 @@ class Tape:
         elif dir == "L":
             if self.idx == 0:
                 self.tape.insert(0, self.blankSymbol)
-            self.idx -= 1
+            else:
+                self.idx -= 1
 
     def prettyPrint(self, formatCurrPos=True):
         out = ""
