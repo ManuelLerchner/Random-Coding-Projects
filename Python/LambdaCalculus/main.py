@@ -50,13 +50,13 @@ inputString = "(FIB THREE)"
 inputString = "(FACT THREE)"
 inputString = "(FIB SIX)"
 
-#Random
+# Random
 inputString = "(λf.((PLUS f) TWO) ONE) "
 inputString = "(λf.(f THREE) λx.((MULT x) x)) "
 inputString = "((λf.f λx.((MULT x) x)) THREE) "
 inputString = "(λx.((MULT x) x) THREE) "
-inputString = "((DIV (FIB SIX)) (FACT FOUR)))"
-inputString = "((DIV (FACT FOUR)) (FIB SIX))"
+#inputString = "((DIV (FIB SIX)) (FACT FOUR)))"
+#inputString = "((DIV (FACT FOUR)) (FIB SIX))"
 
 
 @timeIt

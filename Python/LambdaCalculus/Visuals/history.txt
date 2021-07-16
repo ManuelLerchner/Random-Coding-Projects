@@ -226,3 +226,4 @@ I  -->  I
 ((DIV SIX) THREE)  -->  TWO
 ((DIV (FIB SIX)) THREE)  -->  TWO
 ((DIV (FACT FOUR)) (FIB SIX))  -->  THREE
+(#x.((MULT x) x) THREE)   -->  NINE
