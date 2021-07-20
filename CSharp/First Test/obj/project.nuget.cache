@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "6BHAjD6AgVuGgBuIQjC0qtGP5IJZSCuRueMIaVPn/akIz10s48NSBg2+D28ErGhAsCEXaxRBPk60y0fwlsE56Q==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Manuel\\Documents\\Coding Projects\\CSharp\\First Test\\First_Test.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Manuel\\.nuget\\packages\\mathnet.numerics\\4.15.0\\mathnet.numerics.4.15.0.nupkg.sha512"
+  ],
+  "logs": []
+}
