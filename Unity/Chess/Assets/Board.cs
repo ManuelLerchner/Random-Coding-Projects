@@ -7,24 +7,36 @@ using System.Linq;
 
 public class Board : MonoBehaviour {
 
-    public Piece[,] board = new Piece[8, 8];
+    public Piece[,] board;
 
 
     LoadSprites GS;
 
-    public String playerTurn = "White";
+    String standard = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -0 1";
     public Piece pieceSelected;
+    public string playerTurn;
+
+    public Canvas c;
+    HUD HUD;
+
 
     public List<Move> illegalMoves = new List<Move>();
 
-
-    bool gameOver;
-    bool check;
+    public bool gameOver;
+    public bool check;
 
     void Start() {
 
         GS = gameObject.GetComponent<LoadSprites>();
-        String standard = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -0 1";
+
+        HUD = c.GetComponent<HUD>();
+
+        reset();
+    }
+
+    public void reset() {
+        board = new Piece[8, 8];
+        playerTurn = "White";
         loadGameStatefromFENString(standard);
         generateIllegalMoves(playerTurn);
     }
@@ -192,6 +204,8 @@ public class Board : MonoBehaviour {
             if (attack.posEnd == myKing.pos) {
                 //Opponent can captchure King last move is illegal
                 Debug.Log($"Check for {attack.P.col}");
+                HUD.bannerText = $"Check for { attack.P.col}";
+                HUD.showHUD();
                 Debug.Log($"{attack.P} attacks {myKing}");
                 isChecked = true;
             }
@@ -204,6 +218,8 @@ public class Board : MonoBehaviour {
             gameOver = true;
             Debug.Log($"Checkmate for {enemyCol}");
             Debug.Log($"GameOver {enemyCol} wins");
+            HUD.bannerText = $"Checkmate for {enemyCol}";
+            HUD.showHUD();
         }
 
         //Stalemate
@@ -211,6 +227,8 @@ public class Board : MonoBehaviour {
             gameOver = true;
             Debug.Log($"Stalemate");
             Debug.Log($"Draw");
+            HUD.bannerText = "Stalemate";
+            HUD.showHUD();
         }
 
     }

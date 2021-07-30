@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "6BHAjD6AgVuGgBuIQjC0qtGP5IJZSCuRueMIaVPn/akIz10s48NSBg2+D28ErGhAsCEXaxRBPk60y0fwlsE56Q==",
+  "dgSpecHash": "K4gqNOvbmvkgeDbCuAkGwZmaHVvEORiUITAFiKsDPhjpUePobEqvNFi9F/snfTj4LPAnV4iXiaTrPqg4sjZQfQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Manuel\\Documents\\Coding Projects\\CSharp\\First Test\\First_Test.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Manuel\\.nuget\\packages\\mathnet.numerics\\4.15.0\\mathnet.numerics.4.15.0.nupkg.sha512"
+    "C:\\Users\\Manuel\\.nuget\\packages\\mathnet.numerics\\4.15.0\\mathnet.numerics.4.15.0.nupkg.sha512",
+    "C:\\Users\\Manuel\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
+    "C:\\Users\\Manuel\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
+    "C:\\Users\\Manuel\\.nuget\\packages\\system.drawing.common\\5.0.2\\system.drawing.common.5.0.2.nupkg.sha512"
   ],
   "logs": []
 }

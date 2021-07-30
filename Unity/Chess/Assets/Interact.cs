@@ -8,15 +8,31 @@ public class Interact : MonoBehaviour {
     Board Board;
     GameController GC;
 
+    public Canvas c;
+    HUD HUD;
+
+
     void Start() {
         Board = gameObject.GetComponent<Board>();
         GC = gameObject.GetComponent<GameController>();
+        HUD = c.GetComponent<HUD>();
+
     }
 
 
     void Update() {
 
+
         if (Input.GetMouseButtonDown(0)) {
+
+            if (HUD.show) {
+                HUD.hideHUD();
+                if (Board.gameOver) {
+                    Board.reset();
+                }
+                return;
+            }
+
             Vector3 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2Int BoardPos = getBoardPos(MousePos);
 

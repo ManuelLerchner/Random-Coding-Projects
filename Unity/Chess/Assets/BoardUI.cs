@@ -13,24 +13,34 @@ public class BoardUI : MonoBehaviour {
     Board Board;
     GameController GC;
 
+
+    Shader s;
+    Material squareMaterial;
+
     void Start() {
 
         Board = gameObject.GetComponent<Board>();
         GC = gameObject.GetComponent<GameController>();
 
-        Shader s = Shader.Find("Unlit/Color");
+        s = Shader.Find("Unlit/Color");
 
         //Background
         GameObject bg = GameObject.CreatePrimitive(PrimitiveType.Quad);
         bg.name = "bg";
         bg.transform.parent = transform;
-        bg.transform.localScale = Vector3.one * 8f;
+        bg.transform.localScale = Vector3.one * 8.05f;
         bg.transform.position = Vector3.forward * 0.1f;
 
-        Material squareMaterial = new Material(s);
+        squareMaterial = new Material(s);
         bg.GetComponent<MeshRenderer>().material = squareMaterial;
         bg.GetComponent<MeshRenderer>().material.color = colBackground;
 
+        setPieces();
+
+
+    }
+
+    public void setPieces() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 ///Grid
@@ -56,8 +66,6 @@ public class BoardUI : MonoBehaviour {
 
             }
         }
-
-
     }
 
 

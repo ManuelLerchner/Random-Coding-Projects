@@ -34,3 +34,8 @@ C:\Users\Manuel\Documents\Coding Projects\CSharp\First Test\obj\Debug\net5.0\Fir
 C:\Users\Manuel\Documents\Coding Projects\CSharp\First Test\obj\Debug\net5.0\ref\First_Test.dll
 C:\Users\Manuel\Documents\Coding Projects\CSharp\First Test\obj\Debug\net5.0\First_Test.pdb
 C:\Users\Manuel\Documents\Coding Projects\CSharp\First Test\obj\Debug\net5.0\First_Test.genruntimeconfig.cache
+C:\Users\Manuel\Documents\Coding Projects\CSharp\First Test\bin\Debug\net5.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\Manuel\Documents\Coding Projects\CSharp\First Test\bin\Debug\net5.0\System.Drawing.Common.dll
+C:\Users\Manuel\Documents\Coding Projects\CSharp\First Test\bin\Debug\net5.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\Manuel\Documents\Coding Projects\CSharp\First Test\bin\Debug\net5.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\Manuel\Documents\Coding Projects\CSharp\First Test\bin\Debug\net5.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll

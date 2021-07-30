@@ -10,6 +10,9 @@ namespace Neural_Network
     {
         static void Main(string[] args)
         {
+
+            Example_SetJPEGQuality E = new Example_SetJPEGQuality();
+            E.test();
             DataGenerator DG = new DataGenerator();
 
             ActivationFunction AF = new Sigmoid();
@@ -20,7 +23,7 @@ namespace Neural_Network
             var NN = new Network(dims, AF, CF, 0.5);
 
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 var Data = DG.randomXOR();
                 var input = DenseMatrix.OfRowVectors(new Vector<double>[] { Data.Inp });

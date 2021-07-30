@@ -1,0 +1,80 @@
+@media only screen {
+    .parallax img {
+        max-height: 160%;
+    }
+}
+
+.card {
+    margin: 40px;
+
+    box-shadow: -3px -3px 15px 5px rgb(113, 63, 143),
+        3px 3px 15px 3px rgb(170, 96, 0);
+
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+
+    border: 2px solid black;
+}
+
+.cardWelcome {
+    margin: 60px;
+    border-left: 10px solid #06d2e0;
+}
+
+.top {
+    padding-top: 60px;
+}
+
+.row {
+    margin-bottom: 0px;
+}
+
+.card-title {
+    font-size: 35 !important;
+}
+
+.card-content {
+    font-size: 18 !important;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.border {
+    box-shadow: 0px 0px 2px 2px #ffffff;
+}
+
+.header {
+    font-family: "Arial", "Helvetica", "sans-serif";
+    font-size: 75;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-shadow: 7px 7px 2px black;
+}
+
+.subtext {
+    font-size: 40;
+    font-family: "Arial", "Helvetica", "sans-serif";
+    text-shadow: 3px 3px 2px rgb(0, 0, 0);
+}
+
+.blurr {
+    filter: blur(2px);
+}
+
+.bg {
+    background-color: #252526;
+}
+
+/* Scroll */
+body::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
