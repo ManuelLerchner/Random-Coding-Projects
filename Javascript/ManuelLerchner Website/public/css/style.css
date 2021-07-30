@@ -7,8 +7,8 @@
 .card {
     margin: 40px;
 
-    box-shadow: -3px -3px 15px 5px rgb(113, 63, 143),
-        3px 3px 15px 3px rgb(170, 96, 0);
+    box-shadow: -6px -6px 20px 10px rgb(79, 143, 63),
+        6px 6px 20px 10px rgb(212, 133, 29);
 
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -16,6 +16,11 @@
     border-bottom-left-radius: 10px;
 
     border: 2px solid black;
+}
+
+.card2 {
+    box-shadow: -6px -6px 20px 10px rgb(113, 63, 143),
+        6px 6px 20px 10px rgb(245, 141, 6);
 }
 
 .cardWelcome {
@@ -77,4 +82,53 @@ body::-webkit-scrollbar {
 body {
     -ms-overflow-style: none;
     scrollbar-width: none;
+}
+
+.active {
+    background-color: #565656;
+}
+
+.material-icons.md-18 {
+    font-size: 18px;
+}
+.material-icons.md-24 {
+    font-size: 24px;
+}
+.material-icons.md-36 {
+    font-size: 36px;
+}
+.material-icons.md-48 {
+    font-size: 48px;
+}
+
+.youtube a {
+    color: #ff0000;
+}
+
+.twiter a {
+    color: #1da1f2;
+}
+
+.brand-logo img {
+    height: 56px;
+}
+
+#Logo {
+    animation: rainbow 10s infinite;
+    position: relative;
+    top: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Consolas, monaco, monospace;
+    font-size: 28px;
+}
+
+@keyframes rainbow {
+    from {
+        filter: invert(20%) sepia(100%) saturate(1000%);
+    }
+    to {
+        filter: invert(20%) sepia(100%) saturate(1000%) hue-rotate(360deg);
+    }
 }

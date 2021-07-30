@@ -3,10 +3,17 @@ const dotenv = require("dotenv");
 const path = require("path");
 const exphbs = require("express-handlebars");
 
+var morgan = require("morgan");
+
 const app = express();
 
 //Dotenv
 dotenv.config({ path: "./config/config.env" });
+
+//Log
+if (process.env.NODE_ENV === "developement") {
+    app.use(morgan("dev"));
+}
 
 //Static
 app.use(express.static(path.join(__dirname, "public")));
