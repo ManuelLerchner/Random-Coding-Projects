@@ -4,11 +4,18 @@
     }
 }
 
+.paralaxBig {
+    height: 700px;
+}
+
 .card {
     margin: 40px;
 
-    box-shadow: -6px -6px 20px 10px rgb(79, 143, 63),
+    box-shadow: -6px -6px 20px 10px rgb(63, 143, 123),
         6px 6px 20px 10px rgb(212, 133, 29);
+
+    box-shadow: -6px -6px 20px 10px rgb(113, 63, 143),
+        6px 6px 20px 10px rgb(245, 141, 6);
 
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -18,18 +25,24 @@
     border: 2px solid black;
 }
 
-.card2 {
-    box-shadow: -6px -6px 20px 10px rgb(113, 63, 143),
-        6px 6px 20px 10px rgb(245, 141, 6);
-}
-
 .cardWelcome {
-    margin: 60px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+    bottom: 10%;
+    width: 70vw;
     border-left: 10px solid #06d2e0;
 }
 
 .top {
     padding-top: 60px;
+}
+
+.marginTop {
+    margin-top: 40px;
 }
 
 .row {
@@ -61,7 +74,7 @@
 }
 
 .subtext {
-    font-size: 40;
+    font-size: 45;
     font-family: "Arial", "Helvetica", "sans-serif";
     text-shadow: 3px 3px 2px rgb(0, 0, 0);
 }
@@ -84,7 +97,7 @@ body {
     scrollbar-width: none;
 }
 
-.active {
+.activePage {
     background-color: #565656;
 }
 
@@ -113,15 +126,25 @@ body {
     height: 56px;
 }
 
-#Logo {
-    animation: rainbow 10s infinite;
+.rainbow {
+    animation: rainbow 15s infinite;
+}
+
+.Logo {
     position: relative;
     top: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: Consolas, monaco, monospace;
-    font-size: 28px;
+    width: 56px;
+}
+
+.LogoText {
+    margin-left: 64px;
+
+    font-family: Consolas, monaco, monospace;
+    font-size: 20px;
 }
 
 @keyframes rainbow {
@@ -131,4 +154,36 @@ body {
     to {
         filter: invert(20%) sepia(100%) saturate(1000%) hue-rotate(360deg);
     }
+}
+
+.validate {
+    background-color: red;
+}
+
+/* label color */
+
+.input-field label {
+    color: white;
+    font-size: 20;
+}
+
+/* icon prefix focus color */
+.input-field .prefix {
+    color: white;
+}
+
+.btn-small {
+    margin-left: 10px;
+}
+
+.controllerTitle {
+    font-size: 30px;
+}
+
+.controllerText {
+    font-size: 15px;
+}
+
+.controllerInfo {
+    font-size: 25px;
 }

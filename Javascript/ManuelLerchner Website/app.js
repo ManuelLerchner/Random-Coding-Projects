@@ -12,8 +12,12 @@ dotenv.config({ path: "./config/config.env" });
 
 //Log
 if (process.env.NODE_ENV === "developement") {
-    app.use(morgan("dev"));
+    //app.use(morgan("dev"));
 }
+
+//BodyParser
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 //Static
 app.use(express.static(path.join(__dirname, "public")));
@@ -30,7 +34,10 @@ app.engine(
 );
 
 //Routes
-app.use("/", require("./routes/main"));
+app.use("/", require("./routes/home"));
+app.use("/controller", require("./routes/controller"));
+app.use("/notify", require("./routes/notify"));
+app.use("/about", require("./routes/about"));
 
 //App
 PORT = process.env.PORT || 5000;
