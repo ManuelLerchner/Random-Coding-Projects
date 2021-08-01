@@ -160,18 +160,6 @@ body {
     background-color: red;
 }
 
-/* label color */
-
-.input-field label {
-    color: white;
-    font-size: 20;
-}
-
-/* icon prefix focus color */
-.input-field .prefix {
-    color: white;
-}
-
 .btn-small {
     margin-left: 10px;
 }
@@ -186,4 +174,48 @@ body {
 
 .controllerInfo {
     font-size: 25px;
+}
+
+.controllerImage,
+.controllerImageBig {
+    height: auto;
+    width: auto;
+    max-width: 220px;
+    max-height: 280px;
+
+    border-top-left-radius: 8px !important;
+    border-bottom-left-radius: 8px !important;
+    border-top-right-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
+}
+
+.controllerImageBig {
+    max-height: 420px;
+}
+
+input {
+    color: white;
+}
+
+.input-field span {
+    color: white;
+    font-size: 20;
+}
+
+/* icon prefix focus color */
+.input-field .prefix {
+    color: white;
+}
+
+textarea {
+    color: white;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px #263238 inset !important;
+    box-shadow: 0 0 0px 1000px #263238 inset !important;
+    -webkit-text-fill-color: white;
 }

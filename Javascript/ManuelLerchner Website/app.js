@@ -12,7 +12,7 @@ dotenv.config({ path: "./config/config.env" });
 
 //Log
 if (process.env.NODE_ENV === "developement") {
-    //app.use(morgan("dev"));
+    app.use(morgan("dev"));
 }
 
 //BodyParser
@@ -36,7 +36,7 @@ app.engine(
 //Routes
 app.use("/", require("./routes/home"));
 app.use("/controller", require("./routes/controller"));
-app.use("/notify", require("./routes/notify"));
+app.use("/contact", require("./routes/contact"));
 app.use("/about", require("./routes/about"));
 
 //App
