@@ -1,13 +1,15 @@
 <html lang="en">
     <head>
-
-        <title>Controller</title>
+        <title>Contact</title>
+        <script>
+            document.getElementById("nav-contact").classList.add("activePage")
+        </script>
     </head>
 
     <body class="bg">
 
         <!-- First Parallax  -->
-        <div id="index-banner" class="parallax-container border">
+        <div id="index-banner" class="parallax-container border paralaxBig">
             <div class="top">
                 <div class="container">
 
@@ -28,7 +30,7 @@
 
         <!-- Message Card -->
         <div class="row">
-            <div class="col s10 offset-s1">
+            <div class="col l10 s12 offset-l1 ">
 
                 <div class="card horizontal blue-grey darken-4">
 
@@ -43,7 +45,15 @@
 
                         <!-- Description  -->
                         <div class="row">
-                            <div class="col s3 offset-s1">
+                            <div class="row hide-on-med-and-up">
+                                <div class="col s12 offset-s1">
+                                    <h5
+                                        class="orange-text controllerTitle"
+                                    >Contact me</h5>
+
+                                </div>
+                            </div>
+                            <div class="col s3 offset-s1 hide-on-small-only">
                                 <h5 class="orange-text controllerTitle">
                                     Contact me</h5>
 
@@ -56,9 +66,9 @@
                             </div>
 
                             <!-- Form -->
-                            <form method="POST" action="/notify/api">
+                            <form method="POST" action="/contact/api">
                                 <div class="row">
-                                    <div class="col s6">
+                                    <div class="col s10 l7">
 
                                         <!-- Name -->
                                         <div
@@ -124,10 +134,10 @@
                                             class="input-field col s12 offset-s1 white-text"
                                         >
                                             <i
-                                                class="material-icons Small"
+                                                class="material-icons Small prefix"
                                             >send</i>
                                             <button
-                                                class="btn-small waves-effect waves-light"
+                                                class="btn-small waves-effect waves-light marginLeft"
                                                 type="submit"
                                                 name="action"
                                                 value="Notify"

@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-//  Get /notify
+//  Get /contact
 router.get("/", function (req, res) {
     res.render("contact");
 });
 
-//  Post /notify/api
+//  Post /contact/api
 router.post("/api", function (req, res) {
     console.log(req.body);
 });

@@ -5,7 +5,7 @@
 }
 
 .paralaxBig {
-    height: 700px;
+    height: 75vh;
 }
 
 .card {
@@ -62,19 +62,19 @@
 }
 
 .border {
-    box-shadow: 0px 0px 2px 2px #ffffff;
+    box-shadow: -2px -2px 2px white, -2px 2px 2px white;
 }
 
 .header {
     font-family: "Arial", "Helvetica", "sans-serif";
-    font-size: 75;
+    font-size: calc(3vw + 4vh + 2vmin);
     margin-top: 50px;
     margin-bottom: 50px;
     text-shadow: 7px 7px 2px black;
 }
 
 .subtext {
-    font-size: 45;
+    font-size: calc(1vw + 2vh + 1vmin);
     font-family: "Arial", "Helvetica", "sans-serif";
     text-shadow: 3px 3px 2px rgb(0, 0, 0);
 }
@@ -218,4 +218,16 @@ input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0px 1000px #263238 inset !important;
     box-shadow: 0 0 0px 1000px #263238 inset !important;
     -webkit-text-fill-color: white;
+}
+
+.footerText {
+    font-size: calc(0.3vw + 0.8vh + 0.5vmin);
+}
+
+.descriptionText {
+    font-size: calc(0.8vw + 0.9vh + 0.9vmin);
+}
+
+.marginLeft{
+    margin-left: 45px;
 }
