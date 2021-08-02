@@ -4,6 +4,8 @@
         <script>
             document.getElementById("nav-controller").classList.add("activePage")
         </script>
+        <script defer src="/js/controller.js"></script>
+
     </head>
 
     <body class="bg">
@@ -46,22 +48,35 @@
                                     <h5
                                         class="orange-text controllerTitle"
                                     >Relay</h5>
+                                    <h5
+                                        class="light-blue-text controllerInfo"
+                                        id="relayState_mobile"
+                                    >Current State: ???</h5>
+
                                 </div>
                             </div>
-                            <div class="col s3 offset-s1 hide-on-small-only">
+                            <div
+                                class="col l3 offset-l1 s12 offset-s1 hide-on-small-only"
+                            >
                                 <h5
                                     class="orange-text controllerTitle"
                                 >Relay</h5>
+                                <h5
+                                    class="light-blue-text controllerInfo"
+                                    id="relayState_pc"
+                                >Current State: ???</h5>
                                 <p
                                     class="grey-text text-lighten-4 hide-on-med-and-down controllerText"
-                                >Here you can close a relay at my home, but dont
-                                    do it on purpose because every interaction
-                                    gets logged and forwarded to me.
+                                >Here you can close a relay at my home.
                                 </p>
                             </div>
 
                             <!-- Login -->
-                            <form method="POST" action="/controller/api">
+                            <form
+                                id="form_relay"
+                                method="POST"
+                                action="/controller/api"
+                            >
                                 <div class="row">
                                     <div class="col s10 l7">
 
@@ -109,7 +124,7 @@
                                                 class="material-icons Small prefix"
                                             >send</i>
                                             <button
-                                                class="btn-small waves-effect waves-light marginLeft"
+                                                class="btn-small waves-effect waves-light buttonOffsetLeft"
                                                 type="submit"
                                                 name="action"
                                                 value="Relay"
@@ -150,7 +165,8 @@
                                     >PC</h5>
                                     <h5
                                         class="light-blue-text controllerInfo"
-                                    >Currently: ???</h5>
+                                        id="pcState_mobile"
+                                    >Current State: ???</h5>
 
                                 </div>
                             </div>
@@ -160,6 +176,7 @@
                                 <h5 class="orange-text controllerTitle">PC</h5>
                                 <h5
                                     class="light-blue-text controllerInfo"
+                                    id="pcState_pc"
                                 >Current State: ???</h5>
 
                                 <p
@@ -170,7 +187,11 @@
                             </div>
 
                             <!-- Login -->
-                            <form method="POST" action="/controller/api">
+                            <form
+                                id="form_pc"
+                                method="POST"
+                                action="/controller/api"
+                            >
                                 <div class="row">
                                     <div class="col s10 l7">
 
@@ -218,7 +239,7 @@
                                                 class="material-icons Small prefix"
                                             >send</i>
                                             <button
-                                                class="btn-small waves-effect waves-light marginLeft"
+                                                class="btn-small waves-effect waves-light buttonOffsetLeft"
                                                 type="submit"
                                                 name="action"
                                                 value="PC"

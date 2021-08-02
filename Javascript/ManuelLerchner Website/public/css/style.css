@@ -141,7 +141,7 @@ body {
 }
 
 .LogoText {
-    margin-left: 64px;
+    margin-left: 60px;
 
     font-family: Consolas, monaco, monospace;
     font-size: 20px;
@@ -228,6 +228,14 @@ input:-webkit-autofill:active {
     font-size: calc(0.8vw + 0.9vh + 0.9vmin);
 }
 
-.marginLeft{
+.marginLeft {
+    margin-left: 10vw;
+}
+
+.buttonOffsetLeft {
     margin-left: 45px;
+}
+
+.marginRight {
+    margin-right: 10vw;
 }
