@@ -1,9 +1,9 @@
-[submodule "Javascript/Javascript/Manuel"]
-	path = Javascript/Javascript/Manuel
-	url = https://github.com/ManuelLerchner/Manuel-Lerchner-Website
 [submodule "Javascript/Manuel-Lerchner-Website"]
 	path = Javascript/Manuel-Lerchner-Website
 	url = https://github.com/ManuelLerchner/Manuel-Lerchner-Website
 [submodule "Python/Github.io/ManuelLerchner.github.io"]
 	path = Python/Github.io/ManuelLerchner.github.io
 	url = https://github.com/ManuelLerchner/ManuelLerchner.github.io
+[submodule "Javascript/chat-app"]
+	path = Javascript/chat-app
+	url = https://github.com/ManuelLerchner/chat-app.git
