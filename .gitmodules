@@ -4,3 +4,6 @@
 [submodule "Javascript/Manuel-Lerchner-Website"]
 	path = Javascript/Manuel-Lerchner-Website
 	url = https://github.com/ManuelLerchner/Manuel-Lerchner-Website
+[submodule "Python/Github.io/ManuelLerchner.github.io"]
+	path = Python/Github.io/ManuelLerchner.github.io
+	url = https://github.com/ManuelLerchner/ManuelLerchner.github.io
