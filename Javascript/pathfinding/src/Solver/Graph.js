@@ -1,10 +1,9 @@
 class Node {
     constructor(index) {
-        this.dist = Infinity;
         this.prev = null;
         this.index = index;
         this.neighbours = [];
-        this.visited = null;
+        this.visitedCount = null;
     }
 
     setDist(dist) {
@@ -60,14 +59,15 @@ export class Graph {
             pathIndices.push(node.index);
             node = node.prev;
         }
+
         return pathIndices;
     }
 
-    getVisited() {
-        return this.nodes
-            .filter((node) => node.visited)
+    getVisited(nodes) {
+        return nodes
+            .filter((node) => node.visitedCount)
             .sort((a, b) => {
-                return a.visited - b.visited;
+                return a.visitedCount - b.visitedCount;
             })
             .map((node) => node.index);
     }

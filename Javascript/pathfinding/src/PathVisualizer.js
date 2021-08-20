@@ -5,6 +5,7 @@ import NavBar from "./NavBar/NavBar";
 import Field from "./Game/Field";
 
 import Dijkstra from "./Solver/Dijkstra";
+import AStar from "./Solver/AStar";
 
 class BlockClass {
     constructor(index) {
@@ -20,7 +21,10 @@ export class PathVisualizer extends Component {
 
         this.mousePressed = false;
         this.animating = false;
+        this.calculating = false;
         this.interuptedAnimating = false;
+
+        this.text = "";
 
         this.startIndex = null;
         this.endIndex = null;
@@ -80,11 +84,14 @@ export class PathVisualizer extends Component {
 
             if (!this.clone) return;
 
-            if (this.selectedBrush === "start")
-                this.clone.find((box) => box.type === "start").type = "empty";
+            try {
+                if (this.selectedBrush === "start")
+                    this.clone.find((box) => box.type === "start").type =
+                        "empty";
 
-            if (this.selectedBrush === "end")
-                this.clone.find((box) => box.type === "end").type = "empty";
+                if (this.selectedBrush === "end")
+                    this.clone.find((box) => box.type === "end").type = "empty";
+            } catch {}
 
             if (this.selectedBrush) this.clone[index].type = this.selectedBrush;
 
@@ -111,8 +118,6 @@ export class PathVisualizer extends Component {
 
     clear() {
         if (this.animating) {
-            this.animating = false;
-
             this.pathTimeouts.forEach((timeout) => {
                 clearTimeout(timeout);
             });
@@ -120,6 +125,8 @@ export class PathVisualizer extends Component {
             this.visitedTimeouts.forEach((timeout) => {
                 clearTimeout(timeout);
             });
+
+            this.animating = false;
         }
         const copy = [...this.boxes];
 
@@ -127,6 +134,7 @@ export class PathVisualizer extends Component {
             box.overlay = "";
         });
         this.setboxes(copy);
+        this.text = "";
         this.setState({ state: this.state });
     }
 
@@ -159,19 +167,51 @@ export class PathVisualizer extends Component {
     }
 
     //Solve for Path
-    solve() {
-        if (this.animating === false) {
+    solve(algorithm) {
+        if (this.animating === true) {
+            this.clear();
+        }
+
+        if (this.calculating === false) {
+            this.calculating = true;
+
             this.clear();
             const graph = new Graph(this.boxes, this.dims);
 
-            const start = this.boxes.find((box) => box.type === "start");
-            const end = this.boxes.find((box) => box.type === "end");
+            const startNode = this.boxes.find((box) => box.type === "start");
+            const endNode = this.boxes.find((box) => box.type === "end");
 
-            const Solver = new Dijkstra(start, end, graph);
+            if (!startNode) {
+                this.text = "No Start Node!";
+                this.calculating = false;
+                return;
+            }
+
+            if (!endNode) {
+                this.text = "No End Node!";
+                this.calculating = false;
+                return;
+            }
+
+            const startIndex = startNode.index;
+            const endIndex = endNode.index;
+
+            let Solver = null;
+
+            if (algorithm === "AStar") {
+                Solver = new AStar(startIndex, endIndex, graph);
+            }
+
+            if (algorithm === "Dijkstra") {
+                Solver = new Dijkstra(startIndex, endIndex, graph);
+            }
 
             const target = Solver.solve();
-            const path = Solver.Graph.traceBack(target).slice(1, -1);
-            const visited = Solver.Graph.getVisited();
+
+            const path = graph.traceBack(target).slice(1, -1);
+            const visited = graph.getVisited(Solver.nodes);
+
+            this.calculating = false;
 
             this.animating = true;
             this.animate(visited, path);
@@ -222,6 +262,7 @@ export class PathVisualizer extends Component {
         } else {
             this.animating = false;
             this.interuptedAnimating = false;
+            this.text = "";
         }
     }
 
@@ -231,6 +272,7 @@ export class PathVisualizer extends Component {
                 <NavBar
                     solve={this.solve}
                     randomize={this.randomize}
+                    text={this.text}
                     setselectedBrush={this.setselectedBrush}
                     clear={this.clear}
                 />

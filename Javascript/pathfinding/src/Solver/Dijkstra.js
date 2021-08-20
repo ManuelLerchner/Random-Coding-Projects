@@ -1,11 +1,18 @@
-export default class AStar {
-    constructor(start, end, graph) {
-        this.start = start;
-        this.end = end;
+export default class Dijkstra {
+    constructor(startIndex, endIndex, graph) {
+        this.startIndex = startIndex;
+        this.endIndex = endIndex;
         this.Graph = graph;
 
         this.CONNECTION_WEIGHT = 10;
-        this.Graph.nodes[this.start.index].setDist(0);
+
+        this.nodes = [...this.Graph.nodes];
+
+        this.nodes.forEach((node) => {
+            node.dist = Infinity;
+        });
+
+        this.Graph.nodes[this.startIndex].dist = 0;
     }
 
     solve() {
@@ -25,21 +32,20 @@ export default class AStar {
             );
 
             if (bestCandidate) {
-                if (bestCandidate.index === this.end.index) {
+                if (bestCandidate.index === this.endIndex) {
                     return bestCandidate;
                 }
 
                 remaining = remaining.filter((node) => node !== bestCandidate);
-                bestCandidate.visited = visitedCount;
+                bestCandidate.visitedCount = visitedCount;
                 visitedCount++;
 
                 bestCandidate.neighbours.forEach((neighbour) => {
                     const newDist = bestCandidate.dist + this.CONNECTION_WEIGHT;
 
                     if (newDist < neighbour.dist) {
-                        neighbour.setDist(
-                            bestCandidate.dist + this.CONNECTION_WEIGHT
-                        );
+                        neighbour.dist =
+                            bestCandidate.dist + this.CONNECTION_WEIGHT;
                         neighbour.prev = bestCandidate;
                     }
                 });

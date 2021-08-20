@@ -10,7 +10,7 @@ export default function Field({ dims, boxes, handleClick }) {
 
     return (
         <div className="row">
-            <div className="col l10 offset-l1">
+            <div className="col l10 offset-l1 s12">
                 <div className="grid-container" style={style}>
                     {boxes.map((box) => {
                         return (

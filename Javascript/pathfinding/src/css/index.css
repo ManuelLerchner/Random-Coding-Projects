@@ -78,8 +78,8 @@ body {
 }
 
 div {
-    -webkit-transition: all 0.2s;
-    transition: all 0.2s;
+    -webkit-transition: all 0.1s;
+    transition: all 0.1s;
 }
 
 @keyframes visitedAnimation {
