@@ -4,7 +4,7 @@ class Node {
         this.prev = null;
         this.index = index;
         this.neighbours = [];
-        this.visited = false;
+        this.visited = null;
     }
 
     setDist(dist) {
@@ -66,6 +66,9 @@ export class Graph {
     getVisited() {
         return this.nodes
             .filter((node) => node.visited)
+            .sort((a, b) => {
+                return a.visited - b.visited;
+            })
             .map((node) => node.index);
     }
 }

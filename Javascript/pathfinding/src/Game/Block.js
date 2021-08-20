@@ -17,14 +17,15 @@ export default function Block({ box, handleClick }) {
         box.type === "empty" ? box.overlay : ""
     }`;
 
+    const id = `node-${box.index}`;
+
     return (
         <div
+            id={id}
             className={style}
             onMouseDown={handleOnMouseDown}
             onMouseUp={handleOnMouseUp}
             onMouseMove={handleOnMouseDrag}
-        >
-            {box.symbol}
-        </div>
+        />
     );
 }

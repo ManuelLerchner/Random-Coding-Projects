@@ -55,6 +55,6 @@ input[class="start"]:focus + i {
 input[class="end"]:hover + i,
 input[class="end"]:checked + i,
 input[class="end"]:focus + i {
-    color: rgb(255, 5, 59) !important;
+    color: rgb(238, 255, 0) !important;
     font-size: 50px !important;
 }

@@ -10,6 +10,7 @@ export default class AStar {
 
     solve() {
         let remaining = [...this.Graph.nodes];
+        let visitedCount = 0;
 
         while (remaining.length > 0) {
             const minDist = Math.min.apply(Math, [
@@ -29,7 +30,8 @@ export default class AStar {
                 }
 
                 remaining = remaining.filter((node) => node !== bestCandidate);
-                bestCandidate.visited = true;
+                bestCandidate.visited = visitedCount;
+                visitedCount++;
 
                 bestCandidate.neighbours.forEach((neighbour) => {
                     const newDist = bestCandidate.dist + this.CONNECTION_WEIGHT;

@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export default function Field({ dims, boxes, handleClick }) {
     const style = {
-        gridTemplateColumns: `${"auto ".repeat(dims[0])}`
+        gridTemplateColumns: `${"1fr ".repeat(dims[0])}`
     };
 
     return (
