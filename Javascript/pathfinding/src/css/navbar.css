@@ -1,0 +1,60 @@
+li {
+    margin-right: 20px;
+}
+
+ul.left {
+    margin-left: 20px !important;
+}
+
+.nav-wrapper {
+    background-color: rgb(15, 35, 51) !important;
+}
+
+.drawSelector {
+    background-color: rgb(30, 61, 82);
+    border-radius: 1rem;
+    display: flex;
+}
+
+.drawSelector div {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+input[type="radio"] + i {
+    -webkit-transition: all 1s;
+    transition: all 1s;
+    cursor: pointer;
+}
+
+.material-icons.md-40 {
+    font-size: 40px;
+}
+
+input[class="wall"]:hover + i,
+input[class="wall"]:checked + i,
+input[class="wall"]:focus + i {
+    color: rgb(104, 96, 172) !important;
+    font-size: 50px !important;
+}
+
+input[class="empty"]:hover + i,
+input[class="empty"]:checked + i,
+input[class="empty"]:focus + i {
+    color: rgb(215, 217, 235) !important;
+    font-size: 50px !important;
+}
+
+input[class="start"]:hover + i,
+input[class="start"]:checked + i,
+input[class="start"]:focus + i {
+    color: rgb(0, 223, 231) !important;
+    font-size: 50px !important;
+}
+
+input[class="end"]:hover + i,
+input[class="end"]:checked + i,
+input[class="end"]:focus + i {
+    color: rgb(255, 5, 59) !important;
+    font-size: 50px !important;
+}
