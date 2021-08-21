@@ -22,6 +22,7 @@ body {
 
 .row {
     margin-top: 40px !important;
+    margin-bottom: 40px !important;
 }
 .grid-container {
     display: grid;
