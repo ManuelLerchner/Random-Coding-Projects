@@ -18,7 +18,6 @@ export default function NavBar({
     };
 
     let ErrorMsg = "";
-    console.log(text)
     if (text !== "") {
         ErrorMsg = (
             <li>
