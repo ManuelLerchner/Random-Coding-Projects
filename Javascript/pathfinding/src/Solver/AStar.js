@@ -1,7 +1,7 @@
 export default class AStar {
-    constructor(startIndex, endIndex, graph) {
-        this.startIndex = startIndex;
-        this.endIndex = endIndex;
+    constructor(startNode, endNode, graph) {
+        this.startNode = startNode;
+        this.endNode = endNode;
         this.Graph = graph;
 
         this.nodes = [...this.Graph.nodes];
@@ -11,11 +11,11 @@ export default class AStar {
             node.g = Infinity;
         });
 
-        const startNode = this.nodes[startIndex];
-        startNode.g = 0;
-        startNode.f = this.hCost(startNode);
+        const Start = this.nodes[startNode.index];
+        Start.g = 0;
+        Start.f = this.hCost(Start);
 
-        this.open = [startNode];
+        this.open = [Start];
         this.closed = [];
     }
 
@@ -28,7 +28,8 @@ export default class AStar {
             );
             const currentNode = this.open.find((node) => node.f === minDist);
 
-            if (currentNode.index === this.endIndex) {
+            if (currentNode === this.endNode) {
+                this.nodes = this.closed;
                 return currentNode;
             }
 
@@ -37,6 +38,8 @@ export default class AStar {
 
             this.open = this.open.filter((item) => item !== currentNode);
             this.closed.push(currentNode);
+
+            this.Graph.findNeighbour(currentNode);
 
             currentNode.neighbours.forEach((successor) => {
                 if (!this.closed.includes(successor)) {
@@ -59,7 +62,7 @@ export default class AStar {
             });
         }
 
-        this.nodes = this.open;
+        this.nodes = this.closed;
     }
 
     heuristic([x1, y1], [x2, y2]) {
@@ -67,7 +70,7 @@ export default class AStar {
     }
 
     hCost(Node) {
-        return this.edgeCost(Node, this.nodes[this.endIndex]);
+        return this.edgeCost(Node, this.endNode);
     }
 
     edgeCost(NodeA, NodeB) {

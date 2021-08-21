@@ -1,24 +1,20 @@
 li {
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 ul.left {
-    margin-left: 20px !important;
-}
-
-.nav-wrapper {
-    background-color: rgb(15, 35, 51) !important;
+    margin-left: 5px ;
 }
 
 .drawSelector {
-    background-color: rgb(30, 61, 82);
+    background-color: rgba(34, 113, 119, 0.596);
     border-radius: 1rem;
     display: flex;
 }
 
 .drawSelector div {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 input[type="radio"] + i {
@@ -34,7 +30,7 @@ input[type="radio"] + i {
 input[class="wall"]:hover + i,
 input[class="wall"]:checked + i,
 input[class="wall"]:focus + i {
-    color: rgb(104, 96, 172) !important;
+    color: rgb(114, 109, 184) !important;
     font-size: 50px !important;
 }
 

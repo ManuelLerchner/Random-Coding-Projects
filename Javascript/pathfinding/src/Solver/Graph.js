@@ -1,8 +1,9 @@
 class Node {
-    constructor(index) {
-        this.prev = null;
+    constructor(type, index) {
+        this.type = type;
         this.index = index;
         this.neighbours = [];
+        this.prev = null;
         this.visitedCount = null;
     }
 
@@ -20,29 +21,33 @@ export class Graph {
         this.boxes = boxes;
         this.dims = dims;
 
-        this.nodes = Array.from(boxes, (_, i) => {
-            return new Node(i);
+        this.nodes = Array.from(boxes, (box, i) => {
+            return new Node(box.type, i);
         });
-
-        this.findNeighbour(dims);
     }
 
-    findNeighbour(dims) {
-        this.nodes.forEach((node) => {
-            const index = node.index;
-            if (index % dims[0] !== 0) {
-                this.addNeighbour(node, index - 1);
-            }
-            if ((index + 1) % dims[0] !== 0) {
-                this.addNeighbour(node, index + 1);
-            }
-            if (Math.floor(index / dims[0]) !== 0) {
-                this.addNeighbour(node, index - dims[0]);
-            }
-            if (Math.ceil((index + 1) / dims[0]) !== dims[1]) {
-                this.addNeighbour(node, index + dims[0]);
-            }
-        });
+    findStartNode() {
+        return this.nodes.find((node) => node.type === "start");
+    }
+
+    findEndNode() {
+        return this.nodes.find((node) => node.type === "end");
+    }
+
+    findNeighbour(node) {
+        const index = node.index;
+        if (index % this.dims[0] !== 0) {
+            this.addNeighbour(node, index - 1);
+        }
+        if ((index + 1) % this.dims[0] !== 0) {
+            this.addNeighbour(node, index + 1);
+        }
+        if (Math.floor(index / this.dims[0]) !== 0) {
+            this.addNeighbour(node, index - this.dims[0]);
+        }
+        if (Math.ceil((index + 1) / this.dims[0]) !== this.dims[1]) {
+            this.addNeighbour(node, index + this.dims[0]);
+        }
     }
 
     addNeighbour(node, index) {

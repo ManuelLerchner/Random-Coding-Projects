@@ -1,10 +1,10 @@
 export default class Dijkstra {
-    constructor(startIndex, endIndex, graph) {
-        this.startIndex = startIndex;
-        this.endIndex = endIndex;
+    constructor(startNode, endNode, graph) {
+        this.startNode = startNode;
+        this.endNode = endNode;
         this.Graph = graph;
 
-        this.CONNECTION_WEIGHT = 10;
+        this.CONNECTION_WEIGHT = 1;
 
         this.nodes = [...this.Graph.nodes];
 
@@ -12,7 +12,7 @@ export default class Dijkstra {
             node.dist = Infinity;
         });
 
-        this.Graph.nodes[this.startIndex].dist = 0;
+        this.nodes[startNode.index].dist = 0;
     }
 
     solve() {
@@ -32,13 +32,15 @@ export default class Dijkstra {
             );
 
             if (bestCandidate) {
-                if (bestCandidate.index === this.endIndex) {
+                if (bestCandidate === this.endNode) {
                     return bestCandidate;
                 }
 
                 remaining = remaining.filter((node) => node !== bestCandidate);
                 bestCandidate.visitedCount = visitedCount;
                 visitedCount++;
+
+                this.Graph.findNeighbour(bestCandidate);
 
                 bestCandidate.neighbours.forEach((neighbour) => {
                     const newDist = bestCandidate.dist + this.CONNECTION_WEIGHT;

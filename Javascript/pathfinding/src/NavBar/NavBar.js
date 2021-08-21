@@ -22,7 +22,7 @@ export default function NavBar({
         ErrorMsg = (
             <li>
                 <a
-                    className="waves-effect waves-light btn-large red darken-4"
+                    className="waves-effect waves-light btn-large red darken-4 hide-on-small-only"
                     href="#!"
                 >
                     {text}
@@ -34,7 +34,7 @@ export default function NavBar({
     return (
         <div className="navbar-fixed">
             <nav>
-                <div className="nav-wrapper">
+                <div className="nav-wrapper grey darken-4">
                     <ul className="left hide-on-med-and-down">
                         <Selector setselectedBrush={setselectedBrush} />
                     </ul>
@@ -47,8 +47,13 @@ export default function NavBar({
                                 href="#!"
                                 onClick={randomize}
                             >
-                                Randomize
-                                <i className="material-icons right">
+                                <span className="hide-on-small-only left">
+                                    Randomize
+                                </span>
+                                <i className="material-icons right hide-on-med-and-down">
+                                    shuffle_on
+                                </i>
+                                <i className="material-icons hide-on-med-and-up">
                                     shuffle_on
                                 </i>
                             </a>
@@ -59,15 +64,21 @@ export default function NavBar({
                                 href="#!"
                                 data-target="dropdown1"
                             >
-                                Solve
-                                <i className="material-icons right">
+                                <span className="hide-on-small-only left">
+                                    Solve
+                                </span>
+
+                                <i className="material-icons right hide-on-med-and-down">
+                                    emoji_objects
+                                </i>
+                                <i className="material-icons hide-on-med-and-up">
                                     emoji_objects
                                 </i>
                             </a>
 
                             <ul
                                 id="dropdown1"
-                                className="dropdown-content blue-grey darken-4 "
+                                className="dropdown-content blue-grey darken-2 "
                             >
                                 <li>
                                     <a
@@ -75,9 +86,7 @@ export default function NavBar({
                                         className="white-text"
                                         onClick={solveDijkstra}
                                     >
-                                        <i className="material-icons">
-                                            view_module
-                                        </i>
+                                        <i className="material-icons">pages</i>
                                         Dijkstra
                                     </a>
                                 </li>
@@ -87,9 +96,7 @@ export default function NavBar({
                                         className="white-text"
                                         onClick={solveAStar}
                                     >
-                                        <i className="material-icons">
-                                            view_module
-                                        </i>
+                                        <i className="material-icons">star</i>
                                         AStar
                                     </a>
                                 </li>
@@ -102,10 +109,16 @@ export default function NavBar({
                                 href="#!"
                                 onClick={clear}
                             >
-                                Reset
-                                <i className="material-icons right">
+                                <span className="hide-on-small-only left">
+                                    Reset
+                                </span>
+                                <i className="material-icons right hide-on-med-and-down">
                                     loop
-                                </i>{" "}
+                                </i>
+
+                                <i className="material-icons hide-on-med-and-up">
+                                    loop
+                                </i>
                             </a>
                         </li>
                     </ul>

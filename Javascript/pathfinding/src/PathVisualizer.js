@@ -15,8 +15,16 @@ class BlockClass {
     }
 }
 
+function getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+        width,
+        height
+    };
+}
+
 export class PathVisualizer extends Component {
-    constructor({ dims }) {
+    constructor({ getWindowDimensions }) {
         super();
 
         this.mousePressed = false;
@@ -29,16 +37,8 @@ export class PathVisualizer extends Component {
         this.startIndex = null;
         this.endIndex = null;
 
-        this.pathTimeouts = [];
-        this.visitedTimeouts = [];
+        this.dims = [50, 25];
 
-        this.handleClick = this.handleClick.bind(this);
-        this.clear = this.clear.bind(this);
-        this.randomize = this.randomize.bind(this);
-        this.solve = this.solve.bind(this);
-        this.animate = this.animate.bind(this);
-
-        this.dims = dims;
         this.boxes = [];
         this.selectedBrush = "";
 
@@ -49,6 +49,15 @@ export class PathVisualizer extends Component {
         this.setselectedBrush = (a) => {
             this.selectedBrush = a;
         };
+
+        this.setGridDims();
+
+        this.handleClick = this.handleClick.bind(this);
+        this.clear = this.clear.bind(this);
+        this.randomize = this.randomize.bind(this);
+        this.solve = this.solve.bind(this);
+        this.animate = this.animate.bind(this);
+        this.setGridDims = this.setGridDims.bind(this);
 
         this.randomize();
     }
@@ -118,13 +127,9 @@ export class PathVisualizer extends Component {
 
     clear() {
         if (this.animating) {
-            this.pathTimeouts.forEach((timeout) => {
-                clearTimeout(timeout);
-            });
+            clearInterval(this.pathInterval);
 
-            this.visitedTimeouts.forEach((timeout) => {
-                clearTimeout(timeout);
-            });
+            clearInterval(this.visitedInterval);
 
             this.animating = false;
         }
@@ -152,11 +157,14 @@ export class PathVisualizer extends Component {
                 emptyBoxes[getRandomInt(0, emptyBoxes.length)].type = "wall";
             }
 
-            this.startIndex = getRandomInt(0, 4 * this.dims[0]);
-            this.endIndex = getRandomInt(
-                emptyBoxes.length - 4 * this.dims[0],
-                emptyBoxes.length
-            );
+            this.startIndex =
+                getRandomInt(1, 4) * this.dims[0] +
+                getRandomInt(0, Math.ceil(this.dims[0] / 2));
+
+            this.endIndex =
+                emptyBoxes.length -
+                getRandomInt(1, 4) * this.dims[0] -
+                getRandomInt(0, Math.ceil(this.dims[0] / 2));
 
             emptyBoxes[this.startIndex].type = "start";
             emptyBoxes[this.endIndex].type = "end";
@@ -175,43 +183,49 @@ export class PathVisualizer extends Component {
         if (this.calculating === false) {
             this.calculating = true;
 
-            this.clear();
+            var tStart = performance.now();
+
             const graph = new Graph(this.boxes, this.dims);
 
-            const startNode = this.boxes.find((box) => box.type === "start");
-            const endNode = this.boxes.find((box) => box.type === "end");
+            const startNode = graph.findStartNode();
+            const endNode = graph.findEndNode();
 
-            if (!startNode) {
-                this.text = "No Start Node!";
+            if (!endNode || !startNode) {
+                this.text = !endNode ? "No End Node!" : "No Start Node!";
                 this.calculating = false;
+                this.setState({ state: this.state });
                 return;
             }
 
-            if (!endNode) {
-                this.text = "No End Node!";
-                this.calculating = false;
-                return;
-            }
-
-            const startIndex = startNode.index;
-            const endIndex = endNode.index;
-
-            let Solver = null;
-
-            if (algorithm === "AStar") {
-                Solver = new AStar(startIndex, endIndex, graph);
-            }
-
-            if (algorithm === "Dijkstra") {
-                Solver = new Dijkstra(startIndex, endIndex, graph);
-            }
+            let Solver =
+                algorithm === "AStar"
+                    ? new AStar(startNode, endNode, graph)
+                    : new Dijkstra(startNode, endNode, graph);
 
             const target = Solver.solve();
 
-            const path = graph.traceBack(target).slice(1, -1);
+            const path = graph.traceBack(target);
             const visited = graph.getVisited(Solver.nodes);
 
+            var tEnd = performance.now();
+
             this.calculating = false;
+
+            const timeTaken = tEnd - tStart;
+
+            this.text = (
+                <>
+                    <span className="hide-on-small-only left">
+                        {Math.round(timeTaken * 100) / 100} ms
+                    </span>
+
+                    <i className="material-icons right hide-on-med-and-down">
+                        timer
+                    </i>
+                    <i className="material-icons hide-on-med-and-up">timer</i>
+                </>
+            );
+            this.setState({ state: this.state });
 
             this.animating = true;
             this.animate(visited, path);
@@ -219,51 +233,63 @@ export class PathVisualizer extends Component {
     }
 
     animate(visited, path) {
-        this.visitedTimeouts = [];
-        for (let i = 0; i < visited.length; i++) {
-            this.visitedTimeouts.push(
-                setTimeout(() => {
-                    if (!this.interuptedAnimating) {
-                        const el = document.getElementById(
-                            `node-${visited[i]}`
-                        );
-                        this.setCSS(el, "visited");
+        if (visited.length !== 0) {
+            this.visitedInterval = setInterval(animate.bind(this), 15);
 
-                        if (i === visited.length - 1) {
-                            this.animatePath(path);
-                        }
-                    }
-                }, 10 * i)
-            );
+            var iterations = 0;
+            function animate() {
+                const el = document.getElementById(
+                    `node-${visited[iterations]}`
+                );
+                this.setCSS(el, "visited");
+
+                if (iterations === visited.length - 1) {
+                    this.animatePath(path);
+                }
+
+                if (iterations === visited.length - 1)
+                    clearInterval(this.visitedInterval);
+
+                iterations++;
+            }
         }
     }
 
     animatePath(path) {
-        this.pathTimeouts = [];
-
         if (path.length !== 0) {
-            for (let i = 0; i < path.length; i++) {
-                this.pathTimeouts.push(
-                    setTimeout(() => {
-                        if (!this.interuptedAnimating) {
-                            const el = document.getElementById(
-                                `node-${path[i]}`
-                            );
-                            this.setCSS(el, "path");
+            this.pathInterval = setInterval(animate.bind(this), 80);
 
-                            if (i === path.length - 1) {
-                                this.animating = false;
-                                this.interuptedAnimating = false;
-                            }
-                        }
-                    }, 50 * i)
-                );
+            var iterations = 1;
+            function animate() {
+                const el = document.getElementById(`node-${path[iterations]}`);
+                this.setCSS(el, "path");
+
+                if (iterations === path.length - 2) {
+                    this.animating = false;
+                    this.interuptedAnimating = false;
+                }
+
+                if (iterations === path.length - 2)
+                    clearInterval(this.pathInterval);
+
+                iterations++;
             }
         } else {
             this.animating = false;
             this.interuptedAnimating = false;
             this.text = "";
         }
+    }
+
+    setGridDims() {
+        const dimensions = getWindowDimensions();
+
+        const ratio = dimensions.width / dimensions.height;
+
+        this.dims = [
+            Math.round(dimensions.width / 40),
+            Math.round(dimensions.width / 42 / ratio)
+        ];
     }
 
     render() {
