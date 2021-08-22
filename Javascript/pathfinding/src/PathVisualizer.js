@@ -6,6 +6,8 @@ import Field from "./Game/Field";
 
 import Dijkstra from "./Solver/Dijkstra";
 import AStar from "./Solver/AStar";
+import BFS from "./Solver/BFS";
+import DFS from "./Solver/DFS";
 
 class BlockClass {
     constructor(index) {
@@ -197,10 +199,24 @@ export class PathVisualizer extends Component {
                 return;
             }
 
-            let Solver =
-                algorithm === "AStar"
-                    ? new AStar(startNode, endNode, graph)
-                    : new Dijkstra(startNode, endNode, graph);
+            let Solver = null;
+
+            switch (algorithm) {
+                case "AStar":
+                    Solver = new AStar(startNode, endNode, graph);
+                    break;
+                case "Dijkstra":
+                    Solver = new Dijkstra(startNode, endNode, graph);
+                    break;
+                case "BFS":
+                    Solver = new BFS(startNode, endNode, graph);
+                    break;
+                case "DFS":
+                    Solver = new DFS(startNode, endNode, graph);
+                    break;
+                default:
+                    break;
+            }
 
             const target = Solver.solve();
 

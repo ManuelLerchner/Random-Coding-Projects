@@ -16,6 +16,12 @@ export default function NavBar({
     const solveAStar = () => {
         solve("AStar");
     };
+    const solveBFS = () => {
+        solve("BFS");
+    };
+    const solveDFS = () => {
+        solve("DFS");
+    };
 
     let ErrorMsg = "";
     if (text !== "") {
@@ -84,6 +90,16 @@ export default function NavBar({
                                     <a
                                         href="#!"
                                         className="white-text"
+                                        onClick={solveAStar}
+                                    >
+                                        <i className="material-icons">star</i>
+                                        AStar
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="#!"
+                                        className="white-text"
                                         onClick={solveDijkstra}
                                     >
                                         <i className="material-icons">pages</i>
@@ -94,10 +110,24 @@ export default function NavBar({
                                     <a
                                         href="#!"
                                         className="white-text"
-                                        onClick={solveAStar}
+                                        onClick={solveBFS}
                                     >
-                                        <i className="material-icons">star</i>
-                                        AStar
+                                        <i className="material-icons">
+                                            line_style
+                                        </i>
+                                        BFS
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="#!"
+                                        className="white-text"
+                                        onClick={solveDFS}
+                                    >
+                                        <i className="material-icons">
+                                            filter_list
+                                        </i>
+                                        DFS
                                     </a>
                                 </li>
                             </ul>
