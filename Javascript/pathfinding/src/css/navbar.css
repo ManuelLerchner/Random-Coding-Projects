@@ -1,15 +1,19 @@
 li {
-    margin-right: 5px;
+    margin-right: 15px;
+    border-radius: 5px !important;
 }
 
 ul.left {
-    margin-left: 5px ;
+    margin-left: 10px;
 }
 
 .drawSelector {
     background-color: rgba(34, 113, 119, 0.596);
     border-radius: 1rem;
     display: flex;
+    justify-content: center;
+      align-items: center;
+    height: 64px;
 }
 
 .drawSelector div {
@@ -53,4 +57,16 @@ input[class="end"]:checked + i,
 input[class="end"]:focus + i {
     color: rgb(238, 255, 0) !important;
     font-size: 50px !important;
+}
+
+span {
+    text-transform: uppercase;
+    color: #fff;
+    letter-spacing: 0.5px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.page-footer {
+    height: 64px !important;
 }

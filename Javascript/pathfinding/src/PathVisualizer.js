@@ -8,6 +8,7 @@ import Dijkstra from "./Solver/Dijkstra";
 import AStar from "./Solver/AStar";
 import BFS from "./Solver/BFS";
 import DFS from "./Solver/DFS";
+import SelectorSmall from "./NavBar/SelectorSmall";
 
 class BlockClass {
     constructor(index) {
@@ -26,13 +27,12 @@ function getWindowDimensions() {
 }
 
 export class PathVisualizer extends Component {
-    constructor({ getWindowDimensions }) {
+    constructor() {
         super();
 
         this.mousePressed = false;
         this.animating = false;
         this.calculating = false;
-        this.interuptedAnimating = false;
 
         this.text = "";
 
@@ -59,9 +59,11 @@ export class PathVisualizer extends Component {
         this.randomize = this.randomize.bind(this);
         this.solve = this.solve.bind(this);
         this.animate = this.animate.bind(this);
+        this.animateWalls = this.animateWalls.bind(this);
         this.setGridDims = this.setGridDims.bind(this);
+        this.createGrid = this.createGrid.bind(this);
 
-        this.randomize();
+        this.randomize(0.25, true);
     }
 
     //Draw
@@ -133,6 +135,8 @@ export class PathVisualizer extends Component {
 
             clearInterval(this.visitedInterval);
 
+            clearInterval(this.wallInterval);
+
             this.animating = false;
         }
         const copy = [...this.boxes];
@@ -146,7 +150,7 @@ export class PathVisualizer extends Component {
     }
 
     //Randomize
-    randomize() {
+    randomize(wallProbability, setStartEnd) {
         if (this.animating === false) {
             const emptyBoxes = Array.from(
                 { length: this.dims[0] * this.dims[1] },
@@ -155,21 +159,27 @@ export class PathVisualizer extends Component {
                 }
             );
 
-            for (let i = 0; i < Math.floor(emptyBoxes.length * 0.25); i++) {
+            for (
+                let i = 0;
+                i < Math.floor(emptyBoxes.length * wallProbability);
+                i++
+            ) {
                 emptyBoxes[getRandomInt(0, emptyBoxes.length)].type = "wall";
             }
 
-            this.startIndex =
-                getRandomInt(1, 4) * this.dims[0] +
-                getRandomInt(0, Math.ceil(this.dims[0] / 2));
+            if (setStartEnd) {
+                this.startIndex =
+                    getRandomInt(1, 4) * this.dims[0] +
+                    getRandomInt(0, Math.ceil(this.dims[0] / 2));
 
-            this.endIndex =
-                emptyBoxes.length -
-                getRandomInt(1, 4) * this.dims[0] -
-                getRandomInt(0, Math.ceil(this.dims[0] / 2));
+                this.endIndex =
+                    emptyBoxes.length -
+                    getRandomInt(1, 4) * this.dims[0] -
+                    getRandomInt(0, Math.ceil(this.dims[0] / 2));
 
-            emptyBoxes[this.startIndex].type = "start";
-            emptyBoxes[this.endIndex].type = "end";
+                emptyBoxes[this.startIndex].type = "start";
+                emptyBoxes[this.endIndex].type = "end";
+            }
 
             this.setboxes(emptyBoxes);
             this.setState({ state: this.state });
@@ -231,14 +241,13 @@ export class PathVisualizer extends Component {
 
             this.text = (
                 <>
-                    <span className="hide-on-small-only left">
+                    <span className="left">
                         {Math.round(timeTaken * 100) / 100} ms
                     </span>
 
                     <i className="material-icons right hide-on-med-and-down">
                         timer
                     </i>
-                    <i className="material-icons hide-on-med-and-up">timer</i>
                 </>
             );
             this.setState({ state: this.state });
@@ -250,7 +259,10 @@ export class PathVisualizer extends Component {
 
     animate(visited, path) {
         if (visited.length !== 0) {
-            this.visitedInterval = setInterval(animate.bind(this), 15);
+            this.visitedInterval = setInterval(
+                animate.bind(this),
+                15 + 300 / this.dims[0]
+            );
 
             var iterations = 0;
             function animate() {
@@ -273,7 +285,10 @@ export class PathVisualizer extends Component {
 
     animatePath(path) {
         if (path.length !== 0) {
-            this.pathInterval = setInterval(animate.bind(this), 80);
+            this.pathInterval = setInterval(
+                animate.bind(this),
+                80 + 300 / this.dims[0]
+            );
 
             var iterations = 1;
             function animate() {
@@ -282,7 +297,6 @@ export class PathVisualizer extends Component {
 
                 if (iterations === path.length - 2) {
                     this.animating = false;
-                    this.interuptedAnimating = false;
                 }
 
                 if (iterations === path.length - 2)
@@ -292,8 +306,40 @@ export class PathVisualizer extends Component {
             }
         } else {
             this.animating = false;
-            this.interuptedAnimating = false;
             this.text = "";
+        }
+    }
+
+    animateWalls(walls, emptyBoxes) {
+        if (walls.length !== 0) {
+            this.wallInterval = setInterval(
+                animate.bind(this),
+                15 + 200 / this.dims[0]
+            );
+
+            var iterations = 0;
+            function animate() {
+                const el = document.getElementById(`node-${walls[iterations]}`);
+                this.setCSS(el, "wall");
+
+                if (iterations === walls.length - 1) {
+                    clearInterval(this.wallInterval);
+                    this.startIndex = this.vectorToIndex(1, 1);
+                    this.endIndex = this.vectorToIndex(
+                        this.dims[0] - 2,
+                        this.dims[1] - 2
+                    );
+                    emptyBoxes[this.startIndex].type = "start";
+                    emptyBoxes[this.endIndex].type = "end";
+
+                    this.setboxes(emptyBoxes);
+                    this.animating = false;
+                    this.setState({ state: this.state });
+                }
+                iterations++;
+            }
+        } else {
+            this.animating = false;
         }
     }
 
@@ -306,6 +352,143 @@ export class PathVisualizer extends Component {
             Math.round(dimensions.width / 40),
             Math.round(dimensions.width / 42 / ratio)
         ];
+
+        if (this.dims[0] % 2 === 0) {
+            this.dims[0]++;
+        }
+
+        if (this.dims[1] % 2 === 0) {
+            this.dims[1]++;
+        }
+    }
+
+    indexToVector(index) {
+        const x = index % this.dims[0];
+        const y = index / this.dims[0];
+        return [x, y];
+    }
+
+    vectorToIndex(x, y) {
+        const index = y * this.dims[0] + x;
+        return index;
+    }
+
+    addOuterWalls(emptyBoxes, dims, walls) {
+        for (var i = 0; i < dims[0]; i++) {
+            if (i === 0 || i === dims[0] - 1) {
+                for (var j = 0; j < dims[1]; j++) {
+                    emptyBoxes[this.vectorToIndex(i, j)].type = "wall";
+                    walls.push(this.vectorToIndex(i, j));
+                }
+            } else {
+                emptyBoxes[this.vectorToIndex(i, 0)].type = "wall";
+                emptyBoxes[this.vectorToIndex(i, dims[1] - 1)].type = "wall";
+                walls.push(this.vectorToIndex(i, 0));
+                walls.push(this.vectorToIndex(i, dims[1] - 1));
+            }
+        }
+    }
+
+    addInnerWalls(emptyBoxes, h, minX, maxX, minY, maxY, walls) {
+        if (h) {
+            if (maxX - minX < 2) {
+                return;
+            }
+
+            var y = Math.floor(randomNumber(minY, maxY) / 2) * 2;
+            this.addHWall(emptyBoxes, minX, maxX, y, walls);
+
+            this.addInnerWalls(emptyBoxes, !h, minX, maxX, minY, y - 1, walls);
+            this.addInnerWalls(emptyBoxes, !h, minX, maxX, y + 1, maxY, walls);
+        } else {
+            if (maxY - minY < 2) {
+                return;
+            }
+
+            var x = Math.floor(randomNumber(minX, maxX) / 2) * 2;
+            this.addVWall(emptyBoxes, minY, maxY, x, walls);
+
+            this.addInnerWalls(emptyBoxes, !h, minX, x - 1, minY, maxY, walls);
+            this.addInnerWalls(emptyBoxes, !h, x + 1, maxX, minY, maxY, walls);
+        }
+    }
+
+    addHWall(emptyBoxes, minX, maxX, y, walls) {
+        var hole = Math.floor(randomNumber(minX, maxX) / 2) * 2 + 1;
+
+        for (var i = minX; i <= maxX; i++) {
+            const index = this.vectorToIndex(i, y);
+            if (i !== hole) {
+                emptyBoxes[index].type = "wall";
+                walls.push(index);
+            } else {
+                emptyBoxes[index].type = "empty";
+            }
+        }
+    }
+
+    addVWall(emptyBoxes, minY, maxY, x, walls) {
+        var hole = Math.floor(randomNumber(minY, maxY) / 2) * 2 + 1;
+
+        for (var i = minY; i <= maxY; i++) {
+            const index = this.vectorToIndex(x, i);
+            if (i !== hole) {
+                emptyBoxes[index].type = "wall";
+                walls.push(index);
+            } else {
+                emptyBoxes[this.vectorToIndex(x, i)].type = "empty";
+            }
+        }
+    }
+
+    createMaze() {
+        const emptyBoxes = Array.from(
+            { length: this.dims[0] * this.dims[1] },
+            (_, i) => {
+                return new BlockClass(i);
+            }
+        );
+
+        let walls = [];
+
+        this.addOuterWalls(emptyBoxes, this.dims, walls);
+
+        this.addInnerWalls(
+            emptyBoxes,
+            false,
+            1,
+            this.dims[0] - 2,
+            1,
+            this.dims[1] - 2,
+            walls
+        );
+
+        emptyBoxes.forEach((box) => {
+            if (box.type === "empty") {
+                walls = walls.filter((index) => index !== box.index);
+            }
+        });
+
+        this.animating = true;
+        this.animateWalls(walls, emptyBoxes);
+    }
+
+    createGrid(type) {
+        if (this.animating === false) {
+            switch (type) {
+                case "Empty":
+                    this.randomize(0, true);
+                    break;
+
+                case "Maze":
+                    this.randomize(0, false);
+                    this.createMaze();
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 
     render() {
@@ -313,16 +496,20 @@ export class PathVisualizer extends Component {
             <div className="App">
                 <NavBar
                     solve={this.solve}
+                    createGrid={this.createGrid}
                     randomize={this.randomize}
                     text={this.text}
                     setselectedBrush={this.setselectedBrush}
                     clear={this.clear}
                 />
+
                 <Field
                     dims={this.dims}
                     boxes={this.boxes}
                     handleClick={this.handleClick}
                 />
+
+                <SelectorSmall setselectedBrush={this.setselectedBrush} />
             </div>
         );
     }
@@ -332,4 +519,8 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }
