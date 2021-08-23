@@ -12,7 +12,7 @@ ul.left {
     border-radius: 1rem;
     display: flex;
     justify-content: center;
-      align-items: center;
+    align-items: center;
     height: 64px;
 }
 
@@ -65,8 +65,4 @@ span {
     letter-spacing: 0.5px;
     font-size: 16px;
     font-weight: 600;
-}
-
-.page-footer {
-    height: 64px !important;
 }

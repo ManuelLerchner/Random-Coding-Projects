@@ -39,13 +39,8 @@ export default function NavBar({
     let ErrorMsg = "";
     if (text !== "") {
         ErrorMsg = (
-            <li>
-                <a
-                    className="waves-effect waves-light btn-large red darken-4 "
-                    href="#!"
-                >
-                    {text}
-                </a>
+            <li className="waves-effect waves-light red darken-3 ">
+                <a href="#!">{text}</a>
             </li>
         );
     }
