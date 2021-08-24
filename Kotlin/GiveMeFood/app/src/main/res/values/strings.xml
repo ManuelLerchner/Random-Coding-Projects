@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Give Me Food</string>
+    <string name="author">©Manuel Lerchner 2021</string>
+    <string name="joinButton_text">Join Group</string>
+    <string name="createButton_text">Create Group</string>
+    <string name="logo_contentDescription">logo</string>
+    <string name="logo_subtitle">Give Me Food</string>
+</resources>
