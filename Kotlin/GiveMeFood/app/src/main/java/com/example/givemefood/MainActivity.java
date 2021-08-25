@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        joinButton = findViewById(R.id.joinButton);
+        joinButton = findViewById(R.id.joinButton1);
         createButton = findViewById(R.id.createButton);
 
         joinButton.setOnClickListener(new View.OnClickListener() {
