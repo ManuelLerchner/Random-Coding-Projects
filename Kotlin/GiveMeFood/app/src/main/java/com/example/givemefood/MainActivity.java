@@ -15,12 +15,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
 
-
-        joinButton = findViewById(R.id.joinButton);
+        joinButton = findViewById(R.id.joinButton1);
         createButton = findViewById(R.id.createButton);
 
         joinButton.setOnClickListener(new View.OnClickListener() {
@@ -30,11 +30,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        createButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openCreate();
+            }
+        });
+
+
+
 
     }
 
     public void openJoin() {
         Intent intent = new Intent(this, Join.class);
+        startActivity(intent);
+    }
+
+    public void openCreate() {
+        Intent intent = new Intent(this, Create.class);
         startActivity(intent);
     }
 }
