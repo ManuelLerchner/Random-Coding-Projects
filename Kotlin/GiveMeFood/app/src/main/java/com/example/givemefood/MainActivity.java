@@ -39,12 +39,11 @@ public class MainActivity extends AppCompatActivity {
     private Button joinButton;
     private Button createButton;
     private GoogleSignInClient mGoogleSignInClient;
-    private static final int RC_SIGN_IN = 9001;
     private FirebaseAuth mAuth;
     private SignInButton signInButton;
     private Button signOutButton;
-    private TextView greeting;
 
+    private ActivityResultLauncher<Intent> startActivityForResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         createButton = findViewById(R.id.createButton);
         signInButton = findViewById(R.id.sign_in_button);
         signOutButton = findViewById(R.id.sign_out_button);
-        greeting = findViewById(R.id.greeting);
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -66,6 +64,17 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+
+        startActivityForResult = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    Intent data = result.getData();
+                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                    handleSignInResult(task);
+
+                }
+        );
 
         joinButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        startActivityForResult.launch(signInIntent);
     }
 
     private void signOut() {
@@ -141,15 +150,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
-        }
-    }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
@@ -188,11 +188,11 @@ public class MainActivity extends AppCompatActivity {
             Log.i("Google", "already logged in");
             signInButton.setVisibility(View.GONE);
             signOutButton.setVisibility(View.VISIBLE);
-            greeting.setText("Welcome " + acc.getGivenName());
+
         } else {
             signInButton.setVisibility(View.VISIBLE);
             signOutButton.setVisibility(View.GONE);
-            greeting.setText("");
+
             Log.i("Google", "not previously logged in");
         }
     }

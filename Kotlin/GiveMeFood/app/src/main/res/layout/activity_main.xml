@@ -28,107 +28,99 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@mipmap/holz" />
 
-    <TextView
-        android:id="@+id/title1"
-
-
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-
-
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:fontFamily="@font/lemonada_semibold"
-        android:text="@string/logo_subtitle"
-
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@color/md_white_1000"
-        android:textSize="42sp"
-        android:textStyle="bold"
-        android:visibility="visible"
-        app:autoSizeTextType="uniform"
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo" />
+        app:layout_constraintTop_toTopOf="@+id/background">
 
-    <Button
-        android:id="@+id/joinButton1"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/md_amber_600"
-        android:text="@string/joinButton_text"
-        android:textAlignment="center"
-        android:textColor="#121313"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/greeting" />
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="235dp"
+            android:layout_height="232dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:adjustViewBounds="true"
+            android:cropToPadding="false"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/ic_happy_chef" />
 
-    <Button
-        android:id="@+id/createButton"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/md_green_500"
-        android:text="@string/createButton_text"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/joinButton1" />
+        <TextView
+            android:id="@+id/title1"
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="256dp"
-        android:layout_height="256dp"
-        android:layout_marginTop="16dp"
-        android:adjustViewBounds="true"
-        android:cropToPadding="false"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.45"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_happy_chef" />
+
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+
+
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/lemonada_semibold"
+            android:gravity="center"
+
+            android:text="@string/logo_subtitle"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/md_white_1000"
+            android:textSize="42sp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            app:autoSizeTextType="uniform" />
+
+        <Button
+            android:id="@+id/joinButton1"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/md_amber_600"
+            android:gravity="center"
+            android:text="@string/joinButton_text"
+            android:textAlignment="center"
+            android:textColor="#121313"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/createButton"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/md_green_500"
+            android:gravity="center"
+            android:text="@string/createButton_text"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+    </LinearLayout>
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/background"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_gravity="right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    </com.google.android.gms.common.SignInButton>
 
     <Button
         android:id="@+id/sign_out_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="right"
         android:text="Sign Out"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/sign_in_button" />
-
-    <TextView
-        android:id="@+id/greeting"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="56dp"
-        android:textAlignment="textStart"
-        android:textColor="#FFFFFF"
-        android:textStyle="normal"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title1" />
+        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
