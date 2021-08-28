@@ -212,8 +212,9 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             if (task.getResult().size() == 0) {
-                                Log.d("Database", "User added");
+                                Log.d("Database", "User added " + userdata.toString());
                                 db.collection("users").document(userdata.get("User_ID").toString()).set(userdata);
+
                             } else {
                                 Log.d("Database", "User already exists");
                             }

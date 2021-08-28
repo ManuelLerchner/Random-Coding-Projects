@@ -38,8 +38,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firestore.v1.WriteResult;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Create extends AppCompatActivity {
@@ -88,6 +91,10 @@ public class Create extends AppCompatActivity {
         Family.put("Family_Name", Family_Name);
         Family.put("Admin", userdata.get("User_ID"));
         Family.put("Created_At", FieldValue.serverTimestamp());
+        Family.put("Member", userdata.get("User_ID"));
+
+        List<Map<String, Object>> food = new ArrayList<>();
+
 
         //Add family
         db.collection("groups")

@@ -85,7 +85,7 @@
                 android:background="#664E412E" />
 
             <ListView
-                android:id="@+id/familyList"
+                android:id="@+id/foodList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:dividerHeight="1dp"/>

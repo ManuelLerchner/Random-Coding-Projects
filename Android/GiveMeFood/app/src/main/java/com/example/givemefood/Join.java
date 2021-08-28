@@ -3,35 +3,26 @@ package com.example.givemefood;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Join extends AppCompatActivity {
 
@@ -51,7 +42,7 @@ public class Join extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        familyList = findViewById(R.id.familyList);
+        familyList = findViewById(R.id.foodList);
 
         familyList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -109,7 +100,7 @@ public class Join extends AppCompatActivity {
                                                 families.add(document.getString("Family_Name").toString());
                                                 Log.d("Database", families.toString());
 
-                                                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Join.this, R.layout.activity_listview, R.id.textView, families);
+                                                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Join.this, android.R.layout.simple_list_item_1, families);
 
                                                 familyList.setAdapter(arrayAdapter);
                                             }
@@ -132,6 +123,10 @@ public class Join extends AppCompatActivity {
 
     void loadFamilies(List<String> familyIDs, final OnCompleteCallback callback) {
 
+        if (familyIDs == null) {
+            return;
+
+        }
 
         for (String familyID : familyIDs) {
             db.collection("groups")
