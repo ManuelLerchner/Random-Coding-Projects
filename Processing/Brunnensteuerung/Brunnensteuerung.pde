@@ -1,6 +1,7 @@
 ArrayList<Duese> Duesen=new ArrayList();
 ArrayList<WaterParticle> Water=new ArrayList();
 
+
 final int ANZAHL_AUSLAESSE=3;
 final int MAX_DURCHLAEUFE=30;
 final int MIN_TEMP=5;  // [°C]

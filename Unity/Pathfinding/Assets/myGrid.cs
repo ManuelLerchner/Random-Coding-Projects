@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class myGrid : MonoBehaviour {
 
 	public GameObject Ground;
+    
 
 	Vector2 gridWorldSize;
 

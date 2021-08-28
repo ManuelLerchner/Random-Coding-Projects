@@ -24,12 +24,13 @@ END_VAR
 BEGIN
 
 NETWORK
-TITLE= 
+TITLE=
 //{{a}}
 
        U    E         0.0
        FP   M      1000.0
-       = flanke 
+       =    M0.0
+
 
 
        U    M0.0
@@ -103,7 +104,7 @@ kl:    NOP  0
        T    MD100
 aus:   NOP  0
 NETWORK
-TITLE= 
+TITLE=
 //{{a}}
 
        CALL FC      106
@@ -114,7 +115,7 @@ TITLE=
          RET_VAL:=MW333
          OUT:=PAW256
 NETWORK
-TITLE=
+TITLE= 
 //{{a}}
 
        U    E         1.0
