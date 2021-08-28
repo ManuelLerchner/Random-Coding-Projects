@@ -1,10 +1,7 @@
 package com.example.givemefood;
 
-import static android.util.Log.d;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,7 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -21,30 +17,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
 
     private Button yourGroupsButton;
-    private Button createButton;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     private SignInButton signInButton;
@@ -59,17 +44,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         yourGroupsButton = findViewById(R.id.yourGroupsButton);
-        createButton = findViewById(R.id.createButton);
+        Button createButton = findViewById(R.id.createButton);
         signInButton = findViewById(R.id.sign_in_button);
         signOutButton = findViewById(R.id.sign_out_button);
 
-        String default_web_client_id = "296002394629-uk2uhng8mesc5ctr2k3bourjipfqqjlb.apps.googleusercontent.com";
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(default_web_client_id)
+        GoogleSignInOptions gso = new GoogleSignInOptions
+                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("296002394629-uk2uhng8mesc5ctr2k3bourjipfqqjlb.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
-
 
         mAuth = FirebaseAuth.getInstance();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
@@ -85,33 +69,13 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        yourGroupsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openJoin();
-            }
-        });
+        yourGroupsButton.setOnClickListener(view -> openJoin());
 
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openCreate();
-            }
-        });
+        createButton.setOnClickListener(view -> openCreate());
 
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
+        signInButton.setOnClickListener(v -> signIn());
 
-        signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
+        signOutButton.setOnClickListener(v -> signOut());
 
     }
 
@@ -120,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(account);
 
     }
@@ -133,12 +96,9 @@ public class MainActivity extends AppCompatActivity {
     private void signOut() {
         FirebaseAuth.getInstance().signOut();
         mGoogleSignInClient.signOut()
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        updateUI(null);
-                        Toast.makeText(MainActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
-                    }
+                .addOnCompleteListener(this, task -> {
+                    updateUI(null);
+                    Toast.makeText(MainActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
                 });
 
     }
@@ -188,14 +148,11 @@ public class MainActivity extends AppCompatActivity {
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.i("Firebase", "signInWithCredential:success");
-                        } else {
-                            Log.w("Firebase", "signInWithCredential:failure", task.getException());
-                        }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.i("Firebase", "signInWithCredential:success");
+                    } else {
+                        Log.w("Firebase", "signInWithCredential:failure", task.getException());
                     }
                 });
     }
@@ -207,20 +164,17 @@ public class MainActivity extends AppCompatActivity {
         db.collection("users")
                 .whereEqualTo("User_ID", userdata.get("User_ID"))
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            if (task.getResult().size() == 0) {
-                                Log.d("Database", "User added " + userdata.toString());
-                                db.collection("users").document(userdata.get("User_ID").toString()).set(userdata);
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (task.getResult().size() == 0) {
+                            Log.d("Database", "User added " + userdata.toString());
+                            db.collection("users").document((String) Objects.requireNonNull(userdata.get("User_ID"))).set(userdata);
 
-                            } else {
-                                Log.d("Database", "User already exists");
-                            }
                         } else {
-                            Log.d("Database", "Error getting documents: ", task.getException());
+                            Log.d("Database", "User already exists");
                         }
+                    } else {
+                        Log.d("Database", "Error getting documents: ", task.getException());
                     }
                 });
 
@@ -231,11 +185,11 @@ public class MainActivity extends AppCompatActivity {
         if (acc != null) {
             signInButton.setVisibility(View.GONE);
             signOutButton.setVisibility(View.VISIBLE);
-            yourGroupsButton.setText(acc.getGivenName() + "'s Groups");
+            yourGroupsButton.setText(String.format("%s's Groups", acc.getGivenName()));
         } else {
             signInButton.setVisibility(View.VISIBLE);
             signOutButton.setVisibility(View.GONE);
-            yourGroupsButton.setText("Your Groups");
+            yourGroupsButton.setText(R.string.notLoggedInText);
         }
     }
 }

@@ -2,11 +2,11 @@ package com.example.givemefood;
 
 public class Food {
 
-    public String imageUrl;
+    public String userUrl;
     public String foodName;
 
-    public Food(String imageUrl, String foodName) {
-        this.imageUrl = imageUrl;
+    public Food(String userUrl, String foodName) {
+        this.userUrl = userUrl;
         this.foodName = foodName;
     }
 

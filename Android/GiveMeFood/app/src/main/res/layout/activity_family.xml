@@ -85,7 +85,7 @@
         <Button
             android:id="@+id/submitItem"
             android:layout_width="96dp"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:layout_gravity="right"
             android:layout_marginTop="16dp"
             android:layout_marginRight="12dp"

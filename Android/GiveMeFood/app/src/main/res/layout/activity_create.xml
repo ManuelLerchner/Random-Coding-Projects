@@ -91,7 +91,8 @@
                 android:ems="10"
                 android:hint="Family Name"
                 android:inputType="text"
-                android:textAlignment="textStart" />
+                android:textAlignment="textStart"
+                android:autofillHints="" />
 
             <Button
                 android:id="@+id/createNewFamily"

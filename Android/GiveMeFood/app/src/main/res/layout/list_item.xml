@@ -10,6 +10,7 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginLeft="5dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="10dp"
         android:layout_toRightOf="@id/imageView_poster"
         android:fontFamily="sans-serif-condensed"
@@ -25,6 +26,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp" />
 </RelativeLayout>
