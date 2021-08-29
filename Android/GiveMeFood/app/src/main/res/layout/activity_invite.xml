@@ -6,7 +6,7 @@
 
     android:layout_height="match_parent"
 
-    tools:context=".Create"
+    tools:context=".Invite"
 
     >
 
@@ -52,7 +52,7 @@
             android:gravity="center"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:text="Create Family Group"
+            android:text="Invite New Member"
             android:textColor="#E3DFC7"
             app:autoSizeTextType="uniform" />
     </androidx.cardview.widget.CardView>
@@ -85,13 +85,13 @@
                 android:background="#664E412E" />
 
             <EditText
-                android:id="@+id/familyName"
+                android:id="@+id/email"
                 android:layout_width="220dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="16dp"
                 android:ems="10"
-                android:hint="Family Name"
-                android:inputType="text"
+                android:hint="Email"
+                android:inputType="text|textEmailAddress"
                 android:textAlignment="textStart" />
 
             <Button
@@ -101,7 +101,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="8dp"
                 android:backgroundTint="@color/md_green_400"
-                android:text="Create Group"
+                android:text="Invite"
                 android:textAlignment="center"
                 android:textColor="#121313"
                 android:textSize="16sp"

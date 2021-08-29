@@ -14,7 +14,7 @@ public class User {
     public User(GoogleSignInAccount account) {
         userdata = new HashMap<>();
         userdata.put("User_Name", account.getDisplayName());
-        userdata.put("Fist_Name", account.getGivenName());
+        userdata.put("First_Name", account.getGivenName());
         userdata.put("Last_Name", account.getFamilyName());
         userdata.put("User_Email", account.getEmail());
         userdata.put("User_ID", account.getId());

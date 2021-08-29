@@ -32,7 +32,7 @@ public class Create extends AppCompatActivity {
         setContentView(R.layout.activity_create);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        View createFamily = findViewById(R.id.createNewFamily);
+        View createFamily = findViewById(R.id.submitInviteButton);
         familyName = findViewById(R.id.familyName);
 
         db = FirebaseFirestore.getInstance();
@@ -63,7 +63,7 @@ public class Create extends AppCompatActivity {
         Family.put("Family_Name", Family_Name);
         Family.put("Admin", userdata.get("User_ID"));
         Family.put("Created_At", FieldValue.serverTimestamp());
-        Family.put("Member", userdata.get("User_ID"));
+        Family.put("Members", FieldValue.arrayUnion(userdata.get("User_ID")));
 
 
         //Add family

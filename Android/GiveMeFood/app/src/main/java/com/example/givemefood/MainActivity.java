@@ -17,12 +17,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
@@ -84,7 +90,95 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
+        checkForInvites(account);
+
         updateUI(account);
+
+    }
+
+    void checkForInvites(GoogleSignInAccount account) {
+        if (account == null) {
+            return;
+        }
+
+        User user = new User(account);
+        Map<String, Object> userdata = user.getData();
+
+        db.collection("pendingInvites")
+                .whereEqualTo("User_Email", userdata.get("User_Email"))
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (task.getResult().size() == 0) {
+                            Log.d("Invites", "No pending Invites");
+                        } else {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("Invites", "Invited to " + document.getData());
+
+                                String familyID = (String) document.get("Family_ID");
+                                Log.d("Invites", "Family ID " + familyID);
+
+                                DocumentReference docRef = db.collection("users").document((String) Objects.requireNonNull(userdata.get("User_ID")));
+
+                                db.collection("users")
+                                        .document((String) Objects.requireNonNull(userdata.get("User_ID")))
+                                        .get().addOnCompleteListener(task1 -> {
+                                    if (task1.isSuccessful()) {
+                                        DocumentSnapshot document1 = task1.getResult();
+
+                                        ArrayList<String> families = (ArrayList<String>) document1.get("families");
+
+
+                                        if (families == null) {
+                                            Log.d("Invites", "No Family yet");
+                                            joinFamily(docRef, familyID, document, Objects.requireNonNull(userdata.get("User_ID")).toString());
+
+                                        } else {
+
+                                            if (families.contains(familyID)) {
+                                                Log.d("Invites", "Already in Family");
+                                                document.getReference().delete();
+                                            } else {
+                                                Log.d("Invites", "Not in Family yet");
+                                                joinFamily(docRef, familyID, document, Objects.requireNonNull(userdata.get("User_ID")).toString());
+                                            }
+
+                                        }
+
+
+                                    }
+
+
+                                });
+                            }
+                        }
+                    } else {
+                        Log.d("Invites", "Error getting documents: ", task.getException());
+                    }
+                });
+
+    }
+
+    void joinFamily(DocumentReference docRef, String familyID, QueryDocumentSnapshot document, String userID) {
+        Task<Void> future = docRef.update("families", FieldValue.arrayUnion(familyID)
+        );
+
+        future
+                .addOnCompleteListener(task -> {
+                    Log.d("Database", "Added Family To User");
+                    document.getReference().delete();
+                    Log.d("Database", "Deleted Invite");
+                })
+                .addOnFailureListener(e -> Log.d("Database", "Error Adding Family To User"));
+
+
+        DocumentReference familyRef = db.collection("groups").document(familyID);
+        Task<Void> future1 = familyRef.update("Members", FieldValue.arrayUnion(userID)
+        );
+
+        future1.addOnCompleteListener(task -> Log.d("Database", "Added Member To Family"))
+                .addOnFailureListener(e -> Log.d("Database", "Error Adding Member to Family"));
+
 
     }
 

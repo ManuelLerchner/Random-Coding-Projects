@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
@@ -92,16 +91,31 @@ public class Join extends AppCompatActivity {
 
                                 familyIDs = (List<String>) data.get("families");
 
-
                                 loadFamilies(familyIDs, (success, familiesDocument) -> {
                                     if (success) {
                                         if (familiesDocument.getString("Family_Name") != null) {
                                             families.add(familiesDocument.getString("Family_Name"));
                                             Log.d("Database", families.toString());
 
-                                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(Join.this, android.R.layout.simple_list_item_1, families);
 
-                                            familyList.setAdapter(arrayAdapter);
+                                            String AdminID = familiesDocument.getString("Admin");
+                                            String familyName = familiesDocument.getString("Family_Name");
+
+                                            getImage(AdminID, (success1, memberDocument) -> {
+                                                if (memberDocument.getString("User_PhotoURL") != null) {
+
+                                                    String userURL = memberDocument.getString("User_PhotoURL");
+
+
+                                                    ArrayList<Food> F = new ArrayList<>();
+                                                    F.add(new Food(userURL, familyName, AdminID));
+
+                                                    FoodAdapter FA = new FoodAdapter(this, F);
+                                                    familyList.setAdapter(FA);
+
+                                                }
+                                            });
+
                                         }
                                     }
 
@@ -116,6 +130,20 @@ public class Join extends AppCompatActivity {
                 });
 
 
+    }
+
+
+    void getImage(String id, Family.OnCompleteCallback callback) {
+        db.collection("users")
+                .document(id)
+                .get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                callback.onComplete(document.exists(), document);
+            }
+
+
+        }).addOnFailureListener(e -> Log.d("Family", e.toString()));
     }
 
 

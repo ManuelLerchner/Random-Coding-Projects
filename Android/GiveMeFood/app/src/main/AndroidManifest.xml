@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GiveMeFood">
         <activity
+            android:name=".Invite"
+            android:exported="true" />
+        <activity
             android:name=".Family"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />
