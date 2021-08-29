@@ -126,15 +126,6 @@ public class Family extends AppCompatActivity {
 
         Toast toast = Toast.makeText(Family.this, f.foodName, Toast.LENGTH_SHORT);
 
-
-        LinearLayout toastLayout = (LinearLayout) toast.getView();
-        toastLayout.getBackground().setColorFilter(Color.parseColor("#3e4757"), PorterDuff.Mode.SRC_IN);
-
-        TextView toastTV = (TextView) toastLayout.getChildAt(0);
-        toastTV.setTextSize(30);
-
-        toastTV.setTextColor(Color.parseColor("#ffffff"));
-
         toast.show();
 
     }
