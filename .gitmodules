@@ -7,3 +7,6 @@
 [submodule "Javascript/chat-app"]
 	path = Javascript/chat-app
 	url = https://github.com/ManuelLerchner/chat-app.git
+[submodule "Python/GeometryDash-AutoClicker"]
+	path = Python/GeometryDash-AutoClicker
+	url = https://github.com/ManuelLerchner/GeometryDash-AutoClicker
