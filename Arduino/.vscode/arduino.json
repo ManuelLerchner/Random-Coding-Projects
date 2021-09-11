@@ -1,7 +1,5 @@
 {
-    "programmer": "ArduinoISP",
     "board": "arduino:avr:uno",
-    "sketch": "Master.ino",
     "defines": [
         "ARDUINO=100",
         "ARDUINO_ARCH_SAMD",

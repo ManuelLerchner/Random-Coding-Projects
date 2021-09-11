@@ -10,3 +10,6 @@
 [submodule "Python/GeometryDash-AutoClicker"]
 	path = Python/GeometryDash-AutoClicker
 	url = https://github.com/ManuelLerchner/GeometryDash-AutoClicker
+[submodule "Javascript/Monopoly-Autmatic-Bank"]
+	path = Javascript/Monopoly-Autmatic-Bank
+	url = https://github.com/ManuelLerchner/Monopoly-Autmatic-Bank.git
