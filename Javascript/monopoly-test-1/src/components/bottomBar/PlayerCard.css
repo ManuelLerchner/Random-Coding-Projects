@@ -1,0 +1,12 @@
+.playerCard {
+    height: 400px;
+
+    border: 1px solid whitesmoke;
+    border-radius: 15px;
+
+    width: 200px;
+
+    background: rgb(63, 119, 98);
+
+    box-shadow: 0 0 10px 8px;
+}
