@@ -4,16 +4,14 @@
     bottom: 0;
     width: 100vw;
 
-    height: 400px;
+
 }
 
 .carousel .carousel-item {
     opacity: 1 !important;
+    height: 320px !important;
 }
 
-
-.carousel-item {
-
-    -webkit-transition: all 0.1s;
-    transition: all 0.1s;
+.carousel {
+    height: 320px !important;
 }

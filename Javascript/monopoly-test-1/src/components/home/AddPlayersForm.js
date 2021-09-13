@@ -1,40 +1,73 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 import "./AddPlayersForm.css";
 
-export default function AddPlayersForm({ setPlayers }) {
+import { PlayerClass } from "../../Data/PlayerClass";
+
+export default function AddPlayersForm({ setPlayers, setgameState }) {
     const nameRef = useRef();
+    const iconRef = useRef();
+
+    useEffect(() => {
+        try {
+            var elemsCarousell = document.querySelectorAll(".carousel");
+            var elemsForm = document.querySelectorAll("select");
+
+            // eslint-disable-next-line no-undef
+            M.Carousel.init(elemsCarousell, {
+                dist: 0,
+                padding: 100,
+                numVisible: 10
+            });
+
+            // eslint-disable-next-line no-undef
+            M.updateTextFields();
+
+            // eslint-disable-next-line no-undef
+            M.FormSelect.init(elemsForm);
+        } catch (e) {
+            console.log();
+        }
+    });
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        const name = nameRef.current.value;
+
+        let name = nameRef.current.value;
+        const icon =
+            iconRef.current.options[iconRef.current.selectedIndex].value;
+
+        if (name === "") {
+            return;
+        }
+
+        if (icon === "empty") {
+            return;
+        }
+
+        let nameTruncated = name;
+        let length = 16;
+        name =
+            nameTruncated.length > length
+                ? nameTruncated.substring(0, length - 3) + "..."
+                : nameTruncated;
 
         setPlayers((prevPlayers) => {
-            return [...prevPlayers, name];
+            const newPlayer = new PlayerClass(name, icon);
+            return [...prevPlayers, newPlayer];
         });
 
-        setTimeout(function () {
-            try {
-                var elems = document.querySelectorAll(".carousel");
-
-                // eslint-disable-next-line no-undef
-                M.Carousel.init(elems, {
-                    dist: -10,
-                    padding: 100,
-                    numVisible: 10
-                });
-            } catch (e) {
-                console.log();
-            }
-        }, 0);
-
         nameRef.current.value = "";
+    };
+
+    const startGame = () => {
+        setgameState("main");
     };
 
     return (
         <div className="row">
             <div className="col l4 offset-l4 m8 offset-m2 s12">
-                <div className="card blue-grey darken-3 ">
+                <div className="card blue-grey darken-3 transparent1 ">
                     <div className="card-content white-text">
                         {/*Title */}
                         <div className="section">
@@ -46,40 +79,43 @@ export default function AddPlayersForm({ setPlayers }) {
                         {/*Name Input */}
 
                         <div className="row">
-                            <form className="col s12 " onSubmit={handleSubmit}>
+                            <form onSubmit={handleSubmit}>
                                 <div className="row">
                                     <div className="input-field col s12">
                                         {/*Icon  */}
 
-                                        <div className="input-field col s8">
+                                        <div className="col s1 input-field offset-s1">
                                             <i className="material-icons prefix">
                                                 sentiment_satisfied
                                             </i>
+                                        </div>
 
+                                        <div className="input-field col s6">
                                             <select
                                                 className="icons "
-                                                defaultValue="desc"
+                                                defaultValue="empty"
+                                                ref={iconRef}
                                             >
-                                                <option value="desc" disabled>
+                                                <option value="empty" disabled>
                                                     Choose Icon
                                                 </option>
                                                 <option
-                                                    value=""
+                                                    value="A"
                                                     data-icon="images/sample-1.jpg"
                                                 >
-                                                    example 1
+                                                    A
                                                 </option>
                                                 <option
-                                                    value=""
+                                                    value="B"
                                                     data-icon="images/office.jpg"
                                                 >
-                                                    example 2
+                                                    B
                                                 </option>
                                                 <option
-                                                    value=""
+                                                    value="C"
                                                     data-icon="images/yuna.jpg"
                                                 >
-                                                    example 3
+                                                    C
                                                 </option>
                                             </select>
                                         </div>
@@ -89,10 +125,13 @@ export default function AddPlayersForm({ setPlayers }) {
                                 <div className="row">
                                     {/*Name  */}
                                     <div className="input-field col s12">
-                                        <div className="col s8">
+                                        <div className="col s1 input-field offset-s1">
                                             <i className="material-icons prefix">
                                                 edit
                                             </i>
+                                        </div>
+
+                                        <div className="input-field col s6">
                                             <input
                                                 id="icon_prefix"
                                                 type="text"
@@ -105,18 +144,32 @@ export default function AddPlayersForm({ setPlayers }) {
                                         </div>
 
                                         {/*Add */}
-                                        <div className="input-field col s1">
+                                        <div className="input-field col s3 ">
                                             <button
                                                 className="btn waves-effect waves-light"
                                                 type="submit"
                                                 name="action"
                                             >
-                                                Add!
+                                                Add Player!
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
+
+                            <div className="row">
+                                {/*Add */}
+                                <div className="input-field col s3 offset-s1">
+                                    <button
+                                        className="btn waves-effect waves-light orange darken-3 startButton"
+                                        type="submit"
+                                        name="action"
+                                        onClick={startGame}
+                                    >
+                                        Start Game!
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

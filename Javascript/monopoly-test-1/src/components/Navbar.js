@@ -1,10 +1,13 @@
 import React from "react";
 
-export default function Navbar() {
+export default function Navbar({ setgameState }) {
+    const toHome = () => {
+        setgameState("createGame");
+    };
     return (
         <nav>
             <div className="nav-wrapper grey darken-4">
-                <a href="!#" className="brand-logo center">
+                <a href="!#" className="brand-logo center" onClick={toHome}>
                     <i className="material-icons right">apartment</i>
                     Smart-Bank
                 </a>
