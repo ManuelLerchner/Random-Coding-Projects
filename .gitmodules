@@ -13,3 +13,9 @@
 [submodule "Javascript/Monopoly-Automatic-Bank"]
 	path = Javascript/Monopoly-Automatic-Bank
 	url = https://github.com/ManuelLerchner/Monopoly-Automatic-Bank
+[submodule "Javascript/--force"]
+	path = Javascript/--force
+	url = https://github.com/ManuelLerchner/Monopoly-Smart-Bank-Backend
+[submodule "Javascript/Monopoly-Smart-Bank-Backend"]
+	path = Javascript/Monopoly-Smart-Bank-Backend
+	url = https://github.com/ManuelLerchner/Monopoly-Smart-Bank-Backend
