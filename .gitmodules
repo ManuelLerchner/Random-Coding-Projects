@@ -11,7 +11,7 @@
 	path = Python/GeometryDash-AutoClicker
 	url = https://github.com/ManuelLerchner/GeometryDash-AutoClicker
 [submodule "Javascript/Monopoly-Automatic-Bank"]
-	path = Javascript/Monopoly-Automatic-Bank
+	path = Javascript/Monopoly-Smart-Bank
 	url = https://github.com/ManuelLerchner/Monopoly-Automatic-Bank
 [submodule "Javascript/--force"]
 	path = Javascript/--force
