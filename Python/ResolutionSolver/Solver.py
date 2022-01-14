@@ -1,18 +1,26 @@
 
 import pprint
 
-conditions = [
-    {"p", "-w"},
-    {"p", "y"},
-    {"-p", "-r", "-w", "y"},
-    {"r"},
-    {"-r", "w", "-y"},
-    {"w", "y"},
-    {"-w", "-y"},
-]
+conditions = """
+s t -u
+s u 
+s -u x
+-s t u
+-s t -u
+-s -u -x
+-t u
+-t -u x
+-t -x
+"""
 
 
-F = set(frozenset(x) for x in conditions)
+def conditionStringSet(conditions: str):
+    lines = conditions.split("\n")
+    F = set()
+    for line in lines:
+        if(line):
+            F = F.union({frozenset(line.split(" ")).difference({'', ' '})})
+    return F
 
 
 def negate(str: str):
@@ -42,14 +50,19 @@ def ResSolver(F: set):
     return F
 
 
+F = conditionStringSet(conditions)
+
 solveResult = ResSolver(F)
 list = list(el for el in list(set((el for el in s)) for s in solveResult))
 
 list.sort(key=len, reverse=True)
 
-print()
+
 pprint.pprint(list)
 
+print()
+print(F)
+print("len:", len(F), "checked:", len(list), "resolvents")
 if(set() in list):
     print("Unsatisfiable")
 else:
