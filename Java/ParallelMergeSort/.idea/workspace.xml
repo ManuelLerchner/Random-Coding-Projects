@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9a61153d-fcdc-48f5-8ec5-bb62fa9955b4" name="Changes" comment="EIDI Stuff">
+      <change beforePath="$PROJECT_DIR$/src/CountBigger/CountBigger.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CountBigger/CountBiggerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FindMax/FindMax.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FindMax/FindMaxTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/List/List.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/List/ListTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MergeSort/MergeSort.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MergeSort/MergeSortParallel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MergeSort/MergeSortTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RLEncoding/RLEncoding.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RLEncoding/RLEncodingTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RecursionTest/Recursion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RecursionTest/RecursionTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SumArray/SumArray.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SumArray/SumArrayTest.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DarkyenusTimeTracker">
+    <option name="totalTimeSeconds" value="6490" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="25Fsk7PRW00oFE2NKlKqfmXVhk0" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="create.test.in.the.same.root" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../EIDI Examples" />
+    <property name="settings.editor.selected.configurable" value="preferences.rainbow.brackets" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="FindMax" />
+      <recent name="List" />
+      <recent name="RecursionTest" />
+      <recent name="CountBigger" />
+      <recent name="RLEncoding" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.All in EIDI-Examples">
+    <configuration name="All in EIDI-Examples" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="EIDI-Examples" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FindMaxTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="EIDI-Examples" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="FindMax.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="FindMax" />
+      <option name="MAIN_CLASS_NAME" value="FindMax.FindMaxTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FindMaxTest.run" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="EIDI-Examples" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="FindMax.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="FindMax" />
+      <option name="MAIN_CLASS_NAME" value="FindMax.FindMaxTest" />
+      <option name="METHOD_NAME" value="run" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ListTest.filter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="EIDI-Examples" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="List.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="List" />
+      <option name="MAIN_CLASS_NAME" value="List.ListTest" />
+      <option name="METHOD_NAME" value="filter" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RecursionTest.rec2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="EIDI-Examples" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="RecursionTest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="RecursionTest" />
+      <option name="MAIN_CLASS_NAME" value="RecursionTest.RecursionTest" />
+      <option name="METHOD_NAME" value="rec2" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.All in EIDI-Examples" />
+        <item itemvalue="JUnit.FindMaxTest" />
+        <item itemvalue="JUnit.FindMaxTest.run" />
+        <item itemvalue="JUnit.ListTest.filter" />
+        <item itemvalue="JUnit.RecursionTest.rec2" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9a61153d-fcdc-48f5-8ec5-bb62fa9955b4" name="Changes" comment="" />
+      <created>1645134311648</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1645134311648</updated>
+      <workItem from="1645134312917" duration="3390000" />
+      <workItem from="1645137867165" duration="594000" />
+      <workItem from="1645196213323" duration="2535000" />
+    </task>
+    <task id="LOCAL-00001" summary="Parallel MergeSort">
+      <created>1645137704995</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1645137704995</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Recursive Array Sum">
+      <created>1645138456315</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1645138456315</updated>
+    </task>
+    <task id="LOCAL-00003" summary="EIDI Stuff">
+      <created>1645198725477</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1645198725477</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Parallel MergeSort" />
+    <MESSAGE value="Recursive Array Sum" />
+    <MESSAGE value="EIDI Stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="EIDI Stuff" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/CountBigger/CountBigger.java</url>
+          <line>8</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="JUnit">
+        <watch expression="curr" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>
