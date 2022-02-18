@@ -1,3 +1,5 @@
+package MergeSort;
+
 public class MergeSortParallel implements Runnable {
 
 	int[] arr;

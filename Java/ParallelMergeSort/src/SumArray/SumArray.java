@@ -1,3 +1,5 @@
+package SumArray;
+
 public class SumArray {
 
 	static int sum(int[] arr) {
