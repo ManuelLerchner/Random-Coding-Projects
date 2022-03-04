@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="manifest" href="/rev-manifest.json" />
+        <meta name="theme-color" content="#ffffff" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+
+        <script>
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", function () {
+                    navigator.serviceWorker.register("/sw.js").then(
+                        function (registration) {
+                            // Registration was successful
+                            console.log(
+                                "ServiceWorker registration successful with scope: ",
+                                registration.scope
+                            );
+                        },
+                        function (err) {
+                            // registration failed :(
+                            console.log(
+                                "ServiceWorker registration failed: ",
+                                err
+                            );
+                        }
+                    );
+                });
+            }
+        </script>
+        <title>test</title>
+    </head>
+
+    <body>
+        <p1>test</p1>
+        <h2>HTML Imafge</h2>
+        <img
+            src="https://www.tagesschau.de/multimedia/bilder/jugendwort-cringe-101~_v-videowebm.jpg"
+            alt="sd"
+            width="460"
+            height="345"
+        />
+    </body>
+</html>
