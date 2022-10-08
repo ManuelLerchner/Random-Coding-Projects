@@ -1,3 +1,5 @@
+use ndarray::Array2;
+
 use crate::activation_function::activation_function::ActivationFunction;
 
 use super::layer::Layer;
@@ -25,7 +27,7 @@ impl Network<'_> {
         }
     }
 
-    pub fn predict(&self, input: Vec<f64>) -> Vec<f64> {
+    pub fn predict(&self, input: Array2<f64>) -> Array2<f64> {
         let mut output = input;
         for layer in &self.layers {
             output = layer.predict(output);
