@@ -19,9 +19,11 @@ impl Layer<'_> {
         }
     }
 
-    pub fn predict(&self, input: Array2<f64>) -> Array2<f64> {
-        let output = self.weights.dot(&input) + &self.biases;
+    pub fn predict(&self, input: &Array2<f64>) -> Array2<f64> {
+        self.activation.function(&self.forward(input))
+    }
 
-        self.activation.function(output)
+    pub fn forward(&self, input: &Array2<f64>) -> Array2<f64> {
+        self.weights.dot(input) + &self.biases
     }
 }

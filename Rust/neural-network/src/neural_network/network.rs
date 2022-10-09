@@ -1,8 +1,10 @@
-use ndarray::Array2;
+use std::ops::Mul;
 
-use crate::activation_function::activation_function::ActivationFunction;
+use ndarray::{arr2, Array, Array2};
 
 use super::layer::Layer;
+use crate::{activation_function::activation_function::ActivationFunction, neural_network::layer};
+use itertools::izip;
 
 pub struct Network<'a> {
     pub layers: Vec<Layer<'a>>,
@@ -27,11 +29,60 @@ impl Network<'_> {
         }
     }
 
-    pub fn predict(&self, input: Array2<f64>) -> Array2<f64> {
-        let mut output = input;
+    pub fn predict(&self, input: &Array2<f64>) -> Array2<f64> {
+        let mut output = input.clone();
         for layer in &self.layers {
-            output = layer.predict(output);
+            output = layer.predict(&output);
         }
         output
+    }
+
+    pub fn train(&mut self, input: &Array2<f64>, expected: &Array2<f64>) {
+        let batch_size = input.shape()[1];
+
+        let mut a = input.clone();
+        let mut z_results = Vec::new();
+        let mut a_results = Vec::new();
+        for layer in &self.layers {
+            let z = layer.forward(&a);
+            a_results.push(a.clone());
+            z_results.push(z.clone());
+            a = layer.activation.function(&z);
+        }
+
+        let mut deltas = Vec::new();
+
+        let mut cost = expected - a;
+        for (layer, z) in (&self.layers).iter().zip(z_results).rev() {
+            let deriv = layer.activation.derivative(&z);
+
+            let delta = &cost * deriv;
+            deltas.push(delta.clone());
+
+            cost = layer.weights.t().dot(&delta);
+        }
+
+        deltas.reverse();
+
+        for (layer, delta) in (self.layers).iter_mut().zip(&deltas) {
+            let delta_average = delta.mean_axis(ndarray::Axis(1)).unwrap();
+
+            let len = delta_average.len();
+            let delta_average_mat = &delta_average.into_shape((len, 1)).unwrap();
+
+            layer.biases = &layer.biases - &delta_average_mat.mul(self.learning_rate);
+        }
+
+        for (layer, delta, a) in izip!(&mut self.layers, &deltas, &a_results) {
+            let t = delta.dot(&a.t());
+
+            println!("t: {:?}", t);
+
+            println!("layer.weights: {:?}", layer.weights);
+
+            layer.weights = &layer.weights - &t.mul(self.learning_rate / batch_size as f64);
+
+            println!("layer.weights: {:?}", layer.weights);
+        }
     }
 }

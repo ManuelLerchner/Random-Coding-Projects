@@ -1,19 +1,19 @@
 use ndarray::Array;
 
 pub struct ActivationFunction {
-    f: fn(f64) -> f64,
-    d: fn(f64) -> f64,
+    pub f: fn(f64) -> f64,
+    pub d: fn(f64) -> f64,
 }
 
 impl ActivationFunction {
-    pub fn function<D>(&self, x: Array<f64, D>) -> Array<f64, D>
+    pub fn function<D>(&self, x: &Array<f64, D>) -> Array<f64, D>
     where
         D: ndarray::Dimension,
     {
         x.mapv(self.f)
     }
 
-    pub fn derivative<D>(&self, x: Array<f64, D>) -> Array<f64, D>
+    pub fn derivative<D>(&self, x: &Array<f64, D>) -> Array<f64, D>
     where
         D: ndarray::Dimension,
     {
