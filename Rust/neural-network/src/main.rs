@@ -19,9 +19,12 @@ fn main() {
     println!("Initial guess: {:?}", initial_output);
 
     for i in 0..2000 {
-        let cost = network.train(&input, &expected);
+        network.train(&input, &expected);
 
         if i % 100 == 0 {
+            let output = network.predict(&input);
+            let cost = network.cost_function.cost(&output, &expected);
+
             println!("Step: {:4} Cost: {:.8}", i, cost);
         }
     }

@@ -34,6 +34,7 @@ impl Network<'_> {
         }
     }
 
+    // Predicts the output of the network given an input
     pub fn predict(&self, input: &Array2<f64>) -> Array2<f64> {
         let mut output = input.clone();
         for layer in &self.layers {
@@ -42,10 +43,9 @@ impl Network<'_> {
         output
     }
 
-    pub fn train(&mut self, input: &Array2<f64>, expected: &Array2<f64>) -> f64 {
-        let batch_size = input.shape()[1];
-
-        //Collect Forward Pass Data
+    // Trains the network given an input and the expected output
+    pub fn train(&mut self, input: &Array2<f64>, expected: &Array2<f64>) {
+        //Forward Pass
         let mut a = input.clone();
         let mut z_results = Vec::new();
         let mut a_results = Vec::new();
@@ -56,11 +56,10 @@ impl Network<'_> {
             a = layer.activation.function(&z);
         }
 
-        let mut deltas = Vec::new();
-
         let mut partial_derivative = self.cost_function.nabla_c(&a, &expected);
-        let cost = self.cost_function.cost(&a, &expected);
 
+        // Backward Pass
+        let mut deltas = Vec::new();
         for (layer, z) in (&self.layers).iter().zip(z_results).rev() {
             let sensitivity = layer.activation.derivative(&z);
 
@@ -72,21 +71,20 @@ impl Network<'_> {
 
         deltas.reverse();
 
+        // Update Biases
         for (layer, delta) in (self.layers).iter_mut().zip(&deltas) {
-            let delta_average = delta.mean_axis(ndarray::Axis(1)).unwrap();
+            let delta = delta.mean_axis(ndarray::Axis(1)).unwrap();
+            let len = delta.len();
+            let deriv = &delta.into_shape((len, 1)).unwrap();
 
-            let len = delta_average.len();
-            let delta_average_mat = &delta_average.into_shape((len, 1)).unwrap();
-
-            layer.biases = &layer.biases - &delta_average_mat.mul(self.learning_rate);
+            layer.biases = &layer.biases - &deriv.mul(self.learning_rate);
         }
 
+        // Update Weights
         for (layer, delta, a) in izip!(&mut self.layers, &deltas, &a_results) {
-            let t = delta.dot(&a.t());
+            let deriv = delta.dot(&a.t()) / input.shape()[1] as f64;
 
-            layer.weights = &layer.weights - &t.mul(self.learning_rate / batch_size as f64);
+            layer.weights = &layer.weights - &deriv.mul(self.learning_rate);
         }
-
-        cost
     }
 }

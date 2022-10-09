@@ -12,20 +12,23 @@ pub struct Layer<'a> {
 
 impl Layer<'_> {
     pub fn new(input_size: usize, output_size: usize, activation: &ActivationFunction) -> Layer {
+        let he_distribution = Array2::random(
+            (output_size, input_size),
+            Normal::new(0., (2.0 / input_size as f64).sqrt()).unwrap(),
+        );
         Layer {
-            weights: Array2::random(
-                (output_size, input_size),
-                Normal::new(0., (2.0 / input_size as f64).sqrt()).unwrap(),
-            ),
-            biases: Array2::from_shape_fn((output_size, 1), |_| 0.),
+            weights: he_distribution,
+            biases: Array2::zeros((output_size, 1)),
             activation,
         }
     }
 
+    // Predicts the output of the layer given an input
     pub fn predict(&self, input: &Array2<f64>) -> Array2<f64> {
         self.activation.function(&self.forward(input))
     }
 
+    // Calculates the weighted sum of the input
     pub fn forward(&self, input: &Array2<f64>) -> Array2<f64> {
         self.weights.dot(input) + &self.biases
     }
