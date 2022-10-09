@@ -52,7 +52,7 @@ impl Network<'_> {
 
         let mut deltas = Vec::new();
 
-        let mut cost = expected - a;
+        let mut cost = a - expected;
         for (layer, z) in (&self.layers).iter().zip(z_results).rev() {
             let deriv = layer.activation.derivative(&z);
 
@@ -76,13 +76,7 @@ impl Network<'_> {
         for (layer, delta, a) in izip!(&mut self.layers, &deltas, &a_results) {
             let t = delta.dot(&a.t());
 
-            println!("t: {:?}", t);
-
-            println!("layer.weights: {:?}", layer.weights);
-
             layer.weights = &layer.weights - &t.mul(self.learning_rate / batch_size as f64);
-
-            println!("layer.weights: {:?}", layer.weights);
         }
     }
 }
