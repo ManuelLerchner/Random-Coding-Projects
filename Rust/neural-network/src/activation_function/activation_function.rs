@@ -22,8 +22,25 @@ impl ActivationFunction {
 }
 
 pub static SIGMOID: ActivationFunction = ActivationFunction {
-    f: (|x: f64| 1.0 / (1.0 + (-x).exp())),
-    d: (|x: f64| x * (1.0 - x)),
+    f: (|x: f64| {
+        if x < -45.0 {
+            0.0
+        } else if x > 45.0 {
+            1.0
+        } else {
+            1.0 / (1.0 + (-x).exp())
+        }
+    }),
+    d: (|x: f64| {
+        if x < -45.0 {
+            0.0
+        } else if x > 45.0 {
+            0.0
+        } else {
+            let y = 1.0 / (1.0 + (-x).exp());
+            y * (1.0 - y)
+        }
+    }),
 };
 
 pub static RELU: ActivationFunction = ActivationFunction {

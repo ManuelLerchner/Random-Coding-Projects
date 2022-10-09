@@ -3,21 +3,26 @@ use std::ops::Mul;
 use ndarray::{arr2, Array, Array2};
 
 use super::layer::Layer;
-use crate::{activation_function::activation_function::ActivationFunction, neural_network::layer};
+use crate::{
+    activation_function::activation_function::ActivationFunction,
+    cost_function::cost_function::CostFunction, neural_network::layer,
+};
 use itertools::izip;
 
 pub struct Network<'a> {
     pub layers: Vec<Layer<'a>>,
     pub shape: Vec<usize>,
     pub learning_rate: f64,
+    pub cost_function: &'a CostFunction,
 }
 
 impl Network<'_> {
-    pub fn new(
+    pub fn new<'a>(
         shape: Vec<usize>,
         learning_rate: f64,
-        activation_function: &ActivationFunction,
-    ) -> Network {
+        activation_function: &'a ActivationFunction,
+        cost_function: &'a CostFunction,
+    ) -> Network<'a> {
         let mut layers = Vec::new();
         for i in 0..shape.len() - 1 {
             layers.push(Layer::new(shape[i], shape[i + 1], &activation_function));
@@ -26,6 +31,7 @@ impl Network<'_> {
             layers,
             shape,
             learning_rate,
+            cost_function,
         }
     }
 
@@ -37,9 +43,10 @@ impl Network<'_> {
         output
     }
 
-    pub fn train(&mut self, input: &Array2<f64>, expected: &Array2<f64>) {
+    pub fn train(&mut self, input: &Array2<f64>, expected: &Array2<f64>) -> f64 {
         let batch_size = input.shape()[1];
 
+        //Collect Forward Pass Data
         let mut a = input.clone();
         let mut z_results = Vec::new();
         let mut a_results = Vec::new();
@@ -52,14 +59,16 @@ impl Network<'_> {
 
         let mut deltas = Vec::new();
 
-        let mut cost = a - expected;
-        for (layer, z) in (&self.layers).iter().zip(z_results).rev() {
-            let deriv = layer.activation.derivative(&z);
+        let mut partial_derivative = self.cost_function.nabla_c(&a, &expected);
+        let cost = self.cost_function.cost(&a, &expected);
 
-            let delta = &cost * deriv;
+        for (layer, z) in (&self.layers).iter().zip(z_results).rev() {
+            let sensitivity = layer.activation.derivative(&z);
+
+            let delta = &partial_derivative * sensitivity;
             deltas.push(delta.clone());
 
-            cost = layer.weights.t().dot(&delta);
+            partial_derivative = layer.weights.t().dot(&delta);
         }
 
         deltas.reverse();
@@ -78,5 +87,7 @@ impl Network<'_> {
 
             layer.weights = &layer.weights - &t.mul(self.learning_rate / batch_size as f64);
         }
+
+        cost
     }
 }
