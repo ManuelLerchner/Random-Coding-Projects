@@ -1,13 +1,12 @@
-use std::ops::Mul;
-
-use ndarray::{arr2, Array, Array2};
-
 use super::layer::Layer;
 use crate::{
     activation_function::activation_function::ActivationFunction,
-    cost_function::cost_function::CostFunction, neural_network::layer,
+    cost_function::cost_function::CostFunction,
 };
+
 use itertools::izip;
+use ndarray::Array2;
+use std::ops::Mul;
 
 pub struct Network<'a> {
     pub layers: Vec<Layer<'a>>,

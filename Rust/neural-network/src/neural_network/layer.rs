@@ -1,8 +1,8 @@
 use crate::activation_function;
-use activation_function::activation_function::ActivationFunction;
 
+use activation_function::activation_function::ActivationFunction;
 use ndarray::Array2;
-use ndarray_rand::{rand_distr::Uniform, RandomExt};
+use ndarray_rand::{rand_distr::Normal, RandomExt};
 
 pub struct Layer<'a> {
     pub weights: Array2<f64>,
@@ -13,8 +13,11 @@ pub struct Layer<'a> {
 impl Layer<'_> {
     pub fn new(input_size: usize, output_size: usize, activation: &ActivationFunction) -> Layer {
         Layer {
-            weights: Array2::random((output_size, input_size), Uniform::new(-1.0, 1.0)),
-            biases: Array2::random((output_size, 1), Uniform::new(-1.0, 1.0)),
+            weights: Array2::random(
+                (output_size, input_size),
+                Normal::new(0., (2.0 / input_size as f64).sqrt()).unwrap(),
+            ),
+            biases: Array2::from_shape_fn((output_size, 1), |_| 0.),
             activation,
         }
     }
