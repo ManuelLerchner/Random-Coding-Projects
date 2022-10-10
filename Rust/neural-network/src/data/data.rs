@@ -24,8 +24,8 @@ impl Dataset {
 
 pub static XOR: Dataset = Dataset {
     generate: (|n: usize| {
-        let mut x = Array::zeros((2, n).f());
-        let mut y = Array::zeros((1, n).f());
+        let mut x = Array::zeros((n, 2).f());
+        let mut y = Array::zeros((n, 1).f());
 
         for i in 0..n {
             let r1 = rand::random::<f64>();
@@ -34,10 +34,10 @@ pub static XOR: Dataset = Dataset {
             let r1_bool = r1 > 0.5;
             let r2_bool = r2 > 0.5;
 
-            x[[0, i]] = r1_bool as i32 as f64;
-            x[[1, i]] = r2_bool as i32 as f64;
+            x[[i, 0]] = r1_bool as i32 as f64;
+            x[[i, 1]] = r2_bool as i32 as f64;
 
-            y[[0, i]] = (r1_bool ^ r2_bool) as i32 as f64;
+            y[[i, 0]] = (r1_bool ^ r2_bool) as i32 as f64;
         }
 
         (x, y)
@@ -46,19 +46,36 @@ pub static XOR: Dataset = Dataset {
 
 pub static CIRCLE: Dataset = Dataset {
     generate: (|n: usize| {
-        let mut x = Array::zeros((2, n).f());
-        let mut y = Array::zeros((1, n).f());
+        let mut x = Array::zeros((n, 2).f());
+        let mut y = Array::zeros((n, 1).f());
 
         for i in 0..n {
             let r1 = rand::random::<f64>();
             let r2 = rand::random::<f64>();
 
-            x[[0, i]] = r1;
-            x[[1, i]] = r2;
+            x[[i, 0]] = r1;
+            x[[i, 1]] = r2;
 
-            let dist = ((r1 - 0.5).powi(2) + (r2 - 0.5).powi(2)).sqrt();
+            y[[i, 0]] = (r1 * r1 + r2 * r2 < 0.7 * 0.7) as i32 as f64;
+        }
 
-            y[[0, i]] = if dist < 0.5 { 1.0 } else { 0.0 };
+        (x, y)
+    }),
+};
+
+pub static ADD: Dataset = Dataset {
+    generate: (|n: usize| {
+        let mut x = Array::zeros((n, 2).f());
+        let mut y = Array::zeros((n, 1).f());
+
+        for i in 0..n {
+            let r1 = rand::random::<f64>();
+            let r2 = rand::random::<f64>();
+
+            x[[i, 0]] = r1;
+            x[[i, 1]] = r2;
+
+            y[[i, 0]] = r1 + 0.5*r2;
         }
 
         (x, y)
@@ -72,14 +89,13 @@ mod tests {
 
     #[test]
     fn test_xor() {
-        let (x, y) = (XOR.generate)(100);
-        assert_eq!(2, x.shape()[0]);
-        assert_eq!(100, x.shape()[1]);
+        let (x, y) = XOR.generate(10);
+        assert_eq!(x.shape(), &[10, 2]);
 
-        for i in 0..x.shape()[0] {
-            let a = x[[0, i]];
-            let b = x[[1, i]];
-            let y = y[[0, i]];
+        for i in 0..10 {
+            let a = x[[i, 0]];
+            let b = x[[i, 1]];
+            let y = y[[i, 0]];
 
             let a_bool = a > 0.5;
             let b_bool = b > 0.5;

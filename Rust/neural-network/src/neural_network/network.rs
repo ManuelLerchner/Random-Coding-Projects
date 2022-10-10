@@ -6,19 +6,18 @@ use crate::{
 
 use itertools::izip;
 use ndarray::Array2;
-use std::ops::Mul;
 
 pub struct Network<'a> {
     pub layers: Vec<Layer<'a>>,
     pub shape: Vec<usize>,
-    pub learning_rate: f64,
+    pub eta: f64,
     pub cost_function: &'a CostFunction,
 }
 
 impl Network<'_> {
     pub fn new<'a>(
         shape: Vec<usize>,
-        learning_rate: f64,
+        eta: f64,
         activation_function: &'a ActivationFunction,
         cost_function: &'a CostFunction,
     ) -> Network<'a> {
@@ -29,7 +28,7 @@ impl Network<'_> {
         Network {
             layers,
             shape,
-            learning_rate,
+            eta,
             cost_function,
         }
     }
@@ -55,49 +54,79 @@ impl Network<'_> {
         (output, cost)
     }
 
-    // Trains the network given an input and the expected output
-    pub fn train(&mut self, input: &Array2<f64>, expected: &Array2<f64>) {
-        //Forward Pass
-        let mut a = input.clone();
-        let mut z_results = Vec::new();
-        let mut a_results = Vec::new();
-        a_results.push(a.clone());
+    // Calculates the needed adjustments to the weights and biases for a given input and expected output
+    pub fn backprop(
+        &self,
+        x: &Array2<f64>,
+        y: &Array2<f64>,
+    ) -> (Vec<Array2<f64>>, Vec<Array2<f64>>) {
+        let mut nabla_b = Vec::new();
+        let mut nabla_w = Vec::new();
+
+        // Forward pass
+        let mut activation = x.clone();
+        let mut activations = vec![activation.clone()];
+        let mut zs = Vec::new();
         for layer in &self.layers {
-            let z = layer.forward(&a);
-            z_results.push(z.clone());
-            a = layer.activation.function(&z);
-            a_results.push(a.clone());
+            let z = layer.forward(&activation);
+            zs.push(z.clone());
+            activation = layer.activation.function(&z);
+            activations.push(activation.clone());
         }
 
-        let mut partial_derivative = self.cost_function.nabla_c(&a, &expected);
+        // Calculate the cost
+        let nabla_c = self.cost_function.cost_derivative(&activation, &y);
 
-        // Backward Pass
-        let mut deltas = Vec::new();
-        for (layer, z) in (&self.layers).iter().zip(z_results).rev() {
-            let sensitivity = layer.activation.derivative(&z);
+        // Calculate sensitivity
+        let sig_prime = self.layers[self.layers.len() - 1]
+            .activation
+            .derivative(&zs[zs.len() - 1]);
 
-            let delta = &partial_derivative * sensitivity;
-            deltas.push(delta.clone());
+        // Calculate delta for last layer
+        let mut delta = nabla_c * sig_prime;
 
-            partial_derivative = layer.weights.t().dot(&delta);
+        // Calculate nabla_b and nabla_w for last layer
+        nabla_b.push(delta.clone());
+        nabla_w.push((&activations[activations.len() - 2]).t().dot(&delta));
+
+        // Loop backwards through the layers, calculating delta, nabla_b and nabla_w
+        for i in 2..self.shape.len() {
+            let sig_prime = self.layers[self.layers.len() - i]
+                .activation
+                .derivative(&zs[zs.len() - i]);
+
+            let nabla_c = &delta.dot(&self.layers[self.layers.len() - i + 1].weights.t());
+
+            delta = nabla_c * sig_prime;
+
+            nabla_b.push(delta.clone());
+            nabla_w.push((&activations[activations.len() - i - 1].t()).dot(&delta));
         }
 
-        deltas.reverse();
+        nabla_b.reverse();
+        nabla_w.reverse();
 
-        // Update Biases
-        for (layer, delta) in (self.layers).iter_mut().zip(&deltas) {
-            let delta = delta.mean_axis(ndarray::Axis(1)).unwrap();
-            let len = delta.len();
-            let deriv = &delta.into_shape((len, 1)).unwrap();
+        (nabla_b, nabla_w)
+    }
 
-            layer.biases = &layer.biases - &deriv.mul(self.learning_rate);
+    // Trains the network given an input and the expected output
+    pub fn train(&mut self, (x, y): &(Array2<f64>, Array2<f64>)) -> f64 {
+        let (nabla_b, nabla_w) = self.backprop(x, y);
+
+        let batch_size = x.nrows() as f64;
+
+        for (layer, nabla_b, nabla_w) in izip!(&mut self.layers, nabla_b, nabla_w) {
+            let nabla_b_average = &nabla_b
+                .mean_axis(ndarray::Axis(0))
+                .unwrap()
+                .into_shape((1, nabla_b.ncols()))
+                .unwrap();
+
+            layer.weights = &layer.weights - (self.eta / batch_size) * nabla_w;
+            layer.biases = &layer.biases - (self.eta / batch_size) * nabla_b_average;
         }
 
-        // Update Weights
-        for (layer, delta, a) in izip!(&mut self.layers, &deltas, &a_results) {
-            let deriv = delta.dot(&a.t()) / input.shape()[1] as f64;
-
-            layer.weights = &layer.weights - &deriv.mul(self.learning_rate);
-        }
+        let cost = self.cost_function.cost(&self.predict(x), y);
+        cost
     }
 }

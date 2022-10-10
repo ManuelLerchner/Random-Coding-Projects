@@ -22,24 +22,22 @@ impl ActivationFunction {
 }
 
 pub static SIGMOID: ActivationFunction = ActivationFunction {
-    f: (|x: f64| {
-        let max_val = 45.0;
-        if x < -max_val {
-            return 0.0;
-        } else if x > max_val {
-            return 1.0;
-        }
-        1.0 / (1.0 + (-x).exp())
-    }),
+    f: (|x: f64| 1.0 / (1.0 + (-x).exp())),
+
     d: (|x: f64| {
-        let y = (SIGMOID.f)(x);
-        y * (1.0 - y)
+        let s = 1.0 / (1.0 + (-x).exp());
+        s * (1.0 - s)
     }),
 };
 
 pub static RELU: ActivationFunction = ActivationFunction {
     f: (|x: f64| x.max(0.0)),
     d: (|x: f64| if x > 0.0 { 1.0 } else { 0.0 }),
+};
+
+pub static ID: ActivationFunction = ActivationFunction {
+    f: (|x: f64| x),
+    d: (|_x: f64| 1.0),
 };
 
 #[cfg(test)]
