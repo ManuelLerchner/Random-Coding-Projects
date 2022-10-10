@@ -43,17 +43,30 @@ impl Network<'_> {
         output
     }
 
+    // Predicts the output of the network given an input
+    pub fn test(&self, input: &Array2<f64>, expected: &Array2<f64>) -> (Array2<f64>, f64) {
+        let mut output = input.clone();
+        for layer in &self.layers {
+            output = layer.predict(&output);
+        }
+
+        let cost = self.cost_function.cost(&output, &expected);
+
+        (output, cost)
+    }
+
     // Trains the network given an input and the expected output
     pub fn train(&mut self, input: &Array2<f64>, expected: &Array2<f64>) {
         //Forward Pass
         let mut a = input.clone();
         let mut z_results = Vec::new();
         let mut a_results = Vec::new();
+        a_results.push(a.clone());
         for layer in &self.layers {
             let z = layer.forward(&a);
-            a_results.push(a.clone());
             z_results.push(z.clone());
             a = layer.activation.function(&z);
+            a_results.push(a.clone());
         }
 
         let mut partial_derivative = self.cost_function.nabla_c(&a, &expected);

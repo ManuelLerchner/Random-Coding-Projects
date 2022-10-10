@@ -8,25 +8,59 @@ pub struct CostFunction {
 impl CostFunction {
     pub fn cost(&self, a: &Array2<f64>, expected: &Array2<f64>) -> f64 {
         let mut cost = 0.0;
-        for i in 0..a.shape()[0] + 1 {
-            cost += (self.f)(&a.column(i).to_owned(), &expected.column(i).to_owned());
+        for (a, expected) in a.outer_iter().zip(expected.outer_iter()) {
+            cost += (self.f)(&a.to_owned(), &expected.to_owned());
         }
         cost / a.shape()[0] as f64
     }
 
     pub fn nabla_c(&self, a: &Array2<f64>, expected: &Array2<f64>) -> Array2<f64> {
         let mut cost_derivative = Array2::zeros(a.raw_dim());
-        for i in 0..a.shape()[0] + 1 {
-            cost_derivative.column_mut(i).assign(
-                &(self.d)(&a.column(i).to_owned(), &expected.column(i).to_owned()).to_owned(),
-            );
+
+        for i in 0..a.ncols() {
+            cost_derivative
+                .column_mut(i)
+                .assign(&((self.d)(&a.column(i).to_owned(), &expected.column(i).to_owned())));
         }
 
         cost_derivative
     }
 }
 
-pub static MEAN_SQUARED_ERROR: CostFunction = CostFunction {
+pub static QUADRATIC_COST: CostFunction = CostFunction {
     f: (|a, expected| (a - expected).iter().fold(0.0, |acc, x| acc + x.powi(2)) / 2.0),
     d: (|a, expected| a - expected),
 };
+
+#[cfg(test)]
+mod tests {
+    use ndarray::{arr1, arr2};
+
+    use super::*;
+
+    #[test]
+    fn test_quadratic_cost() {
+        let a = arr1(&[0.25, 1.0, 0.4]);
+        let expected = arr1(&[0.2, 1.5, 0.5]);
+        assert_eq!(0.13125, (QUADRATIC_COST.f)(&a, &expected));
+    }
+
+    #[test]
+    fn test_quadratic_cost_derivative() {
+        let a = arr1(&[0.25, 1.0, 2.]);
+        let expected = arr1(&[0.5, 1.5, 0.5]);
+        assert_eq!(arr1(&[-0.25, -0.5, 1.5]), (QUADRATIC_COST.d)(&a, &expected));
+    }
+
+    #[test]
+    fn test_quadratic_cost_nabla() {
+        let a = arr2(&[[0.25, 1.0, 2.], [0.25, 1.0, 2.], [0.25, 1.0, 2.]]);
+        let expected = arr2(&[[0.5, 1.5, 0.5], [0.5, 1.5, 0.5], [0.5, 1.5, 0.5]]);
+
+        let diff = &a - &expected;
+
+        let nabla = QUADRATIC_COST.nabla_c(&a, &expected);
+
+        assert_eq!(diff, nabla);
+    }
+}
