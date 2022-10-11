@@ -10,6 +10,7 @@ edition = "2021"
 ndarray = "0.15.6"
 ndarray-rand = "0.14.0"
 itertools = "0.8"
+png = "0.17.6"
 
 [profile.dev]
 opt-level = 0

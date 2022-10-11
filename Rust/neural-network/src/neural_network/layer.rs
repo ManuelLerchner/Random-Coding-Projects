@@ -14,7 +14,7 @@ impl Layer<'_> {
     pub fn new(input_size: usize, output_size: usize, activation: &ActivationFunction) -> Layer {
         let weights = Array2::random((input_size, output_size), Normal::new(0.0, 1.0).unwrap())
             / (input_size as f64).sqrt();
-        let biases = Array2::random((1, output_size), Normal::new(0.0, 0.01).unwrap());
+        let biases = Array2::random((1, output_size), Normal::new(0.0, 0.1).unwrap());
 
         Layer {
             weights,
@@ -82,5 +82,11 @@ mod tests {
         let output = layer.predict(&input);
 
         assert_eq!(output, expected);
+    }
+}
+
+impl std::fmt::Display for Layer<'_> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "weights:\n{}\nbiases:\n{}\n", self.weights, self.biases)
     }
 }

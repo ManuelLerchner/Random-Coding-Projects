@@ -2,30 +2,40 @@ pub mod activation_function;
 pub mod cost_function;
 pub mod data;
 pub mod neural_network;
+pub mod plot;
+
+use plot::plot;
 
 #[allow(unused_imports)]
 use crate::{
     activation_function::activation_function::{ID, RELU, SIGMOID},
     cost_function::cost_function::QUADRATIC_COST,
-    data::data::{Dataset, ADD, CIRCLE, XOR},
+    data::data::{Dataset, CIRCLE, XOR},
     neural_network::network::Network,
 };
 
 fn main() {
-    let mut network = Network::new(vec![2, 32, 32, 1], 0.2, &RELU, &QUADRATIC_COST);
-
-    let (x_test, y_test) = CIRCLE.generate(1000);
+    let mut network = Network::new(vec![2, 16, 16, 16, 16, 1], 0.2, &RELU, &QUADRATIC_COST);
 
     for _ in 0..1000 {
-        let data_train = CIRCLE.generate(8);
+        let data_train = XOR.get_batch(16);
         let cost = network.train(&data_train);
         println!("cost: {}", cost);
     }
 
-    let pred = network.predict(&x_test);
-    let cost = network.cost_function.cost(&pred, &y_test);
+    let resolution: usize = 100;
+    let unit_square = Dataset::get_2d_unit_square(resolution);
+    let pred = network.predict(&unit_square);
 
-    println!("guess {:?}", pred);
-    println!("cost: {}", cost);
-    println!("actual {:?}", (pred - y_test).mapv(|x| x.abs()).sum());
+    let pred_flat = pred
+        .to_shape(resolution * resolution)
+        .expect("reshape failed")
+        .to_owned();
+
+    plot(
+        "xor.png",
+        (resolution, resolution),
+        &pred_flat,
+        png::ColorType::Grayscale,
+    );
 }

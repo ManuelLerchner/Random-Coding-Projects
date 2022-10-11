@@ -1,107 +1,91 @@
 use ndarray::prelude::*;
 use ndarray::{Array, Array2};
-use ndarray_rand::rand;
+use ndarray_rand::{rand, RandomExt};
+
+pub enum DatasetType {
+    Static(fn() -> (Array2<f64>, Array2<f64>)),
+    Dynamic(fn(Array1<f64>) -> Array1<f64>, usize),
+}
+
 pub struct Dataset {
-    generate: fn(usize) -> (Array2<f64>, Array2<f64>),
+    pub dataset_type: DatasetType,
 }
 
 impl Dataset {
-    pub fn generate(&self, size: usize) -> (Array2<f64>, Array2<f64>) {
-        (self.generate)(size)
+    pub fn new(dataset_type: DatasetType) -> Dataset {
+        Dataset { dataset_type }
     }
 
-    pub fn to_string(x: &Array2<f64>, y: &Array2<f64>, output: &Array2<f64>) -> String {
-        let mut string = String::new();
+    pub fn get_full(&self) -> (Array2<f64>, Array2<f64>) {
+        match &self.dataset_type {
+            DatasetType::Static(f) => f(),
+            _ => panic!("Cannot get full dataset from dynamic dataset"),
+        }
+    }
 
-        string.push_str(&format!(
-            "Input:\n{}\nShould:\n{}\nGuess:\n{}\n\n",
-            x, y, output
-        ));
+    pub fn get_2d_unit_square(resolution: usize) -> Array2<f64> {
+        let linspace = Array::linspace(0.0, 1.0, resolution);
 
-        string
+        let mut x = Array::zeros((resolution * resolution, 2).f());
+        for i in 0..resolution {
+            for j in 0..resolution {
+                x[[i * resolution + j, 0]] = linspace[i];
+                x[[i * resolution + j, 1]] = linspace[j];
+            }
+        }
+
+        x
+    }
+
+    pub fn get_batch(&self, batch_size: usize) -> (Array2<f64>, Array2<f64>) {
+        match &self.dataset_type {
+            DatasetType::Static(f) => {
+                let (data, labels) = f();
+
+                let indices = Array1::random(
+                    batch_size,
+                    rand::distributions::Uniform::new(0, data.shape()[0]),
+                )
+                .to_vec();
+
+                let data = data.select(Axis(0), &indices);
+                let labels = labels.select(Axis(0), &indices);
+
+                (data, labels)
+            }
+            DatasetType::Dynamic(f, dim) => {
+                let x = Array::random(
+                    (batch_size, *dim),
+                    rand::distributions::Uniform::new(0.0, 1.0),
+                );
+
+                let mut y = Array2::zeros((batch_size, 1));
+                for (i, xi) in x.outer_iter().enumerate() {
+                    let yi = f(xi.to_owned());
+                    y.slice_mut(s![i, ..]).assign(&yi);
+                }
+
+                (x, y)
+            }
+        }
     }
 }
 
 pub static XOR: Dataset = Dataset {
-    generate: (|n: usize| {
-        let mut x = Array::zeros((n, 2).f());
-        let mut y = Array::zeros((n, 1).f());
-
-        for i in 0..n {
-            let r1 = rand::random::<f64>();
-            let r2 = rand::random::<f64>();
-
-            let r1_bool = r1 > 0.5;
-            let r2_bool = r2 > 0.5;
-
-            x[[i, 0]] = r1_bool as i32 as f64;
-            x[[i, 1]] = r2_bool as i32 as f64;
-
-            y[[i, 0]] = (r1_bool ^ r2_bool) as i32 as f64;
-        }
-
+    dataset_type: DatasetType::Static(|| {
+        let x = array![[0.0, 0.0], [0.0, 1.0], [1.0, 0.0], [1.0, 1.0]];
+        let y = array![[0.0], [1.0], [1.0], [0.0]];
         (x, y)
     }),
 };
 
 pub static CIRCLE: Dataset = Dataset {
-    generate: (|n: usize| {
-        let mut x = Array::zeros((n, 2).f());
-        let mut y = Array::zeros((n, 1).f());
-
-        for i in 0..n {
-            let r1 = rand::random::<f64>();
-            let r2 = rand::random::<f64>();
-
-            x[[i, 0]] = r1;
-            x[[i, 1]] = r2;
-
-            y[[i, 0]] = (r1 * r1 + r2 * r2 < 0.7 * 0.7) as i32 as f64;
-        }
-
-        (x, y)
-    }),
+    dataset_type: DatasetType::Dynamic(
+        |x| {
+            let dist_from_center = ((x[0] - 0.5).powi(2) + (x[1] - 0.5).powi(2)).sqrt();
+            let y = if dist_from_center < 0.25 { 1.0 } else { 0.0 };
+            array![y]
+        },
+        2,
+    ),
 };
-
-pub static ADD: Dataset = Dataset {
-    generate: (|n: usize| {
-        let mut x = Array::zeros((n, 2).f());
-        let mut y = Array::zeros((n, 1).f());
-
-        for i in 0..n {
-            let r1 = rand::random::<f64>();
-            let r2 = rand::random::<f64>();
-
-            x[[i, 0]] = r1;
-            x[[i, 1]] = r2;
-
-            y[[i, 0]] = r1 + 0.5*r2;
-        }
-
-        (x, y)
-    }),
-};
-
-#[cfg(test)]
-mod tests {
-
-    use super::*;
-
-    #[test]
-    fn test_xor() {
-        let (x, y) = XOR.generate(10);
-        assert_eq!(x.shape(), &[10, 2]);
-
-        for i in 0..10 {
-            let a = x[[i, 0]];
-            let b = x[[i, 1]];
-            let y = y[[i, 0]];
-
-            let a_bool = a > 0.5;
-            let b_bool = b > 0.5;
-            let y_bool = y > 0.5;
-
-            assert_eq!(a_bool ^ b_bool, y_bool);
-        }
-    }
-}
