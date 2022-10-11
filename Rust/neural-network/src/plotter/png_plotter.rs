@@ -4,7 +4,7 @@ use std::path::Path;
 
 use ndarray::Array1;
 
-pub fn plot(name: &str, dims: (usize, usize), data: &Array1<f64>, color_type: png::ColorType) {
+pub fn plot_png(name: &str, dims: (usize, usize), data: &Array1<f64>, color_type: png::ColorType) {
     let path = Path::new("images").join(name);
 
     if let Some(parent) = path.parent() {
