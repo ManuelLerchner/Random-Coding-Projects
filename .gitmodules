@@ -19,3 +19,6 @@
 [submodule "Javascript/Monopoly-Smart-Bank-Backend"]
 	path = Javascript/Monopoly-Smart-Bank-Backend
 	url = https://github.com/ManuelLerchner/Monopoly-Smart-Bank-Backend
+[submodule "Rust/neural-network"]
+	path = Rust/neural-network
+	url = https://github.com/ManuelLerchner/neural-network
