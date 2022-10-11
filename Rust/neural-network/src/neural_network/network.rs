@@ -1,7 +1,7 @@
 use super::layer::Layer;
 use crate::{
     activation_function::activation_function::ActivationFunction,
-    cost_function::cost_function::CostFunction, data::data::Dataset, plotter::png_plotter::plot_png,
+    cost_function::cost_function::CostFunction, data::data::Dataset,
 };
 
 use itertools::izip;
@@ -134,12 +134,6 @@ impl Network<'_> {
                 cost_history.push((epoch, cost));
 
                 println!("Epoch: {}, Cost: {:.8}", epoch, cost);
-
-                //Plot
-                let (dim, unit_square_prediction) = self.predict_unit_square(100);
-
-                let name = format!("animation/{}", epoch);
-                plot_png(&name, dim, &unit_square_prediction, png::ColorType::Rgb).unwrap();
             }
         }
 

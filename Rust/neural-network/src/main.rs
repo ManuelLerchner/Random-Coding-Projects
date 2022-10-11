@@ -4,7 +4,7 @@ pub mod data;
 pub mod neural_network;
 pub mod plotter;
 
-use data::data::RGB_CIRCLE;
+use data::data::RGB_DONUT;
 use neural_network::network::Summary;
 
 #[allow(unused_imports)]
@@ -17,14 +17,14 @@ use crate::{
 };
 
 fn main() {
-    let mut network = Network::new(&[2, 128, 64, 32, 3], 0.2, &RELU, &QUADRATIC_COST);
+    let mut network = Network::new(&[2, 64, 128, 64, 3], 0.15, &RELU, &QUADRATIC_COST);
 
     //Train
-    let dataset = &RGB_CIRCLE;
-    let cost_history = network.train_and_log(dataset, 16, 64, 10000);
+    let dataset = &RGB_DONUT;
+    let cost_history = network.train_and_log(dataset, 16, 64, 6000);
 
     //Plot
-    let (dim, unit_square_prediction) = network.predict_unit_square(100);
+    let (dim, unit_square_prediction) = network.predict_unit_square(1024);
 
     let name = String::from(dataset.name) + "_" + &network.summerize();
     plot_png(&name, dim, &unit_square_prediction, png::ColorType::Rgb).unwrap();
