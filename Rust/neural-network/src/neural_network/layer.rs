@@ -84,9 +84,3 @@ mod tests {
         assert_eq!(output, expected);
     }
 }
-
-impl std::fmt::Display for Layer<'_> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "weights:\n{}\nbiases:\n{}\n", self.weights, self.biases)
-    }
-}

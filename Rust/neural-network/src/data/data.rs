@@ -4,16 +4,17 @@ use ndarray_rand::{rand, RandomExt};
 
 pub enum DatasetType {
     Static(fn() -> (Array2<f64>, Array2<f64>)),
-    Dynamic(fn(Array1<f64>) -> Array1<f64>, usize),
+    Dynamic(fn(Array1<f64>) -> Array1<f64>, (usize, usize)),
 }
 
-pub struct Dataset {
+pub struct Dataset<'a> {
     pub dataset_type: DatasetType,
+    pub name: &'a str,
 }
 
-impl Dataset {
-    pub fn new(dataset_type: DatasetType) -> Dataset {
-        Dataset { dataset_type }
+impl Dataset<'_> {
+    pub fn new(name: &str, dataset_type: DatasetType) -> Dataset {
+        Dataset { dataset_type, name }
     }
 
     pub fn get_full(&self) -> (Array2<f64>, Array2<f64>) {
@@ -29,8 +30,8 @@ impl Dataset {
         let mut x = Array::zeros((resolution * resolution, 2).f());
         for i in 0..resolution {
             for j in 0..resolution {
-                x[[i * resolution + j, 0]] = linspace[i];
-                x[[i * resolution + j, 1]] = linspace[j];
+                x[[i * resolution + j, 0]] = linspace[j];
+                x[[i * resolution + j, 1]] = linspace[i];
             }
         }
 
@@ -53,16 +54,16 @@ impl Dataset {
 
                 (data, labels)
             }
-            DatasetType::Dynamic(f, dim) => {
+            DatasetType::Dynamic(f, (input_dim, output_dim)) => {
                 let x = Array::random(
-                    (batch_size, *dim),
+                    (batch_size, *input_dim),
                     rand::distributions::Uniform::new(0.0, 1.0),
                 );
 
-                let mut y = Array2::zeros((batch_size, 1));
+                let mut y = Array2::zeros((batch_size, *output_dim));
                 for (i, xi) in x.outer_iter().enumerate() {
                     let yi = f(xi.to_owned());
-                    y.slice_mut(s![i, ..]).assign(&yi);
+                    y.row_mut(i).assign(&yi);
                 }
 
                 (x, y)
@@ -72,6 +73,7 @@ impl Dataset {
 }
 
 pub static XOR: Dataset = Dataset {
+    name: "XOR",
     dataset_type: DatasetType::Static(|| {
         let x = array![[0.0, 0.0], [0.0, 1.0], [1.0, 0.0], [1.0, 1.0]];
         let y = array![[0.0], [1.0], [1.0], [0.0]];
@@ -80,12 +82,26 @@ pub static XOR: Dataset = Dataset {
 };
 
 pub static CIRCLE: Dataset = Dataset {
+    name: "Circle",
     dataset_type: DatasetType::Dynamic(
         |x| {
             let dist_from_center = ((x[0] - 0.5).powi(2) + (x[1] - 0.5).powi(2)).sqrt();
             let y = if dist_from_center < 0.25 { 1.0 } else { 0.0 };
             array![y]
         },
-        2,
+        (2, 1),
+    ),
+};
+
+pub static RGB_TEST: Dataset = Dataset {
+    name: "RGB_TEST",
+    dataset_type: DatasetType::Dynamic(
+        |x| {
+            let r = x[0];
+            let g = x[1];
+            let b = r * g;
+            array![r, g, b]
+        },
+        (2, 3),
     ),
 };

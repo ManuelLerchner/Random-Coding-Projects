@@ -1,12 +1,12 @@
 use plotters::prelude::*;
 
-pub fn plot_graph(name: &str, data: &Vec<(f64, f64)>) -> Result<(), Box<dyn std::error::Error>> {
-    let path_name = format!("images/{}", name);
+pub fn plot_graph(name: String, data: &Vec<(i32, f64)>) -> Result<(), Box<dyn std::error::Error>> {
+    let path_name = format!("images/{}.png", name);
 
     let root = BitMapBackend::new(&path_name, (640, 480)).into_drawing_area();
     root.fill(&WHITE)?;
 
-    let x_range = 0.0..data[data.len() - 1].0;
+    let x_range = 0..data[data.len() - 1].0;
     let y_range = 0.0..data
         .iter()
         .map(|x| x.1)

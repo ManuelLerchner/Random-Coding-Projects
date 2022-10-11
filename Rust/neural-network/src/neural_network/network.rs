@@ -1,7 +1,7 @@
 use super::layer::Layer;
 use crate::{
     activation_function::activation_function::ActivationFunction,
-    cost_function::cost_function::CostFunction,
+    cost_function::cost_function::CostFunction, data::data::Dataset,
 };
 
 use itertools::izip;
@@ -9,14 +9,15 @@ use ndarray::Array2;
 
 pub struct Network<'a> {
     pub layers: Vec<Layer<'a>>,
-    pub shape: Vec<usize>,
+    pub shape: &'a [usize],
     pub eta: f64,
     pub cost_function: &'a CostFunction,
 }
 
+#[allow(non_snake_case)]
 impl Network<'_> {
     pub fn new<'a>(
-        shape: Vec<usize>,
+        shape: &'a [usize],
         eta: f64,
         activation_function: &'a ActivationFunction,
         cost_function: &'a CostFunction,
@@ -42,29 +43,17 @@ impl Network<'_> {
         output
     }
 
-    // Predicts the output of the network given an input
-    pub fn test(&self, input: &Array2<f64>, expected: &Array2<f64>) -> (Array2<f64>, f64) {
-        let mut output = input.clone();
-        for layer in &self.layers {
-            output = layer.predict(&output);
-        }
-
-        let cost = self.cost_function.cost(&output, &expected);
-
-        (output, cost)
-    }
-
     // Calculates the needed adjustments to the weights and biases for a given input and expected output
     pub fn backprop(
         &self,
-        x: &Array2<f64>,
+        X: &Array2<f64>,
         y: &Array2<f64>,
     ) -> (Vec<Array2<f64>>, Vec<Array2<f64>>) {
         let mut nabla_b = Vec::new();
         let mut nabla_w = Vec::new();
 
         // Forward pass
-        let mut activation = x.clone();
+        let mut activation = X.clone();
         let mut activations = vec![activation.clone()];
         let mut zs = Vec::new();
         for layer in &self.layers {
@@ -109,11 +98,11 @@ impl Network<'_> {
         (nabla_b, nabla_w)
     }
 
-    // Trains the network given an input and the expected output
-    pub fn train(&mut self, (x, y): &(Array2<f64>, Array2<f64>)) -> f64 {
-        let (nabla_b, nabla_w) = self.backprop(x, y);
+    // Trains the network using a minibatch
+    pub fn train_minibatch(&mut self, (X, y): &(Array2<f64>, Array2<f64>)) {
+        let (nabla_b, nabla_w) = self.backprop(X, y);
 
-        let batch_size = x.nrows() as f64;
+        let batch_size = X.nrows() as f64;
 
         for (layer, nabla_b, nabla_w) in izip!(&mut self.layers, nabla_b, nabla_w) {
             let nabla_b_average = &nabla_b
@@ -125,18 +114,63 @@ impl Network<'_> {
             layer.weights = &layer.weights - (self.eta / batch_size) * nabla_w;
             layer.biases = &layer.biases - (self.eta / batch_size) * nabla_b_average;
         }
+    }
 
-        let cost = self.cost_function.cost(&self.predict(x), y);
+    // Trains the network using a dataset, records the cost for each epoch
+    pub fn train_and_log(
+        &mut self,
+        data: &Dataset,
+        batch_size: usize,
+        verification_samples: usize,
+        epochs: i32,
+    ) -> Vec<(i32, f64)> {
+        let mut cost_history = Vec::new();
+
+        for epoch in 0..epochs {
+            self.train_minibatch(&data.get_batch(batch_size));
+
+            if epoch % (epochs / 100 + 1) == 0 {
+                let cost = self.eval(data, verification_samples);
+                cost_history.push((epoch, cost));
+
+                println!("Epoch: {}, Cost: {:.8}", epoch, cost);
+            }
+        }
+
+        cost_history
+    }
+
+    // Evaluates the network on a given dataset
+    pub fn eval(&self, data: &Dataset, sample_size: usize) -> f64 {
+        let (x, y) = data.get_batch(sample_size);
+
+        let prediction = self.predict(&x);
+        let cost = self.cost_function.cost(&prediction, &y);
         cost
+    }
+
+    // evaluates the prediction-results for the unit-square, returns a list
+    // containing the result for each point in a row by row fashion
+    pub fn predict_unit_square(&self, resolution: usize) -> ((usize, usize), Vec<Vec<f64>>) {
+        let unit_square = Dataset::get_2d_unit_square(resolution);
+        let pred = self.predict(&unit_square);
+
+        let res = pred
+            .lanes(ndarray::Axis(1))
+            .into_iter()
+            .map(|x| x.to_vec())
+            .collect();
+
+        ((resolution, resolution), res)
     }
 }
 
-impl std::fmt::Display for Network<'_> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let mut output = String::new();
-        for (i, layer) in self.layers.iter().enumerate() {
-            output.push_str(&format!("Layer {}:\n{}\n", i, layer));
-        }
-        write!(f, "{}", output)
+pub trait Summary {
+    fn summerize(&self) -> String;
+}
+
+impl Summary for Network<'_> {
+    fn summerize(&self) -> String {
+        format!("S_{:?}_e_{:?}", self.shape, self.eta)
     }
 }
