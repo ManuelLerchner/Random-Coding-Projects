@@ -99,8 +99,28 @@ pub static RGB_TEST: Dataset = Dataset {
         |x| {
             let r = x[0];
             let g = x[1];
-            let b = r * g;
+            let b = 1.0 - r;
             array![r, g, b]
+        },
+        (2, 3),
+    ),
+};
+
+pub static RGB_CIRCLE: Dataset = Dataset {
+    name: "RGB_CIRCLE",
+    dataset_type: DatasetType::Dynamic(
+        |x| {
+            let dist_from_center = ((x[0] - 0.5).powi(2) + (x[1] - 0.5).powi(2)).sqrt();
+
+            let r = x[0];
+            let g = x[1];
+            let b = 1.0 - r;
+
+            if dist_from_center < 0.25 {
+                array![r, g, b]
+            } else {
+                array![0.0, 0.0, 0.0]
+            }
         },
         (2, 3),
     ),
